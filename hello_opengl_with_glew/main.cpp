@@ -72,7 +72,11 @@ int main(int argc, char **argv) {
 
     // init glew
     glewExperimental = true;
-    glewInit();
+    GLenum err = glewInit();
+    if (err != GLEW_OK) {
+        cout << "glew initialize failed:" << glewGetErrorString(err) << endl;
+        return -1;
+    }
 
     // get gl info
     const GLubyte *renderer = glGetString(GL_RENDERER);
