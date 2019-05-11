@@ -103,9 +103,6 @@ int main(int argc, char **argv) {
     glfwGetFramebufferSize(pWd, &width, &height);
     glViewport(0, 0, width, height);
 
-    // get time
-    double t = glfwGetTime();
-
     // buffer swapping setting
     glfwSwapInterval(1);
 
