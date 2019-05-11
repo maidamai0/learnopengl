@@ -15,7 +15,6 @@
 // glfw
 #include <GLFW/glfw3.h>
 
-#include <cassert>
 #include <fstream>
 #include <iostream>
 #include <iterator>
@@ -27,29 +26,21 @@ using std::endl;
 using std::ifstream;
 using std::string;
 using std::stringstream;
-
-/*              |
-                *0.5
-            *   *   *
-   0.5   *      *       *
-----*  *  *  *  *  *  *  *--------
-        *       *       *   0.5
-            *   *   *
-                * 0.5
-                |
- */
-
 // clang-format off
-static const float vertices[] =
+// point for rectangle
+static const float rect[] =
 {
-    0.0f, 0.5f, 0.0f,
-    0.5f, 0.0f, 0.0f,
-     0.0f, 0.0f, 0.0f,
+    0.5f, 0.5f, 0.0f,
+    0.5f, -0.5f, 0.0f,
+    -0.5f, -0.5f, 0.0f,
+    -0.5f, 0.5f, 0.0f
+};
 
-
-     -0.5f, 0.0f, 0.0f,
-    0.0f, 0.0f, 0.0f,
-     0.0f, 0.5f, 0.0f,
+// index for two triangles
+static const unsigned int indices[] =
+{
+    0,1,3,
+    1,2,3
 };
 // clang-format on
 
@@ -224,11 +215,17 @@ int main(int argc, char **argv) {
     GLuint vbo = 0;
     glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(rect), rect, GL_STATIC_DRAW);
 
     // tell opengl how to interpret our data
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
     glEnableVertexAttribArray(0);
+
+    // create ebo
+    GLuint ebo = 0;
+    glGenBuffers(1, &ebo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     // unbind vao
     glBindVertexArray(0);
@@ -241,7 +238,7 @@ int main(int argc, char **argv) {
     // buffer swapping setting
     glfwSwapInterval(1);
 
-    // draw line instead of fill
+    // set draw type
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     // running until exit
@@ -256,13 +253,7 @@ int main(int argc, char **argv) {
         // draw triangle
         glUseProgram(shader_program);
         glBindVertexArray(vao);
-
-        const GLuint len = sizeof(vertices);
-        assert(!(len % 3) && "size of vertices must be times of 3");
-        const GLuint num = sizeof(vertices) / 3 / sizeof(vertices[0]);
-        //        cout << "numer is " << num << "\n";
-
-        glDrawArrays(GL_TRIANGLES, 0, num);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         // event loop
         glfwPollEvents();

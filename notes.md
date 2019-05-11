@@ -133,3 +133,8 @@ A shader program is the final linked version of multiple shaders, like excutable
 5. when use,re-bind vao
 
 ## **Element Buffer Object(EBO)**
+
+1. `create ebo` glGenBuffers()
+2. `bind buffer` glBindBuffer
+3. `copy indices` glBufferData
+4. `draw` use **glDrawElements** instead of **glDrawArray**
