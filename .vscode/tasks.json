@@ -1,0 +1,55 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "cmake-vs2019-x64",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "-G",
+                "Visual Studio 16 2019",
+                "-A",
+                "x64",
+                ".."
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "silent"
+            },
+            "options": {
+                    "cwd": "${workspaceFolder}/build"
+            }
+        },
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "msbuild",
+            "args": [
+                "opengl.sln",
+                "/property:GenerateFullPaths=true",
+                "/t:build",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "options": {
+                    "cwd": "${workspaceFolder}/build"
+            }
+        }
+    ]
+}
