@@ -2,7 +2,15 @@ cmake_minimum_required(VERSION 3.10)
 
 project(learn_opengl)
 
-set(OPENGL_LIB glfw GLEW X11 dl pthread Xxf86vm Xrandr Xcursor Xinerama GL)
+set set(OPENGL_LIB glfw GLEW)
+
+if(WIN32)
+set(OPENGL_LIB ${OPENGL_LIB})
+endif(WIN32)
+
+if(UNIX)
+set(OPENGL_LIB ${OPENGL_LIB} X11 dl pthread Xxf86vm Xrandr Xcursor Xinerama GL)
+endif(UNIX)
 
 link_libraries(${OPENGL_LIB})
 
