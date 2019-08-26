@@ -6,13 +6,46 @@
     "configurations": [
 
         {
-            "name": "hello",
+            "name": "hello_opengl",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "hello.exe",
+            "program": "hello_opengl.exe",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/build/hello_world/Debug/",
+            "cwd": "${workspaceFolder}/build/bin/",
+            "environment": [],
+            "externalConsole": false
+        },
+        {
+            "name": "hello_opengl_with_glew",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "hello_opengl_with_glew.exe",
+            "args": [],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}/build/bin/",
+            "environment": [],
+            "externalConsole": false
+        },
+        {
+            "name": "hello_rectangle",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "hello_rectangle.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build/bin/",
+            "environment": [],
+            "externalConsole": false
+        },
+        {
+            "name": "hello_triangle",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "hello_triangle.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build/bin/",
             "environment": [],
             "externalConsole": false
         }
