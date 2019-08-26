@@ -2,15 +2,9 @@ cmake_minimum_required(VERSION 3.10)
 
 project(learn_opengl)
 
-set set(OPENGL_LIB glfw GLEW)
-
-if(WIN32)
-set(OPENGL_LIB ${OPENGL_LIB})
-endif(WIN32)
-
-if(UNIX)
-set(OPENGL_LIB ${OPENGL_LIB} X11 dl pthread Xxf86vm Xrandr Xcursor Xinerama GL)
-endif(UNIX)
+if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
+set(OPENGL_LIB X11 dl pthread Xxf86vm Xrandr Xcursor Xinerama GL)
+endif()
 
 link_libraries(${OPENGL_LIB})
 
@@ -19,6 +13,12 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
+# 3rdparty headers
+include_directories(3rdparty/glad/include 3rdparty/glfw3/include)
+
+add_subdirectory(3rdparty)
+
+link_libraries(glad glfw)
 add_subdirectory(hello_opengl)
 add_subdirectory(hello_opengl_with_glew)
 add_subdirectory(hello_triangle)

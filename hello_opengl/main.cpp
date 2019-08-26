@@ -9,8 +9,8 @@
  *
  */
 
-// glew
-#include <GL/glew.h>
+// glad
+#include "glad/glad.h"
 
 // glfw
 #include <GLFW/glfw3.h>
@@ -90,13 +90,12 @@ int main(int argc, char **argv) {
     // make opengl context
     glfwMakeContextCurrent(pWd);
 
-    // initialize glew
-    glewExperimental = true;
-    GLenum err = glewInit();
-    if (err != GLEW_OK) {
-        cout << "glew initialize failed:" << glewGetErrorString(err) << endl;
-        return -1;
+    // initialize gl
+    if(!gladLoadGL()){
+        cout << "Load OpenGL failed!";
+        exit(-1);
     }
+    cout << "OpenGL version:" << GLVersion.major << "." << GLVersion.minor << endl;
 
     // set viewport
     int height = 0, width = 0;
