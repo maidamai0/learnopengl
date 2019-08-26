@@ -8,6 +8,8 @@ endif()
 
 link_libraries(${OPENGL_LIB})
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 # set output directory
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -25,3 +27,6 @@ add_subdirectory(hello_opengl)
 add_subdirectory(hello_opengl_with_glew)
 add_subdirectory(hello_triangle)
 add_subdirectory(hello_rectangle)
+
+# copy compile_commands.json
+configure_file(${CMAKE_BINARY_DIR}/compile_commands.json ./compile_commands.json)

@@ -1,0 +1,102 @@
+[
+{
+  "directory": "D:/open_source_project/learnopengl/build/3rdparty/glfw3/src",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\BUILDT~1\\VC\\Tools\\MSVC\\1421~1.277\\bin\\Hostx86\\x86\\cl.exe  /nologo -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -ID:\\open_source_project\\learnopengl\\3rdparty\\glad\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src -ID:\\open_source_project\\learnopengl\\build\\3rdparty\\glfw3\\src  /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1   /FoCMakeFiles\\glfw.dir\\context.c.obj /FdCMakeFiles\\glfw.dir\\glfw.pdb /FS -c D:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src\\context.c",
+  "file": "D:/open_source_project/learnopengl/3rdparty/glfw3/src/context.c"
+},
+{
+  "directory": "D:/open_source_project/learnopengl/build/3rdparty/glfw3/src",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\BUILDT~1\\VC\\Tools\\MSVC\\1421~1.277\\bin\\Hostx86\\x86\\cl.exe  /nologo -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -ID:\\open_source_project\\learnopengl\\3rdparty\\glad\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src -ID:\\open_source_project\\learnopengl\\build\\3rdparty\\glfw3\\src  /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1   /FoCMakeFiles\\glfw.dir\\init.c.obj /FdCMakeFiles\\glfw.dir\\glfw.pdb /FS -c D:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src\\init.c",
+  "file": "D:/open_source_project/learnopengl/3rdparty/glfw3/src/init.c"
+},
+{
+  "directory": "D:/open_source_project/learnopengl/build/3rdparty/glfw3/src",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\BUILDT~1\\VC\\Tools\\MSVC\\1421~1.277\\bin\\Hostx86\\x86\\cl.exe  /nologo -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -ID:\\open_source_project\\learnopengl\\3rdparty\\glad\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src -ID:\\open_source_project\\learnopengl\\build\\3rdparty\\glfw3\\src  /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1   /FoCMakeFiles\\glfw.dir\\input.c.obj /FdCMakeFiles\\glfw.dir\\glfw.pdb /FS -c D:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src\\input.c",
+  "file": "D:/open_source_project/learnopengl/3rdparty/glfw3/src/input.c"
+},
+{
+  "directory": "D:/open_source_project/learnopengl/build/3rdparty/glfw3/src",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\BUILDT~1\\VC\\Tools\\MSVC\\1421~1.277\\bin\\Hostx86\\x86\\cl.exe  /nologo -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -ID:\\open_source_project\\learnopengl\\3rdparty\\glad\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src -ID:\\open_source_project\\learnopengl\\build\\3rdparty\\glfw3\\src  /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1   /FoCMakeFiles\\glfw.dir\\monitor.c.obj /FdCMakeFiles\\glfw.dir\\glfw.pdb /FS -c D:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src\\monitor.c",
+  "file": "D:/open_source_project/learnopengl/3rdparty/glfw3/src/monitor.c"
+},
+{
+  "directory": "D:/open_source_project/learnopengl/build/3rdparty/glfw3/src",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\BUILDT~1\\VC\\Tools\\MSVC\\1421~1.277\\bin\\Hostx86\\x86\\cl.exe  /nologo -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -ID:\\open_source_project\\learnopengl\\3rdparty\\glad\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src -ID:\\open_source_project\\learnopengl\\build\\3rdparty\\glfw3\\src  /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1   /FoCMakeFiles\\glfw.dir\\vulkan.c.obj /FdCMakeFiles\\glfw.dir\\glfw.pdb /FS -c D:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src\\vulkan.c",
+  "file": "D:/open_source_project/learnopengl/3rdparty/glfw3/src/vulkan.c"
+},
+{
+  "directory": "D:/open_source_project/learnopengl/build/3rdparty/glfw3/src",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\BUILDT~1\\VC\\Tools\\MSVC\\1421~1.277\\bin\\Hostx86\\x86\\cl.exe  /nologo -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -ID:\\open_source_project\\learnopengl\\3rdparty\\glad\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src -ID:\\open_source_project\\learnopengl\\build\\3rdparty\\glfw3\\src  /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1   /FoCMakeFiles\\glfw.dir\\window.c.obj /FdCMakeFiles\\glfw.dir\\glfw.pdb /FS -c D:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src\\window.c",
+  "file": "D:/open_source_project/learnopengl/3rdparty/glfw3/src/window.c"
+},
+{
+  "directory": "D:/open_source_project/learnopengl/build/3rdparty/glfw3/src",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\BUILDT~1\\VC\\Tools\\MSVC\\1421~1.277\\bin\\Hostx86\\x86\\cl.exe  /nologo -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -ID:\\open_source_project\\learnopengl\\3rdparty\\glad\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src -ID:\\open_source_project\\learnopengl\\build\\3rdparty\\glfw3\\src  /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1   /FoCMakeFiles\\glfw.dir\\win32_init.c.obj /FdCMakeFiles\\glfw.dir\\glfw.pdb /FS -c D:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src\\win32_init.c",
+  "file": "D:/open_source_project/learnopengl/3rdparty/glfw3/src/win32_init.c"
+},
+{
+  "directory": "D:/open_source_project/learnopengl/build/3rdparty/glfw3/src",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\BUILDT~1\\VC\\Tools\\MSVC\\1421~1.277\\bin\\Hostx86\\x86\\cl.exe  /nologo -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -ID:\\open_source_project\\learnopengl\\3rdparty\\glad\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src -ID:\\open_source_project\\learnopengl\\build\\3rdparty\\glfw3\\src  /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1   /FoCMakeFiles\\glfw.dir\\win32_joystick.c.obj /FdCMakeFiles\\glfw.dir\\glfw.pdb /FS -c D:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src\\win32_joystick.c",
+  "file": "D:/open_source_project/learnopengl/3rdparty/glfw3/src/win32_joystick.c"
+},
+{
+  "directory": "D:/open_source_project/learnopengl/build/3rdparty/glfw3/src",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\BUILDT~1\\VC\\Tools\\MSVC\\1421~1.277\\bin\\Hostx86\\x86\\cl.exe  /nologo -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -ID:\\open_source_project\\learnopengl\\3rdparty\\glad\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src -ID:\\open_source_project\\learnopengl\\build\\3rdparty\\glfw3\\src  /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1   /FoCMakeFiles\\glfw.dir\\win32_monitor.c.obj /FdCMakeFiles\\glfw.dir\\glfw.pdb /FS -c D:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src\\win32_monitor.c",
+  "file": "D:/open_source_project/learnopengl/3rdparty/glfw3/src/win32_monitor.c"
+},
+{
+  "directory": "D:/open_source_project/learnopengl/build/3rdparty/glfw3/src",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\BUILDT~1\\VC\\Tools\\MSVC\\1421~1.277\\bin\\Hostx86\\x86\\cl.exe  /nologo -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -ID:\\open_source_project\\learnopengl\\3rdparty\\glad\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src -ID:\\open_source_project\\learnopengl\\build\\3rdparty\\glfw3\\src  /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1   /FoCMakeFiles\\glfw.dir\\win32_time.c.obj /FdCMakeFiles\\glfw.dir\\glfw.pdb /FS -c D:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src\\win32_time.c",
+  "file": "D:/open_source_project/learnopengl/3rdparty/glfw3/src/win32_time.c"
+},
+{
+  "directory": "D:/open_source_project/learnopengl/build/3rdparty/glfw3/src",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\BUILDT~1\\VC\\Tools\\MSVC\\1421~1.277\\bin\\Hostx86\\x86\\cl.exe  /nologo -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -ID:\\open_source_project\\learnopengl\\3rdparty\\glad\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src -ID:\\open_source_project\\learnopengl\\build\\3rdparty\\glfw3\\src  /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1   /FoCMakeFiles\\glfw.dir\\win32_thread.c.obj /FdCMakeFiles\\glfw.dir\\glfw.pdb /FS -c D:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src\\win32_thread.c",
+  "file": "D:/open_source_project/learnopengl/3rdparty/glfw3/src/win32_thread.c"
+},
+{
+  "directory": "D:/open_source_project/learnopengl/build/3rdparty/glfw3/src",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\BUILDT~1\\VC\\Tools\\MSVC\\1421~1.277\\bin\\Hostx86\\x86\\cl.exe  /nologo -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -ID:\\open_source_project\\learnopengl\\3rdparty\\glad\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src -ID:\\open_source_project\\learnopengl\\build\\3rdparty\\glfw3\\src  /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1   /FoCMakeFiles\\glfw.dir\\win32_window.c.obj /FdCMakeFiles\\glfw.dir\\glfw.pdb /FS -c D:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src\\win32_window.c",
+  "file": "D:/open_source_project/learnopengl/3rdparty/glfw3/src/win32_window.c"
+},
+{
+  "directory": "D:/open_source_project/learnopengl/build/3rdparty/glfw3/src",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\BUILDT~1\\VC\\Tools\\MSVC\\1421~1.277\\bin\\Hostx86\\x86\\cl.exe  /nologo -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -ID:\\open_source_project\\learnopengl\\3rdparty\\glad\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src -ID:\\open_source_project\\learnopengl\\build\\3rdparty\\glfw3\\src  /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1   /FoCMakeFiles\\glfw.dir\\wgl_context.c.obj /FdCMakeFiles\\glfw.dir\\glfw.pdb /FS -c D:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src\\wgl_context.c",
+  "file": "D:/open_source_project/learnopengl/3rdparty/glfw3/src/wgl_context.c"
+},
+{
+  "directory": "D:/open_source_project/learnopengl/build/3rdparty/glfw3/src",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\BUILDT~1\\VC\\Tools\\MSVC\\1421~1.277\\bin\\Hostx86\\x86\\cl.exe  /nologo -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -ID:\\open_source_project\\learnopengl\\3rdparty\\glad\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src -ID:\\open_source_project\\learnopengl\\build\\3rdparty\\glfw3\\src  /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1   /FoCMakeFiles\\glfw.dir\\egl_context.c.obj /FdCMakeFiles\\glfw.dir\\glfw.pdb /FS -c D:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src\\egl_context.c",
+  "file": "D:/open_source_project/learnopengl/3rdparty/glfw3/src/egl_context.c"
+},
+{
+  "directory": "D:/open_source_project/learnopengl/build/3rdparty/glfw3/src",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\BUILDT~1\\VC\\Tools\\MSVC\\1421~1.277\\bin\\Hostx86\\x86\\cl.exe  /nologo -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -ID:\\open_source_project\\learnopengl\\3rdparty\\glad\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src -ID:\\open_source_project\\learnopengl\\build\\3rdparty\\glfw3\\src  /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1   /FoCMakeFiles\\glfw.dir\\osmesa_context.c.obj /FdCMakeFiles\\glfw.dir\\glfw.pdb /FS -c D:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\src\\osmesa_context.c",
+  "file": "D:/open_source_project/learnopengl/3rdparty/glfw3/src/osmesa_context.c"
+},
+{
+  "directory": "D:/open_source_project/learnopengl/build/3rdparty/glad",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\BUILDT~1\\VC\\Tools\\MSVC\\1421~1.277\\bin\\Hostx86\\x86\\cl.exe  /nologo  -ID:\\open_source_project\\learnopengl\\3rdparty\\glad\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\include  /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1   /FoCMakeFiles\\glad.dir\\src\\glad.c.obj /FdCMakeFiles\\glad.dir\\glad.pdb /FS -c D:\\open_source_project\\learnopengl\\3rdparty\\glad\\src\\glad.c",
+  "file": "D:/open_source_project/learnopengl/3rdparty/glad/src/glad.c"
+},
+{
+  "directory": "D:/open_source_project/learnopengl/build/hello_opengl",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\BUILDT~1\\VC\\Tools\\MSVC\\1421~1.277\\bin\\Hostx86\\x86\\cl.exe  /nologo /TP  -ID:\\open_source_project\\learnopengl\\3rdparty\\glad\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\include  /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1   /FoCMakeFiles\\hello_opengl.dir\\main.cpp.obj /FdCMakeFiles\\hello_opengl.dir\\ /FS -c D:\\open_source_project\\learnopengl\\hello_opengl\\main.cpp",
+  "file": "D:/open_source_project/learnopengl/hello_opengl/main.cpp"
+},
+{
+  "directory": "D:/open_source_project/learnopengl/build/hello_opengl_with_glew",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\BUILDT~1\\VC\\Tools\\MSVC\\1421~1.277\\bin\\Hostx86\\x86\\cl.exe  /nologo /TP  -ID:\\open_source_project\\learnopengl\\3rdparty\\glad\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\include  /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1   /FoCMakeFiles\\hello_opengl_with_glew.dir\\main.cpp.obj /FdCMakeFiles\\hello_opengl_with_glew.dir\\ /FS -c D:\\open_source_project\\learnopengl\\hello_opengl_with_glew\\main.cpp",
+  "file": "D:/open_source_project/learnopengl/hello_opengl_with_glew/main.cpp"
+},
+{
+  "directory": "D:/open_source_project/learnopengl/build/hello_triangle",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\BUILDT~1\\VC\\Tools\\MSVC\\1421~1.277\\bin\\Hostx86\\x86\\cl.exe  /nologo /TP  -ID:\\open_source_project\\learnopengl\\3rdparty\\glad\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\include  /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1   /FoCMakeFiles\\hello_triangle.dir\\main.cpp.obj /FdCMakeFiles\\hello_triangle.dir\\ /FS -c D:\\open_source_project\\learnopengl\\hello_triangle\\main.cpp",
+  "file": "D:/open_source_project/learnopengl/hello_triangle/main.cpp"
+},
+{
+  "directory": "D:/open_source_project/learnopengl/build/hello_rectangle",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\BUILDT~1\\VC\\Tools\\MSVC\\1421~1.277\\bin\\Hostx86\\x86\\cl.exe  /nologo /TP  -ID:\\open_source_project\\learnopengl\\3rdparty\\glad\\include -ID:\\open_source_project\\learnopengl\\3rdparty\\glfw3\\include  /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1   /FoCMakeFiles\\hello_rectangle.dir\\main.cpp.obj /FdCMakeFiles\\hello_rectangle.dir\\ /FS -c D:\\open_source_project\\learnopengl\\hello_rectangle\\main.cpp",
+  "file": "D:/open_source_project/learnopengl/hello_rectangle/main.cpp"
+}
+]
