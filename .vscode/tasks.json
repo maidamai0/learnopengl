@@ -4,34 +4,10 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "cmake-vs2019-x64",
+            "label": "compile-vs2019-x64",
             "type": "shell",
-            "command": "cmake",
-            "args": [
-                "-G",
-                "Visual Studio 16 2019",
-                "-A",
-                "x64",
-                ".."
-            ],
-            "group": "build",
-            "presentation": {
-                "reveal": "silent"
-            },
-            "options": {
-                    "cwd": "${workspaceFolder}/build"
-            }
-        },
-        {
-            "label": "build",
-            "type": "shell",
-            "command": "msbuild",
-            "args": [
-                "opengl.sln",
-                "/property:GenerateFullPaths=true",
-                "/t:build",
-                "/consoleloggerparameters:NoSummary"
-            ],
+            "command": "${cwd}\\compile.bat",
+            "args": [],
             "presentation": {
                 "echo": true,
                 "reveal": "always",
@@ -48,7 +24,7 @@
                 "isDefault": true
             },
             "options": {
-                    "cwd": "${workspaceFolder}/build"
+                    "cwd": "${workspaceFolder}"
             }
         }
     ]

@@ -1,6 +1,11 @@
 :: compile for windows
 @echo off
 
+:: get dev environment
+call "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\Tools\VsDevCmd.bat"
+
+md build 2> nul
+
 set ROOT_DIR=%~dp0
 set BUILD_DIR=%ROOT_DIR%build\
 set PROJ_FILE=%BUILD_DIR%learn_opengl.sln
