@@ -1,19 +1,17 @@
 /**
- * @file gl.cpp
- * @author your name (you@domain.com)
- * @brief
+ * @file main.cpp
+ * @author tonghao.yuan (tonghao.yuan@csdental.com)
+ * @brief 
  * @version 0.1
- * @date 2019-04-16
- *
- * @copyright Copyright (c) 2019
- *
+ * @date 2019-08-27
+ * 
  */
 
 // glad
 #include "glad/glad.h"
 
 // glfw
-#include <GLFW/glfw3.h>
+#include "GLFW/glfw3.h"
 
 #include <fstream>
 #include <iostream>

@@ -1,12 +1,10 @@
 /**
- * @file gl.cpp
- * @author your name (you@domain.com)
- * @brief
+ * @file main.cpp
+ * @author tonghao.yuan (tonghao.yuan@csdental.com)
+ * @brief 
  * @version 0.1
- * @date 2019-04-16
- *
- * @copyright Copyright (c) 2019
- *
+ * @date 2019-08-27
+ * 
  */
 
 // glad
@@ -44,12 +42,12 @@ static const float vertices[] =
 {
     0.0f, 0.5f, 0.0f,
     0.5f, 0.0f, 0.0f,
-     0.0f, 0.0f, 0.0f,
-
-
-     -0.5f, 0.0f, 0.0f,
     0.0f, 0.0f, 0.0f,
-     0.0f, 0.5f, 0.0f,
+
+
+    -0.5f, 0.0f, 0.0f,
+    0.0f, 0.0f, 0.0f,
+    0.0f, 0.5f, 0.0f,
 };
 // clang-format on
 

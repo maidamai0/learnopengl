@@ -3,12 +3,16 @@
         {
             "name": "Win32-csdc",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/",
+                "${workspaceFolder}/3rdparty/glfw3/include/",
+                "${workspaceFolder}/3rdparty/glad/include/",
+                "${workspaceFolder}/3rdparty/fmt/include/"
             ],
             "defines": [
                 "_DEBUG",
                 "UNICODE",
-                "_UNICODE"
+                "_UNICODE",
+                "COMMON_DLL_EXPORT"
             ],
             "windowsSdkVersion": "10.0.18362.0",
             "compilerPath": "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.22.27905/bin/Hostx64/x64/cl.exe",

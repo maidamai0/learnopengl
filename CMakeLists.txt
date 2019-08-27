@@ -17,16 +17,23 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin)
 
-# 3rdparty headers
-include_directories(3rdparty/glad/include 3rdparty/glfw3/include)
+# library compilation
+set(BUILD_SHARED_LIBS OFF)
 
+# 3rdparty headers
+include_directories(./ 3rdparty/glad/include 3rdparty/glfw3/include 3rdparty/fmt/include)
+
+# compile 3rdparty libs
 add_subdirectory(3rdparty)
 
-link_libraries(glad glfw)
+# compile common libs
+link_libraries(fmt glfw)
+add_subdirectory(common)
+
+# compile executables
+link_libraries(glad)
 add_subdirectory(hello_opengl)
 add_subdirectory(hello_opengl_with_glew)
 add_subdirectory(hello_triangle)
 add_subdirectory(hello_rectangle)
-
-# copy compile_commands.json
-configure_file(${CMAKE_BINARY_DIR}/compile_commands.json ./compile_commands.json)
+add_subdirectory(get_started_with_glfw)
