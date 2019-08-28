@@ -100,10 +100,9 @@ int main(int argc, char **argv) {
     glfwSetErrorCallback(err_callback);
 
     // create a window
-    // must 3.2 or earlier
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
-
+    // glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    // glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
+    // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     auto pWd = glfwCreateWindow(640, 480, "hello, opengl", nullptr, nullptr);
     if (!pWd) {
         fmt::print("create window failed!\n");
