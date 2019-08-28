@@ -21,7 +21,11 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin)
 set(BUILD_SHARED_LIBS OFF)
 
 # 3rdparty headers
-include_directories(./ 3rdparty/glad/include 3rdparty/glfw3/include 3rdparty/fmt/include)
+include_directories(./ 
+                    3rdparty/glad/include
+                    3rdparty/glfw3/include
+                    3rdparty/fmt/include
+                    3rdparty/linmath/include)
 
 # compile 3rdparty libs
 add_subdirectory(3rdparty)
