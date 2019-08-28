@@ -59,8 +59,6 @@ int main(int argc, char **argv) {
     }
 
     // create a window
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
     auto pWd = glfwCreateWindow(640, 480, "hello, opengl", nullptr, nullptr);
     if (!pWd) {
         cout << "create window failed!" << endl;

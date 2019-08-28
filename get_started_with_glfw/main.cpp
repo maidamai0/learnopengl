@@ -12,8 +12,10 @@
 #include "fmt/core.h"
 #include "linmath/linmath.h"
 
-#include "common/glfw_guard.h"
+#include "common/glfw_helpper.h"
 #include "common/define.h"
+
+#include <functional>
 
 // vertex
 static const struct
@@ -50,38 +52,6 @@ static const char* fragment_shader_text =
 "}\n";
 
 /**
- * @brief glfw error callback function
- *
- * @param err	error number
- * @param msg 	description
- */
-void err_callback(int err, const char *msg) {
-    fmt::print("error:{}[{}]\n", err, msg);
-}
-
-static void key_callback(GLFWwindow *window, int key, int scan_code, int action, int mods) {
-    (void)scan_code;
-    (void)mods;
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-        fmt::print("Escape pressed\n");
-        glfwSetWindowShouldClose(window, GLFW_TRUE);
-    }
-}
-
-void resize_callback(GLFWwindow *pWd, int w, int h) {
-    int h_old = 0;
-    int w_old = 0;
-    glfwGetFramebufferSize(pWd, &w_old, &h_old);
-    fmt::print("resize from{}x{} to {}x{}\n", w_old, h_old, w, h);
-    glViewport(0, 0, w, h);
-}
-
-void process_input(GLFWwindow *pWd) {
-    (void)pWd;
-    // do nothing
-}
-
-/**
  * @brief main function
  *
  * @param argc
@@ -92,9 +62,7 @@ int main(int argc, char **argv) {
     UNUSED(argc);
     UNUSED(argv);
 
-    if (!glfwInit()) {
-        fmt::print(stderr, "glfw initialize failed\n");
-    }
+    GLFW_GUARD;
 
     // set error callback
     glfwSetErrorCallback(err_callback);
@@ -106,8 +74,7 @@ int main(int argc, char **argv) {
     auto pWd = glfwCreateWindow(640, 480, "hello, opengl", nullptr, nullptr);
     if (!pWd) {
         fmt::print("create window failed!\n");
-        glfwTerminate();
-        exit(-1);
+        return -1;
     }
 
     // set key callback
@@ -164,21 +131,19 @@ int main(int argc, char **argv) {
 
     // running until exit
     while (!glfwWindowShouldClose(pWd)) {
-        // process input
-        process_input(pWd);
 
         // rendering
-        int height = 0, width = 0;
-        glfwGetFramebufferSize(pWd, &width, &height);
-        glViewport(0, 0, width, height);
         glClear(GL_COLOR_BUFFER_BIT);
 
         mat4x4 m;
         mat4x4_identity(m);
         mat4x4_rotate_Z(m, m, static_cast<float>(glfwGetTime()));
 
-        mat4x4 p;
+        int height = 0, width = 0;
+        glfwGetFramebufferSize(pWd, &width, &height);
         float ratio = width/ static_cast<float>(height);
+
+        mat4x4 p;
         mat4x4_ortho(p, -ratio, ratio, -1.0f, 1.0f, 1.0f, -1.0f);
 
         mat4x4 mvp;

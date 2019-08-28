@@ -48,6 +48,17 @@
             "cwd": "${workspaceFolder}/build/bin/",
             "environment": [],
             "externalConsole": false
+        },
+        {
+            "name": "get_started_with_glfw",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "get_started_with_glfw.exe",
+            "args": [],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}/build/bin/",
+            "environment": [],
+            "externalConsole": false
         }
     ]
 }
