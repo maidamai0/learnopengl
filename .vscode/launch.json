@@ -16,17 +16,6 @@
             "externalConsole": false
         },
         {
-            "name": "hello_opengl_with_glew",
-            "type": "cppvsdbg",
-            "request": "launch",
-            "program": "hello_opengl_with_glew.exe",
-            "args": [],
-            "stopAtEntry": true,
-            "cwd": "${workspaceFolder}/build/bin/",
-            "environment": [],
-            "externalConsole": false
-        },
-        {
             "name": "hello_rectangle",
             "type": "cppvsdbg",
             "request": "launch",
@@ -49,10 +38,10 @@
             "externalConsole": false
         },
         {
-            "name": "get_started_with_glfw",
+            "name": "vao_and_shader",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "get_started_with_glfw.exe",
+            "program": "vao_and_shader.exe",
             "args": [],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}/build/bin/",
@@ -60,10 +49,10 @@
             "externalConsole": false
         },
         {
-            "name": "hello_rectangle",
+            "name": "get_started_with_glfw",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "hello_rectangle.exe",
+            "program": "get_started_with_glfw.exe",
             "args": [],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}/build/bin/",
