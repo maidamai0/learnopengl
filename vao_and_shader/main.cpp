@@ -7,61 +7,24 @@
  * 
  */
 
-// glad
 #include "glad/glad.h"
-
-// glfw
 #include "GLFW/glfw3.h"
+#include "fmt/core.h"
 
-#include <fstream>
-#include <iostream>
-#include <sstream>
+#include "common/glfw_helpper.h"
 
-using std::cout;
-using std::endl;
-using std::ifstream;
-using std::stringstream;
-
-/**
- * @brief glfw error callback function
- *
- * @param err	error number
- * @param msg 	description
- */
-void err_callback(int err, const char *msg) {
-    cout << "err:" << err << msg << endl;
-}
-
-static void key_callback(GLFWwindow *window, int key, int scan_code, int action, int mods) {
-    (void)scan_code;
-    (void)mods;
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-        glfwSetWindowShouldClose(window, GLFW_TRUE);
-    }
-}
-
-/**
- * @brief main function
- *
- * @param argc
- * @param argv
- * @return int
- */
 int main(int argc, char **argv) {
     (void)argc;
     (void)argv;
     // set error callback
     glfwSetErrorCallback(err_callback);
 
-    // initialize
-    if (!glfwInit()) {
-        cout << "init error, exit" << endl;
-    }
+    GLFW_GUARD;
 
     // create a window
     auto pWd = glfwCreateWindow(640, 480, "hello, opengl", nullptr, nullptr);
     if (!pWd) {
-        cout << "create window failed!" << endl;
+        fmt::print("create window failed!\n");
     }
 
     // set key callback
@@ -72,16 +35,14 @@ int main(int argc, char **argv) {
 
     // initialize gl
     if(!gladLoadGL()){
-        cout << "Load OpenGL failed!";
-        exit(-1);
+        fmt::print( "Load OpenGL failed!\n");
+        return -1;
     }
-    cout << "OpenGL version:" << GLVersion.major << "." << GLVersion.minor << endl;
+    fmt::print("OpenGL version:{}.{}\n", GLVersion.major, GLVersion.minor);
 
     // get gl info
-    const GLubyte *renderer = glGetString(GL_RENDERER);
-    const GLubyte *version = glGetString(GL_VERSION);
-    printf("rederer is %s\n", renderer);
-    printf("version is %s\n", version);
+    fmt::print("rederer is {}\n", glGetString(GL_RENDERER));
+    fmt::print("version is {}\n", glGetString(GL_VERSION));
 
     // config
     glEnable(GL_DEPTH_TEST);
@@ -105,34 +66,15 @@ int main(int argc, char **argv) {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
     // shader
-    const char *vertex_shader = nullptr;
-    //        "#version 150\n"
-    //        "in vec3 vp;"
-    //        "void main() {"
-    //        "  gl_Position = vec4(vp, 1.0);"
-    //        "}";
-
-    const char *fragment_shader = nullptr;
-    //        "#version 150\n"
-    //        "out vec4 frag_colour;"
-    //        "void main() {"
-    //        "  frag_colour = vec4(0.5, 0.0, 0.5, 1.0);"
-    //        "}";
-
-    ifstream shader_reader;
-    stringstream buff;
-    shader_reader.open("vs.glsl");
-    buff << shader_reader.rdbuf();
-    vertex_shader = buff.str().c_str();
-
-    //    shader_reader.clear();
-    shader_reader.open("fs.glsl");
-    buff << shader_reader.rdbuf();
-    fragment_shader = buff.str().c_str();
+    std::string tmp {read_shader("vs.glsl")};
+    const char *vertex_shader = tmp.c_str();
 
     GLuint vs = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vs, 1, &vertex_shader, nullptr);
     glCompileShader(vs);
+
+    tmp = read_shader("fs.glsl");
+    const char *fragment_shader = tmp.c_str();
     GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fs, 1, &fragment_shader, nullptr);
     glCompileShader(fs);
@@ -165,7 +107,7 @@ int main(int argc, char **argv) {
         glfwSwapBuffers(pWd);
     }
 
-    cout << "user request to close this window!" << endl;
+    fmt::print("user request to close this window!\n");
 
     // destroy window
     glfwDestroyWindow(pWd);

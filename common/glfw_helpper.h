@@ -9,8 +9,11 @@
  * 
  */
 
+#include "glad/glad.h"
 #include "GLFW/glfw3.h"
 #include "fmt/core.h"
+
+#include <string>
 
 #ifdef _MSC_VER
     #ifdef COMMON_DLL_EXPORT
@@ -40,3 +43,11 @@ public: \
 COMMON_API void err_callback(int err, const char *msg);
 COMMON_API void key_callback(GLFWwindow *window, int key, int scan_code, int action, int mods);
 COMMON_API void resize_callback(GLFWwindow *pWd, int w, int h);
+
+/**
+ * @brief read shader file, return shader source in std::string
+ * 
+ * @param shader_file_path  file path
+ * @return read_shader      shader source
+ */
+COMMON_API std::string read_shader(std::string && shader_file_path);

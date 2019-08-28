@@ -11,6 +11,9 @@
 
 #include "common/glfw_helpper.h"
 
+#include <fstream>
+#include <sstream>
+
 void err_callback(int err, const char *msg) {
     fmt::print("error:{}[{}]\n", err, msg);
 }
@@ -30,4 +33,16 @@ void resize_callback(GLFWwindow *pWd, int w, int h) {
     glfwGetFramebufferSize(pWd, &w_old, &h_old);
     fmt::print("resize from{}x{} to {}x{}\n", w_old, h_old, w, h);
     glViewport(0, 0, w, h);
+}
+
+std::string read_shader(std::string && shader_file_path) {
+    std::ifstream shader_reader;
+    std::stringstream buff;
+    shader_reader.open(shader_file_path);
+    if(!shader_reader.is_open()){
+        throw::std::exception("file not exist");
+    }
+    buff << shader_reader.rdbuf();
+
+    return buff.str();
 }

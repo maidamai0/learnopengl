@@ -7,7 +7,7 @@ add_compile_definitions(COMMON_DLL_EXPORT)
 
 # add add library
 add_library(common SHARED ${src})
-target_link_libraries(common opengl32)
+target_link_libraries(common opengl32 glad)
 
 file(GLOB test_src
     "*cxx")

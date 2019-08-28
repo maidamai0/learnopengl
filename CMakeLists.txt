@@ -37,7 +37,7 @@ add_subdirectory(common)
 # compile executables
 link_libraries(glad)
 add_subdirectory(hello_opengl)
-add_subdirectory(hello_opengl_with_glew)
+add_subdirectory(vao_and_shader)
 add_subdirectory(hello_triangle)
 add_subdirectory(hello_rectangle)
 add_subdirectory(get_started_with_glfw)

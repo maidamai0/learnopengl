@@ -1,6 +1,12 @@
 {
     "files.associations": {
         "type_traits": "cpp",
-        "functional": "cpp"
+        "functional": "cpp",
+        "iosfwd": "cpp",
+        "fstream": "cpp",
+        "ios": "cpp",
+        "sstream": "cpp",
+        "xlocbuf": "cpp",
+        "xstring": "cpp"
     }
 }
