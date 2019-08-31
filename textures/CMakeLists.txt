@@ -11,3 +11,4 @@ configure_file(textures_vs.glsl ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/textures_vs.gl
 
 # image
 configure_file(winnie_the_pooh.jpg ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/winnie_the_pooh.jpg COPYONLY)
+configure_file(xijinping.jpg ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/xijinping.jpg COPYONLY)

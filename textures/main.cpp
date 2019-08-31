@@ -91,7 +91,7 @@ int main(int argc, char **argv) {
         color_location, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(3 * sizeof(float)));
     glEnableVertexAttribArray(color_location);
 
-    // texture
+    // texture cooridinatin
     const auto tex_location = glGetAttribLocation(shader.GetProgram(), "vTex");
     glVertexAttribPointer(
         tex_location, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(6 * sizeof(float)));
@@ -101,7 +101,7 @@ int main(int argc, char **argv) {
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
 
-    // texture
+    // texture parameter
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -109,6 +109,7 @@ int main(int argc, char **argv) {
 
     // load image
     int width = 0, height = 0, num_of_color_channels = 0;
+    stbi_set_flip_vertically_on_load(true);
     unsigned char *image_raw_data =
         stbi_load("winnie_the_pooh.jpg", &width, &height, &num_of_color_channels, 0);
 
@@ -122,6 +123,34 @@ int main(int argc, char **argv) {
     }
     stbi_image_free(image_raw_data);
 
+    GLuint texture1 = 0;
+    glGenTextures(1, &texture1);
+    glBindTexture(GL_TEXTURE_2D, texture1);
+
+    // texture parameter
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    // load image
+    stbi_set_flip_vertically_on_load(true);
+    unsigned char *image_raw_data1 =
+        stbi_load("xijinping.jpg", &width, &height, &num_of_color_channels, 0);
+
+    if (image_raw_data1) {
+        glTexImage2D(
+            GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image_raw_data1);
+        glGenerateMipmap(texture1);
+    } else {
+        fmt::print(stderr, "load image failed\n");
+        return -1;
+    }
+    stbi_image_free(image_raw_data1);
+
+    glUniform1i(glGetUniformLocation(shader.GetProgram(), "outTexture"), 0);
+    glUniform1i(glGetUniformLocation(shader.GetProgram(), "outTexture1"), 1);
+
     // clear color
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
@@ -134,7 +163,11 @@ int main(int argc, char **argv) {
         glBindVertexArray(vao);
 
         // draw
+        glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, texture1);
+
         glBindVertexArray(vao);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
