@@ -25,7 +25,8 @@ include_directories(./
                     3rdparty/glad/include
                     3rdparty/glfw3/include
                     3rdparty/fmt/include
-                    3rdparty/linmath/include)
+                    3rdparty/linmath/include
+                    3rdparty/stb/include)
 
 # compile 3rdparty libs
 add_subdirectory(3rdparty)
@@ -35,6 +36,9 @@ link_libraries(fmt glfw glad)
 
 # glfw required this macro for DLL version
 add_compile_definitions(GLFW_DLL)
+
+# std_image implementation switch
+add_compile_definitions(STB_IMAGE_IMPLEMENTATION)
 
 # compile common libs
 add_subdirectory(common)
@@ -46,3 +50,4 @@ add_subdirectory(hello_triangle)
 add_subdirectory(hello_rectangle)
 add_subdirectory(get_started_with_glfw)
 add_subdirectory(shaders)
+add_subdirectory(textures)
