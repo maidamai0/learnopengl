@@ -6,4 +6,3 @@ file(GLOB src
 
 # add excutable
 add_executable(get_started_with_glfw ${src})
-target_link_libraries(get_started_with_glfw common)

@@ -1,10 +1,10 @@
 /**
  * @file main.cpp
  * @author tonghao.yuan (tonghao.yuan@csdental.com)
- * @brief 
+ * @brief
  * @version 0.1
  * @date 2019-08-27
- * 
+ *
  */
 
 #include "common/glfw_helpper.h"
@@ -33,34 +33,6 @@ static const float vertices[] =
     0.0f, 0.5f, 0.0f,
 };
 // clang-format on
-
-bool check_compile(const GLuint shader, const GLchar *const shader_source) {
-    GLint success = 0;
-    GLchar msg[512] = {0};
-
-    glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-    if (success != GL_TRUE) {
-        glGetShaderInfoLog(shader, sizeof(msg), nullptr, msg);
-        fmt::print(stderr, "compile shader failed:{}\nsource:{}\n", msg, shader_source);
-        return false;
-    }
-
-    return true;
-}
-
-bool check_link(const GLuint link) {
-    GLint success = 0;
-    GLchar msg[512] = {0};
-
-    glGetProgramiv(link, GL_LINK_STATUS, &success);
-    if (success != GL_TRUE) {
-        glGetShaderInfoLog(link, sizeof(msg), nullptr, msg);
-        fmt::print("compile shader failed:{}\n", msg);
-        return false;
-    }
-
-    return true;
-}
 
 int main(int argc, char **argv) {
     (void)argc;
@@ -91,7 +63,7 @@ int main(int argc, char **argv) {
     glfwMakeContextCurrent(pWd);
 
     // initialize gl
-    if(!gladLoadGL()){
+    if (!gladLoadGL()) {
         fmt::print("Load OpenGL failed!\n");
         return -1;
     }
@@ -164,7 +136,6 @@ int main(int argc, char **argv) {
 
     // running until exit
     while (!glfwWindowShouldClose(pWd)) {
-
         // clear color
         glClearColor(0.5f, 0.4f, 0.5f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);

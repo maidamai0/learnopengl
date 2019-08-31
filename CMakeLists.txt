@@ -30,12 +30,16 @@ include_directories(./
 # compile 3rdparty libs
 add_subdirectory(3rdparty)
 
+# add 3rdparty lib
+link_libraries(fmt glfw glad)
+
+# glfw required this macro for DLL version
+add_compile_definitions(GLFW_DLL)
+
 # compile common libs
-link_libraries(fmt glfw)
 add_subdirectory(common)
 
 # compile executables
-link_libraries(glad)
 add_subdirectory(hello_opengl)
 add_subdirectory(vao_and_shader)
 add_subdirectory(hello_triangle)

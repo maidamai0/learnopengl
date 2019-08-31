@@ -4,52 +4,44 @@
  * @brief seems an old interface, only works for <= OpenGL3.2, and can not work with CORE_PROFILE
  * @version 0.1
  * @date 2019-08-27
- * 
+ *
  */
 
-#include "glad/glad.h"
-#include "GLFW/glfw3.h"
-#include "fmt/core.h"
 #include "linmath/linmath.h"
 
-#include "common/glfw_helpper.h"
 #include "common/define.h"
+#include "common/glfw_helpper.h"
 
 #include <functional>
 
 // vertex
-static const struct
-{
+static const struct {
     float x, y;
     float r, g, b;
-} vertices[3] =
-{
-    { -0.6f, -0.4f, 1.f, 0.f, 0.f },
-    {  0.6f, -0.4f, 0.f, 1.f, 0.f },
-    {  0.f,  0.6f, 0.f, 0.f, 1.f }
-};
+} vertices[3] = {
+    {-0.6f, -0.4f, 1.f, 0.f, 0.f}, {0.6f, -0.4f, 0.f, 1.f, 0.f}, {0.f, 0.6f, 0.f, 0.f, 1.f}};
 
 // vertex shader
-static const char* vertex_shader_text =
-"#version 110\n"
-"uniform mat4 MVP;\n"
-"attribute vec3 vCol;\n"
-"attribute vec2 vPos;\n"
-"varying vec3 color;\n"
-"void main()\n"
-"{\n"
-"    gl_Position = MVP * vec4(vPos, 0.0, 1.0);\n"
-"    color = vCol;\n"
-"}\n";
+static const char *vertex_shader_text =
+    "#version 110\n"
+    "uniform mat4 MVP;\n"
+    "attribute vec3 vCol;\n"
+    "attribute vec2 vPos;\n"
+    "varying vec3 color;\n"
+    "void main()\n"
+    "{\n"
+    "    gl_Position = MVP * vec4(vPos, 0.0, 1.0);\n"
+    "    color = vCol;\n"
+    "}\n";
 
 // fragment shader
-static const char* fragment_shader_text =
-"#version 110\n"
-"varying vec3 color;\n"
-"void main()\n"
-"{\n"
-"    gl_FragColor = vec4(color, 1.0);\n"
-"}\n";
+static const char *fragment_shader_text =
+    "#version 110\n"
+    "varying vec3 color;\n"
+    "void main()\n"
+    "{\n"
+    "    gl_FragColor = vec4(color, 1.0);\n"
+    "}\n";
 
 /**
  * @brief main function
@@ -62,7 +54,9 @@ int main(int argc, char **argv) {
     UNUSED(argc);
     UNUSED(argv);
 
-    GLFW_GUARD;
+    if (!glfwInit()) {
+        return -1;
+    }
 
     // set error callback
     glfwSetErrorCallback(err_callback);
@@ -87,7 +81,7 @@ int main(int argc, char **argv) {
     glfwMakeContextCurrent(pWd);
 
     // initialize gl
-    if(!gladLoadGL()) {
+    if (!gladLoadGL()) {
         fmt::print("Load OpenGL failed!\n");
         exit(-1);
     }
@@ -115,7 +109,7 @@ int main(int argc, char **argv) {
     glCompileShader(fragment_shader);
 
     GLuint program = glCreateProgram();
-    glAttachShader(program,vertex_shader);
+    glAttachShader(program, vertex_shader);
     glAttachShader(program, fragment_shader);
     glLinkProgram(program);
 
@@ -124,14 +118,14 @@ int main(int argc, char **argv) {
     GLuint vcol_location = glGetAttribLocation(program, "vCol");
 
     glEnableVertexAttribArray(vpos_location);
-    glVertexAttribPointer(vpos_location, 2, GL_FLOAT, GL_FALSE, sizeof(vertices[0]), (void*)(0));
+    glVertexAttribPointer(vpos_location, 2, GL_FLOAT, GL_FALSE, sizeof(vertices[0]), (void *)(0));
 
     glEnableVertexAttribArray(vcol_location);
-    glVertexAttribPointer(vcol_location, 3, GL_FLOAT, GL_FALSE, sizeof(vertices[0]), (void*)(sizeof(float)*2));
+    glVertexAttribPointer(
+        vcol_location, 3, GL_FLOAT, GL_FALSE, sizeof(vertices[0]), (void *)(sizeof(float) * 2));
 
     // running until exit
     while (!glfwWindowShouldClose(pWd)) {
-
         // rendering
         glClear(GL_COLOR_BUFFER_BIT);
 
@@ -141,7 +135,7 @@ int main(int argc, char **argv) {
 
         int height = 0, width = 0;
         glfwGetFramebufferSize(pWd, &width, &height);
-        float ratio = width/ static_cast<float>(height);
+        float ratio = width / static_cast<float>(height);
 
         mat4x4 p;
         mat4x4_ortho(p, -ratio, ratio, -1.0f, 1.0f, 1.0f, -1.0f);
@@ -150,7 +144,7 @@ int main(int argc, char **argv) {
         mat4x4_mul(mvp, p, m);
 
         glUseProgram(program);
-        glUniformMatrix4fv(mvp_location, 1, GL_FALSE, (const GLfloat*)mvp);
+        glUniformMatrix4fv(mvp_location, 1, GL_FALSE, (const GLfloat *)mvp);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
         // event loop
