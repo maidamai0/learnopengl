@@ -3,7 +3,7 @@
 /**
  * @file shader.h
  * @author tonghao.yuan (yuantonghao@gmail.com)
- * @brief
+ * @brief wrapper of shader program
  * @version 0.1
  * @date 2019-08-31
  *
