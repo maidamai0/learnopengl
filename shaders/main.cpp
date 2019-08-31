@@ -8,6 +8,7 @@
  */
 
 #include "common/glfw_helpper.h"
+#include "common/shader.h"
 
 int main(int argc, char **argv) {
     (void)argc;
@@ -25,6 +26,9 @@ int main(int argc, char **argv) {
 
     // set key callback
     glfwSetKeyCallback(pWd, key_callback);
+
+    // resize callback
+    glfwSetFramebufferSizeCallback(pWd, resize_callback);
 
     // make opengl context
     glfwMakeContextCurrent(pWd);
@@ -64,42 +68,15 @@ int main(int argc, char **argv) {
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    // shader
-    std::string tmp{read_shader("shaders_vs.glsl")};
-    const char *vertex_shader = tmp.c_str();
-
-    GLuint vs = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vs, 1, &vertex_shader, nullptr);
-    glCompileShader(vs);
-    if (!check_compile(vs, vertex_shader)) {
-        return -1;
-    }
-
-    tmp = read_shader("shaders_fs.glsl");
-    const char *fragment_shader = tmp.c_str();
-    GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fs, 1, &fragment_shader, nullptr);
-    glCompileShader(fs);
-    if (!check_compile(fs, fragment_shader)) {
-        return -1;
-    }
-
-    // gpu shade program
-    GLuint shade_proram = glCreateProgram();
-    glAttachShader(shade_proram, vs);
-    glAttachShader(shade_proram, fs);
-    glLinkProgram(shade_proram);
-    if (!check_link(shade_proram)) {
-        return -1;
-    }
+    Shader shader("shaders_vs.glsl", "shaders_fs.glsl");
 
     // position
-    const auto pos_location = glGetAttribLocation(shade_proram, "vPos");
+    const auto pos_location = glGetAttribLocation(shader.GetProgram(), "vPos");
     glVertexAttribPointer(pos_location, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), nullptr);
     glEnableVertexAttribArray(pos_location);
 
     // color
-    const auto col_location = glGetAttribLocation(shade_proram, "vCol");
+    const auto col_location = glGetAttribLocation(shader.GetProgram(), "vCol");
     glVertexAttribPointer(
         col_location, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float)));
     glEnableVertexAttribArray(col_location);
@@ -113,7 +90,6 @@ int main(int argc, char **argv) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // setup environment
-        glUseProgram(shade_proram);
         glBindVertexArray(vao);
 
         // draw
