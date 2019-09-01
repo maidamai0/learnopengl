@@ -40,7 +40,7 @@ class Texture {
                      image_reader.GetWidth(),
                      image_reader.GetHeight(),
                      0,
-                     GL_RGB,
+                     image_reader.GetImageType(),
                      GL_UNSIGNED_BYTE,
                      image_reader.GetRawData());
 

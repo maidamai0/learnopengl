@@ -92,7 +92,7 @@ int main(int argc, char **argv) {
 
     // texture
     Texture texture("winnie_the_pooh.jpg");
-    Texture texture1("xijinping.jpg");
+    Texture texture1("awesomeface.png");
 
     glUniform1i(glGetUniformLocation(shader.GetProgram(), "outTexture"), 0);
     glUniform1i(glGetUniformLocation(shader.GetProgram(), "outTexture1"), 1);
