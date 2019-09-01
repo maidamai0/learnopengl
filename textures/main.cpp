@@ -2,8 +2,20 @@
 #include "common/shader.h"
 #include "common/texture.h"
 
+namespace {
+float g_texture_ratio = 0.5;
+}
+
 // triangle point
 // clang-format off
+// float vertices[] = {
+//     // positions          // colors           // texture coords
+//      0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   0.55f, 0.55f,   // top right
+//      0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   0.55f, 0.45f,   // bottom right
+//     -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.45f, 0.45f,   // bottom left
+//     -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.45f, 0.55f    // top left 
+// };
+
 float vertices[] = {
     // positions          // colors           // texture coords
      0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
@@ -18,6 +30,29 @@ unsigned int indices[] = {
 };
 
 // clang-format on
+
+void key_callback_ratio(GLFWwindow *window, int key, int scan_code, int action, int mods) {
+    (void)scan_code;
+    (void)mods;
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
+        fmt::print("Escape pressed\n");
+        glfwSetWindowShouldClose(window, GLFW_TRUE);  // not work
+    } else if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
+        fmt::print("GLFW_KEY_UP pressed\n");
+        g_texture_ratio += 0.1f;
+
+        if (g_texture_ratio > 1.0f) {
+            g_texture_ratio = 1.0f;
+        }
+    } else if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
+        fmt::print("GLFW_KEY_DOWN pressed\n");
+        g_texture_ratio -= 0.1f;
+
+        if (g_texture_ratio < 0.0f) {
+            g_texture_ratio = 0.0f;
+        }
+    }
+}
 
 int main(int argc, char **argv) {
     (void)argc;
@@ -35,7 +70,7 @@ int main(int argc, char **argv) {
     }
 
     // set key callback
-    glfwSetKeyCallback(pWd, key_callback);
+    glfwSetKeyCallback(pWd, key_callback_ratio);
 
     // resize callback
     glfwSetFramebufferSizeCallback(pWd, resize_callback);
@@ -113,6 +148,9 @@ int main(int argc, char **argv) {
         glBindTexture(GL_TEXTURE_2D, texture.GetTextureID());
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, texture1.GetTextureID());
+
+        // set ratio
+        glUniform1f(glGetUniformLocation(shader.GetProgram(), "ratio"), g_texture_ratio);
 
         glBindVertexArray(vao);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

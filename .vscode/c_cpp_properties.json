@@ -8,7 +8,8 @@
                 "${workspaceFolder}/3rdparty/glad/include/",
                 "${workspaceFolder}/3rdparty/fmt/include/",
                 "${workspaceFolder}/3rdparty/linmath/include/",
-                "${workspaceFolder}/3rdparty/stb/include/"
+                "${workspaceFolder}/3rdparty/stb/include/",
+                "${workspaceFolder}/3rdparty/cxxopts/include/"
             ],
             "defines": [
                 "_DEBUG",

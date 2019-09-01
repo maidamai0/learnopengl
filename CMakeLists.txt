@@ -26,7 +26,8 @@ include_directories(./
                     3rdparty/glfw3/include
                     3rdparty/fmt/include
                     3rdparty/linmath/include
-                    3rdparty/stb/include)
+                    3rdparty/stb/include
+                    3rdparty/cxxopts/include)
 
 # compile 3rdparty libs
 add_subdirectory(3rdparty)
