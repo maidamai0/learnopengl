@@ -1,9 +1,6 @@
 #include "common/glfw_helpper.h"
 #include "common/shader.h"
-
-#include "stb/stb_image.h"
-
-#include <filesystem>
+#include "common/texture.h"
 
 // triangle point
 // clang-format off
@@ -57,10 +54,6 @@ int main(int argc, char **argv) {
     fmt::print("rederer is {}\n", glGetString(GL_RENDERER));
     fmt::print("version is {}\n", glGetString(GL_VERSION));
 
-    // config
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LESS);
-
     // vao
     GLuint vao = 0;
     glGenVertexArrays(1, &vao);
@@ -97,56 +90,9 @@ int main(int argc, char **argv) {
         tex_location, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(6 * sizeof(float)));
     glEnableVertexAttribArray(tex_location);
 
-    GLuint texture = 0;
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
-
-    // texture parameter
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    // load image
-    int width = 0, height = 0, num_of_color_channels = 0;
-    stbi_set_flip_vertically_on_load(true);
-    unsigned char *image_raw_data =
-        stbi_load("winnie_the_pooh.jpg", &width, &height, &num_of_color_channels, 0);
-
-    if (image_raw_data) {
-        glTexImage2D(
-            GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image_raw_data);
-        glGenerateMipmap(texture);
-    } else {
-        fmt::print(stderr, "load image failed\n");
-        return -1;
-    }
-    stbi_image_free(image_raw_data);
-
-    GLuint texture1 = 0;
-    glGenTextures(1, &texture1);
-    glBindTexture(GL_TEXTURE_2D, texture1);
-
-    // texture parameter
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    // load image
-    stbi_set_flip_vertically_on_load(true);
-    unsigned char *image_raw_data1 =
-        stbi_load("xijinping.jpg", &width, &height, &num_of_color_channels, 0);
-
-    if (image_raw_data1) {
-        glTexImage2D(
-            GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image_raw_data1);
-        glGenerateMipmap(texture1);
-    } else {
-        fmt::print(stderr, "load image failed\n");
-        return -1;
-    }
-    stbi_image_free(image_raw_data1);
+    // texture
+    Texture texture("winnie_the_pooh.jpg");
+    Texture texture1("xijinping.jpg");
 
     glUniform1i(glGetUniformLocation(shader.GetProgram(), "outTexture"), 0);
     glUniform1i(glGetUniformLocation(shader.GetProgram(), "outTexture1"), 1);
@@ -164,9 +110,9 @@ int main(int argc, char **argv) {
 
         // draw
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texture);
+        glBindTexture(GL_TEXTURE_2D, texture.GetTextureID());
         glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, texture1);
+        glBindTexture(GL_TEXTURE_2D, texture1.GetTextureID());
 
         glBindVertexArray(vao);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
