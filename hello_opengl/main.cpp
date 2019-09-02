@@ -1,15 +1,11 @@
 /**
  * @file main.cpp
  * @author tonghao.yuan
- * @brief 
+ * @brief
  * @version 0.1
  * @date 2019-08-28
- * 
+ *
  */
-
-#include "glad/glad.h"
-#include <GLFW/glfw3.h>
-#include "fmt/core.h"
 
 #include "common/glfw_helpper.h"
 
@@ -38,8 +34,8 @@ int main(int argc, char **argv) {
     glfwMakeContextCurrent(pWd);
 
     // initialize gl
-    if(!gladLoadGL()){
-        fmt::print( "Load OpenGL failed!\n");
+    if (!gladLoadGL()) {
+        fmt::print("Load OpenGL failed!\n");
         return -1;
     }
     fmt::print("OpenGL version:{}.{}\n", GLVersion.major, GLVersion.minor);
@@ -56,7 +52,6 @@ int main(int argc, char **argv) {
 
     // running until exit
     while (!glfwWindowShouldClose(pWd)) {
-
         // rendering
         glClear(GL_COLOR_BUFFER_BIT);
 

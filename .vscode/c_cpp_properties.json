@@ -7,16 +7,19 @@
                 "${workspaceFolder}/3rdparty/glfw3/include/",
                 "${workspaceFolder}/3rdparty/glad/include/",
                 "${workspaceFolder}/3rdparty/fmt/include/",
-                "${workspaceFolder}/3rdparty/linmath/include/"
+                "${workspaceFolder}/3rdparty/linmath/include/",
+                "${workspaceFolder}/3rdparty/stb/include/",
+                "${workspaceFolder}/3rdparty/cxxopts/include/"
             ],
             "defines": [
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE",
-                "COMMON_DLL_EXPORT"
+                "COMMON_DLL_EXPORT",
+                "STB_IMAGE_IMPLEMENTATION"
             ],
             "windowsSdkVersion": "10.0.18362.0",
-            "compilerPath": "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.22.27905/bin/Hostx64/x64/cl.exe",
+            "compilerPath": "${MSVC_RROT}/bin/Hostx64/x64/cl.exe",
             "cStandard": "c11",
             "cppStandard": "c++17",
             "intelliSenseMode": "msvc-x64",

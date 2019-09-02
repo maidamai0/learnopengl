@@ -7,6 +7,7 @@
         "ios": "cpp",
         "sstream": "cpp",
         "xlocbuf": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "filesystem": "cpp"
     }
 }

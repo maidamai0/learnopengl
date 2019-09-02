@@ -8,6 +8,7 @@
  */
 
 #include "common/glfw_helpper.h"
+#include "common/shader.h"
 
 int main(int argc, char **argv) {
     (void)argc;
@@ -25,6 +26,9 @@ int main(int argc, char **argv) {
 
     // set key callback
     glfwSetKeyCallback(pWd, key_callback);
+
+    // resize callback
+    glfwSetFramebufferSizeCallback(pWd, resize_callback);
 
     // make opengl context
     glfwMakeContextCurrent(pWd);
@@ -45,44 +49,40 @@ int main(int argc, char **argv) {
     glDepthFunc(GL_LESS);
 
     // triangle point
-    float points[] = {0.0f, 0.5f, 0.0f, 0.5f, -0.5f, 0.0f, -0.5f, -0.5, 0.0f};
-
-    // copy data to graphical card with vbo
-    GLuint vbo = 0;
-    glGenBuffers(1, &vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(float), points, GL_STATIC_DRAW);
+    // clang-format off
+    float vertices[] = {
+        -0.5f, -0.5f, 0.0f, 1.0f,0.0f,0.0f,
+        0.5f, -0.5f, 0.0f,  0.0f,1.0f,0.0f,
+        0.0f, 0.5, 0.0f,    0.0f,0.0f,1.0f
+    };
+    // clang-format on
 
     // vao
     GLuint vao = 0;
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
-    glEnableVertexAttribArray(0);
+
+    // copy data to graphical card with vbo
+    GLuint vbo = 0;
+    glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    // shader
-    std::string tmp{read_shader("vs.glsl")};
-    const char *vertex_shader = tmp.c_str();
+    Shader shader("shaders_vs.glsl", "shaders_fs.glsl");
 
-    GLuint vs = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vs, 1, &vertex_shader, nullptr);
-    glCompileShader(vs);
+    // position
+    const auto pos_location = glGetAttribLocation(shader.GetProgram(), "vPos");
+    glVertexAttribPointer(pos_location, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), nullptr);
+    glEnableVertexAttribArray(pos_location);
 
-    tmp = read_shader("fs.glsl");
-    const char *fragment_shader = tmp.c_str();
-    GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fs, 1, &fragment_shader, nullptr);
-    glCompileShader(fs);
-
-    // gpu shade program
-    GLuint shade_proram = glCreateProgram();
-    glAttachShader(shade_proram, vs);
-    glAttachShader(shade_proram, fs);
-    glLinkProgram(shade_proram);
+    // color
+    const auto col_location = glGetAttribLocation(shader.GetProgram(), "vCol");
+    glVertexAttribPointer(
+        col_location, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float)));
+    glEnableVertexAttribArray(col_location);
 
     // clear color
-    glClearColor(0.6f, 0.6f, 0.8f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
     // running until exit
     while (!glfwWindowShouldClose(pWd)) {
@@ -90,7 +90,6 @@ int main(int argc, char **argv) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // setup environment
-        glUseProgram(shade_proram);
         glBindVertexArray(vao);
 
         // draw
