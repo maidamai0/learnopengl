@@ -152,7 +152,7 @@ int main(int argc, char **argv) {
     glfwSwapInterval(1);
 
     // set draw type
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     // running until exit
     while (!glfwWindowShouldClose(pWd)) {
@@ -164,7 +164,7 @@ int main(int argc, char **argv) {
         // draw triangle
         glUseProgram(shader_program);
         glBindVertexArray(vao);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, 5, GL_UNSIGNED_INT, 0);
 
         // event loop
         glfwPollEvents();

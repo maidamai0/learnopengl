@@ -32,7 +32,7 @@ void resize_callback(GLFWwindow *pWd, int w, int h) {
     int w_old = 0;
     glfwGetFramebufferSize(pWd, &w_old, &h_old);
     fmt::print("resize from{}x{} to {}x{}\n", w_old, h_old, w, h);
-    glViewport(0, 0, w, h);
+    glViewport(0, 0, w, h); // what's the purpose?
 }
 
 std::string read_shader(std::string && shader_file_path) {

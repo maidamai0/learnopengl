@@ -10,13 +10,13 @@
 #include "common/glfw_helpper.h"
 
 /*              |
-                *0.5
-            *   *   *
-   0.5   *      *       *
-----*  *  *  *  *  *  *  *--------
-        *       *       *   0.5
-            *   *   *
-                * 0.5
+                x0.5
+            *   x   x
+   -0.5   *     x       x
+----x  x  x  x  x  x  x  x--------
+        x       x       *   0.5
+            x   x   *
+                x -0.5
                 |
  */
 
@@ -30,7 +30,7 @@ static const float vertices[] =
 
     -0.5f, 0.0f, 0.0f,
     0.0f, 0.0f, 0.0f,
-    0.0f, 0.5f, 0.0f,
+    0.0f, -0.5f, 0.0f,
 };
 // clang-format on
 
@@ -166,7 +166,7 @@ int main(int argc, char **argv) {
     while (!glfwWindowShouldClose(pWd)) {
 
         // clear color
-        glClearColor(0.5f, 0.4f, 0.5f, 1.0f);
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
         // draw triangle
