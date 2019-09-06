@@ -82,7 +82,7 @@ std::string read_shader(std::string &&shader_file_path) {
     std::stringstream buff;
     shader_reader.open(shader_file_path);
     if (!shader_reader.is_open()) {
-        throw ::std::exception("file not exist");
+        throw ::std::runtime_error("file not exist");
     }
     buff << shader_reader.rdbuf();
 

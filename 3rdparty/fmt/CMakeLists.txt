@@ -1,4 +1,5 @@
 # Joins arguments and places the results in ${result_var}.
+message("FMT fonfigure...")
 function(join result_var)
   set(result )
   foreach (arg ${ARGN})
@@ -116,10 +117,6 @@ if (FMT_PEDANTIC)
 endif ()
 
 target_compile_features(fmt INTERFACE ${FMT_REQUIRED_FEATURES})
-
-target_include_directories(fmt PUBLIC
-  $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
 
 set_target_properties(fmt PROPERTIES
   VERSION ${FMT_VERSION} SOVERSION ${CPACK_PACKAGE_VERSION_MAJOR}

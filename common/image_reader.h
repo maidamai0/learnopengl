@@ -17,8 +17,15 @@
 #include <string>
 
 #include <experimental/filesystem>  // C++-standard header file name
+
+#ifdef __WIN32
 #include <filesystem>               // Microsoft-specific implementation header file name
 namespace stdfs = std::experimental::filesystem::v1;
+#endif
+
+#ifdef __linux__
+namespace stdfs = std::experimental::filesystem;
+#endif
 
 class ImageReader {
    public:
@@ -28,7 +35,7 @@ class ImageReader {
             stbi_load(image_path.c_str(), &widht_, &height_, &num_of_color_channels_, 0);
         if (!raw_image_data_) {
             fmt::print(stderr, "load image:{} failed:{}\n", image_path, stbi_failure_reason());
-            throw std::exception("load image failed");
+            throw std::runtime_error("load image failed");
         }
 
         stdfs::path path_info(image_path);

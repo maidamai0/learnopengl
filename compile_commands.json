@@ -1,0 +1,137 @@
+[
+{
+  "directory": "/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I/home/thy/Documents/learnopengl/. -I/home/thy/Documents/learnopengl/3rdparty/glad/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/include -I/home/thy/Documents/learnopengl/3rdparty/fmt/include -I/home/thy/Documents/learnopengl/3rdparty/linmath/include -I/home/thy/Documents/learnopengl/3rdparty/stb/include -I/home/thy/Documents/learnopengl/3rdparty/cxxopts/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/src -I/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src  -fPIC   -Wall -Wdeclaration-after-statement -o CMakeFiles/glfw.dir/context.c.o   -c /home/thy/Documents/learnopengl/3rdparty/glfw3/src/context.c",
+  "file": "/home/thy/Documents/learnopengl/3rdparty/glfw3/src/context.c"
+},
+{
+  "directory": "/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I/home/thy/Documents/learnopengl/. -I/home/thy/Documents/learnopengl/3rdparty/glad/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/include -I/home/thy/Documents/learnopengl/3rdparty/fmt/include -I/home/thy/Documents/learnopengl/3rdparty/linmath/include -I/home/thy/Documents/learnopengl/3rdparty/stb/include -I/home/thy/Documents/learnopengl/3rdparty/cxxopts/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/src -I/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src  -fPIC   -Wall -Wdeclaration-after-statement -o CMakeFiles/glfw.dir/init.c.o   -c /home/thy/Documents/learnopengl/3rdparty/glfw3/src/init.c",
+  "file": "/home/thy/Documents/learnopengl/3rdparty/glfw3/src/init.c"
+},
+{
+  "directory": "/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I/home/thy/Documents/learnopengl/. -I/home/thy/Documents/learnopengl/3rdparty/glad/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/include -I/home/thy/Documents/learnopengl/3rdparty/fmt/include -I/home/thy/Documents/learnopengl/3rdparty/linmath/include -I/home/thy/Documents/learnopengl/3rdparty/stb/include -I/home/thy/Documents/learnopengl/3rdparty/cxxopts/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/src -I/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src  -fPIC   -Wall -Wdeclaration-after-statement -o CMakeFiles/glfw.dir/input.c.o   -c /home/thy/Documents/learnopengl/3rdparty/glfw3/src/input.c",
+  "file": "/home/thy/Documents/learnopengl/3rdparty/glfw3/src/input.c"
+},
+{
+  "directory": "/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I/home/thy/Documents/learnopengl/. -I/home/thy/Documents/learnopengl/3rdparty/glad/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/include -I/home/thy/Documents/learnopengl/3rdparty/fmt/include -I/home/thy/Documents/learnopengl/3rdparty/linmath/include -I/home/thy/Documents/learnopengl/3rdparty/stb/include -I/home/thy/Documents/learnopengl/3rdparty/cxxopts/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/src -I/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src  -fPIC   -Wall -Wdeclaration-after-statement -o CMakeFiles/glfw.dir/monitor.c.o   -c /home/thy/Documents/learnopengl/3rdparty/glfw3/src/monitor.c",
+  "file": "/home/thy/Documents/learnopengl/3rdparty/glfw3/src/monitor.c"
+},
+{
+  "directory": "/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I/home/thy/Documents/learnopengl/. -I/home/thy/Documents/learnopengl/3rdparty/glad/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/include -I/home/thy/Documents/learnopengl/3rdparty/fmt/include -I/home/thy/Documents/learnopengl/3rdparty/linmath/include -I/home/thy/Documents/learnopengl/3rdparty/stb/include -I/home/thy/Documents/learnopengl/3rdparty/cxxopts/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/src -I/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src  -fPIC   -Wall -Wdeclaration-after-statement -o CMakeFiles/glfw.dir/vulkan.c.o   -c /home/thy/Documents/learnopengl/3rdparty/glfw3/src/vulkan.c",
+  "file": "/home/thy/Documents/learnopengl/3rdparty/glfw3/src/vulkan.c"
+},
+{
+  "directory": "/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I/home/thy/Documents/learnopengl/. -I/home/thy/Documents/learnopengl/3rdparty/glad/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/include -I/home/thy/Documents/learnopengl/3rdparty/fmt/include -I/home/thy/Documents/learnopengl/3rdparty/linmath/include -I/home/thy/Documents/learnopengl/3rdparty/stb/include -I/home/thy/Documents/learnopengl/3rdparty/cxxopts/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/src -I/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src  -fPIC   -Wall -Wdeclaration-after-statement -o CMakeFiles/glfw.dir/window.c.o   -c /home/thy/Documents/learnopengl/3rdparty/glfw3/src/window.c",
+  "file": "/home/thy/Documents/learnopengl/3rdparty/glfw3/src/window.c"
+},
+{
+  "directory": "/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I/home/thy/Documents/learnopengl/. -I/home/thy/Documents/learnopengl/3rdparty/glad/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/include -I/home/thy/Documents/learnopengl/3rdparty/fmt/include -I/home/thy/Documents/learnopengl/3rdparty/linmath/include -I/home/thy/Documents/learnopengl/3rdparty/stb/include -I/home/thy/Documents/learnopengl/3rdparty/cxxopts/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/src -I/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src  -fPIC   -Wall -o CMakeFiles/glfw.dir/x11_init.c.o   -c /home/thy/Documents/learnopengl/3rdparty/glfw3/src/x11_init.c",
+  "file": "/home/thy/Documents/learnopengl/3rdparty/glfw3/src/x11_init.c"
+},
+{
+  "directory": "/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I/home/thy/Documents/learnopengl/. -I/home/thy/Documents/learnopengl/3rdparty/glad/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/include -I/home/thy/Documents/learnopengl/3rdparty/fmt/include -I/home/thy/Documents/learnopengl/3rdparty/linmath/include -I/home/thy/Documents/learnopengl/3rdparty/stb/include -I/home/thy/Documents/learnopengl/3rdparty/cxxopts/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/src -I/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src  -fPIC   -Wall -o CMakeFiles/glfw.dir/x11_monitor.c.o   -c /home/thy/Documents/learnopengl/3rdparty/glfw3/src/x11_monitor.c",
+  "file": "/home/thy/Documents/learnopengl/3rdparty/glfw3/src/x11_monitor.c"
+},
+{
+  "directory": "/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I/home/thy/Documents/learnopengl/. -I/home/thy/Documents/learnopengl/3rdparty/glad/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/include -I/home/thy/Documents/learnopengl/3rdparty/fmt/include -I/home/thy/Documents/learnopengl/3rdparty/linmath/include -I/home/thy/Documents/learnopengl/3rdparty/stb/include -I/home/thy/Documents/learnopengl/3rdparty/cxxopts/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/src -I/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src  -fPIC   -Wall -o CMakeFiles/glfw.dir/x11_window.c.o   -c /home/thy/Documents/learnopengl/3rdparty/glfw3/src/x11_window.c",
+  "file": "/home/thy/Documents/learnopengl/3rdparty/glfw3/src/x11_window.c"
+},
+{
+  "directory": "/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I/home/thy/Documents/learnopengl/. -I/home/thy/Documents/learnopengl/3rdparty/glad/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/include -I/home/thy/Documents/learnopengl/3rdparty/fmt/include -I/home/thy/Documents/learnopengl/3rdparty/linmath/include -I/home/thy/Documents/learnopengl/3rdparty/stb/include -I/home/thy/Documents/learnopengl/3rdparty/cxxopts/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/src -I/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src  -fPIC   -Wall -o CMakeFiles/glfw.dir/xkb_unicode.c.o   -c /home/thy/Documents/learnopengl/3rdparty/glfw3/src/xkb_unicode.c",
+  "file": "/home/thy/Documents/learnopengl/3rdparty/glfw3/src/xkb_unicode.c"
+},
+{
+  "directory": "/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I/home/thy/Documents/learnopengl/. -I/home/thy/Documents/learnopengl/3rdparty/glad/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/include -I/home/thy/Documents/learnopengl/3rdparty/fmt/include -I/home/thy/Documents/learnopengl/3rdparty/linmath/include -I/home/thy/Documents/learnopengl/3rdparty/stb/include -I/home/thy/Documents/learnopengl/3rdparty/cxxopts/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/src -I/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src  -fPIC   -Wall -o CMakeFiles/glfw.dir/posix_time.c.o   -c /home/thy/Documents/learnopengl/3rdparty/glfw3/src/posix_time.c",
+  "file": "/home/thy/Documents/learnopengl/3rdparty/glfw3/src/posix_time.c"
+},
+{
+  "directory": "/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I/home/thy/Documents/learnopengl/. -I/home/thy/Documents/learnopengl/3rdparty/glad/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/include -I/home/thy/Documents/learnopengl/3rdparty/fmt/include -I/home/thy/Documents/learnopengl/3rdparty/linmath/include -I/home/thy/Documents/learnopengl/3rdparty/stb/include -I/home/thy/Documents/learnopengl/3rdparty/cxxopts/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/src -I/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src  -fPIC   -Wall -o CMakeFiles/glfw.dir/posix_thread.c.o   -c /home/thy/Documents/learnopengl/3rdparty/glfw3/src/posix_thread.c",
+  "file": "/home/thy/Documents/learnopengl/3rdparty/glfw3/src/posix_thread.c"
+},
+{
+  "directory": "/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I/home/thy/Documents/learnopengl/. -I/home/thy/Documents/learnopengl/3rdparty/glad/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/include -I/home/thy/Documents/learnopengl/3rdparty/fmt/include -I/home/thy/Documents/learnopengl/3rdparty/linmath/include -I/home/thy/Documents/learnopengl/3rdparty/stb/include -I/home/thy/Documents/learnopengl/3rdparty/cxxopts/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/src -I/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src  -fPIC   -Wall -o CMakeFiles/glfw.dir/glx_context.c.o   -c /home/thy/Documents/learnopengl/3rdparty/glfw3/src/glx_context.c",
+  "file": "/home/thy/Documents/learnopengl/3rdparty/glfw3/src/glx_context.c"
+},
+{
+  "directory": "/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I/home/thy/Documents/learnopengl/. -I/home/thy/Documents/learnopengl/3rdparty/glad/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/include -I/home/thy/Documents/learnopengl/3rdparty/fmt/include -I/home/thy/Documents/learnopengl/3rdparty/linmath/include -I/home/thy/Documents/learnopengl/3rdparty/stb/include -I/home/thy/Documents/learnopengl/3rdparty/cxxopts/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/src -I/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src  -fPIC   -Wall -o CMakeFiles/glfw.dir/egl_context.c.o   -c /home/thy/Documents/learnopengl/3rdparty/glfw3/src/egl_context.c",
+  "file": "/home/thy/Documents/learnopengl/3rdparty/glfw3/src/egl_context.c"
+},
+{
+  "directory": "/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I/home/thy/Documents/learnopengl/. -I/home/thy/Documents/learnopengl/3rdparty/glad/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/include -I/home/thy/Documents/learnopengl/3rdparty/fmt/include -I/home/thy/Documents/learnopengl/3rdparty/linmath/include -I/home/thy/Documents/learnopengl/3rdparty/stb/include -I/home/thy/Documents/learnopengl/3rdparty/cxxopts/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/src -I/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src  -fPIC   -Wall -o CMakeFiles/glfw.dir/osmesa_context.c.o   -c /home/thy/Documents/learnopengl/3rdparty/glfw3/src/osmesa_context.c",
+  "file": "/home/thy/Documents/learnopengl/3rdparty/glfw3/src/osmesa_context.c"
+},
+{
+  "directory": "/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I/home/thy/Documents/learnopengl/. -I/home/thy/Documents/learnopengl/3rdparty/glad/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/include -I/home/thy/Documents/learnopengl/3rdparty/fmt/include -I/home/thy/Documents/learnopengl/3rdparty/linmath/include -I/home/thy/Documents/learnopengl/3rdparty/stb/include -I/home/thy/Documents/learnopengl/3rdparty/cxxopts/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/src -I/home/thy/Documents/learnopengl/build/3rdparty/glfw3/src  -fPIC   -Wall -o CMakeFiles/glfw.dir/linux_joystick.c.o   -c /home/thy/Documents/learnopengl/3rdparty/glfw3/src/linux_joystick.c",
+  "file": "/home/thy/Documents/learnopengl/3rdparty/glfw3/src/linux_joystick.c"
+},
+{
+  "directory": "/home/thy/Documents/learnopengl/build/3rdparty/glad",
+  "command": "/usr/bin/cc  -I/home/thy/Documents/learnopengl/. -I/home/thy/Documents/learnopengl/3rdparty/glad/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/include -I/home/thy/Documents/learnopengl/3rdparty/fmt/include -I/home/thy/Documents/learnopengl/3rdparty/linmath/include -I/home/thy/Documents/learnopengl/3rdparty/stb/include -I/home/thy/Documents/learnopengl/3rdparty/cxxopts/include    -o CMakeFiles/glad.dir/src/glad.c.o   -c /home/thy/Documents/learnopengl/3rdparty/glad/src/glad.c",
+  "file": "/home/thy/Documents/learnopengl/3rdparty/glad/src/glad.c"
+},
+{
+  "directory": "/home/thy/Documents/learnopengl/build/3rdparty/fmt",
+  "command": "/usr/bin/c++   -I/home/thy/Documents/learnopengl/. -I/home/thy/Documents/learnopengl/3rdparty/glad/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/include -I/home/thy/Documents/learnopengl/3rdparty/fmt/include -I/home/thy/Documents/learnopengl/3rdparty/linmath/include -I/home/thy/Documents/learnopengl/3rdparty/stb/include -I/home/thy/Documents/learnopengl/3rdparty/cxxopts/include    -Werror -pedantic-errors -Wall -Wextra -pedantic -Wold-style-cast -Wundef -Wredundant-decls -Wwrite-strings -Wpointer-arith -Wcast-qual -Wformat=2 -Wmissing-include-dirs -Wcast-align -Wnon-virtual-dtor -Wctor-dtor-privacy -Wdisabled-optimization -Winvalid-pch -Woverloaded-virtual -Wconversion -Wno-ctor-dtor-privacy -Wno-format-nonliteral -Wno-shadow -Wnoexcept -Wno-dangling-else -Wno-unused-local-typedefs -Wdouble-promotion -Wtrampolines -Wzero-as-null-pointer-constant -Wuseless-cast -Wvector-operation-performance -Wsized-deallocation -Wshift-overflow=2 -Wnull-dereference -Wduplicated-cond -std=gnu++1z -o CMakeFiles/fmt.dir/src/format.cc.o -c /home/thy/Documents/learnopengl/3rdparty/fmt/src/format.cc",
+  "file": "/home/thy/Documents/learnopengl/3rdparty/fmt/src/format.cc"
+},
+{
+  "directory": "/home/thy/Documents/learnopengl/build/3rdparty/fmt",
+  "command": "/usr/bin/c++   -I/home/thy/Documents/learnopengl/. -I/home/thy/Documents/learnopengl/3rdparty/glad/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/include -I/home/thy/Documents/learnopengl/3rdparty/fmt/include -I/home/thy/Documents/learnopengl/3rdparty/linmath/include -I/home/thy/Documents/learnopengl/3rdparty/stb/include -I/home/thy/Documents/learnopengl/3rdparty/cxxopts/include    -Werror -pedantic-errors -Wall -Wextra -pedantic -Wold-style-cast -Wundef -Wredundant-decls -Wwrite-strings -Wpointer-arith -Wcast-qual -Wformat=2 -Wmissing-include-dirs -Wcast-align -Wnon-virtual-dtor -Wctor-dtor-privacy -Wdisabled-optimization -Winvalid-pch -Woverloaded-virtual -Wconversion -Wno-ctor-dtor-privacy -Wno-format-nonliteral -Wno-shadow -Wnoexcept -Wno-dangling-else -Wno-unused-local-typedefs -Wdouble-promotion -Wtrampolines -Wzero-as-null-pointer-constant -Wuseless-cast -Wvector-operation-performance -Wsized-deallocation -Wshift-overflow=2 -Wnull-dereference -Wduplicated-cond -std=gnu++1z -o CMakeFiles/fmt.dir/src/posix.cc.o -c /home/thy/Documents/learnopengl/3rdparty/fmt/src/posix.cc",
+  "file": "/home/thy/Documents/learnopengl/3rdparty/fmt/src/posix.cc"
+},
+{
+  "directory": "/home/thy/Documents/learnopengl/build/common",
+  "command": "/usr/bin/c++   -I/home/thy/Documents/learnopengl/. -I/home/thy/Documents/learnopengl/3rdparty/glad/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/include -I/home/thy/Documents/learnopengl/3rdparty/fmt/include -I/home/thy/Documents/learnopengl/3rdparty/linmath/include -I/home/thy/Documents/learnopengl/3rdparty/stb/include -I/home/thy/Documents/learnopengl/3rdparty/cxxopts/include    -DGLFW_DLL -DSTB_IMAGE_IMPLEMENTATION -std=gnu++1z -o CMakeFiles/glfw_helpper_test.dir/glfw_helpper_test.cxx.o -c /home/thy/Documents/learnopengl/common/glfw_helpper_test.cxx",
+  "file": "/home/thy/Documents/learnopengl/common/glfw_helpper_test.cxx"
+},
+{
+  "directory": "/home/thy/Documents/learnopengl/build/hello_opengl",
+  "command": "/usr/bin/c++   -I/home/thy/Documents/learnopengl/. -I/home/thy/Documents/learnopengl/3rdparty/glad/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/include -I/home/thy/Documents/learnopengl/3rdparty/fmt/include -I/home/thy/Documents/learnopengl/3rdparty/linmath/include -I/home/thy/Documents/learnopengl/3rdparty/stb/include -I/home/thy/Documents/learnopengl/3rdparty/cxxopts/include    -DGLFW_DLL -DSTB_IMAGE_IMPLEMENTATION -std=gnu++1z -o CMakeFiles/hello_opengl.dir/main.cpp.o -c /home/thy/Documents/learnopengl/hello_opengl/main.cpp",
+  "file": "/home/thy/Documents/learnopengl/hello_opengl/main.cpp"
+},
+{
+  "directory": "/home/thy/Documents/learnopengl/build/vao_and_shader",
+  "command": "/usr/bin/c++   -I/home/thy/Documents/learnopengl/. -I/home/thy/Documents/learnopengl/3rdparty/glad/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/include -I/home/thy/Documents/learnopengl/3rdparty/fmt/include -I/home/thy/Documents/learnopengl/3rdparty/linmath/include -I/home/thy/Documents/learnopengl/3rdparty/stb/include -I/home/thy/Documents/learnopengl/3rdparty/cxxopts/include    -DGLFW_DLL -DSTB_IMAGE_IMPLEMENTATION -std=gnu++1z -o CMakeFiles/vao_and_shader.dir/main.cpp.o -c /home/thy/Documents/learnopengl/vao_and_shader/main.cpp",
+  "file": "/home/thy/Documents/learnopengl/vao_and_shader/main.cpp"
+},
+{
+  "directory": "/home/thy/Documents/learnopengl/build/hello_triangle",
+  "command": "/usr/bin/c++   -I/home/thy/Documents/learnopengl/. -I/home/thy/Documents/learnopengl/3rdparty/glad/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/include -I/home/thy/Documents/learnopengl/3rdparty/fmt/include -I/home/thy/Documents/learnopengl/3rdparty/linmath/include -I/home/thy/Documents/learnopengl/3rdparty/stb/include -I/home/thy/Documents/learnopengl/3rdparty/cxxopts/include    -DGLFW_DLL -DSTB_IMAGE_IMPLEMENTATION -std=gnu++1z -o CMakeFiles/hello_triangle.dir/main.cpp.o -c /home/thy/Documents/learnopengl/hello_triangle/main.cpp",
+  "file": "/home/thy/Documents/learnopengl/hello_triangle/main.cpp"
+},
+{
+  "directory": "/home/thy/Documents/learnopengl/build/hello_rectangle",
+  "command": "/usr/bin/c++   -I/home/thy/Documents/learnopengl/. -I/home/thy/Documents/learnopengl/3rdparty/glad/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/include -I/home/thy/Documents/learnopengl/3rdparty/fmt/include -I/home/thy/Documents/learnopengl/3rdparty/linmath/include -I/home/thy/Documents/learnopengl/3rdparty/stb/include -I/home/thy/Documents/learnopengl/3rdparty/cxxopts/include    -DGLFW_DLL -DSTB_IMAGE_IMPLEMENTATION -std=gnu++1z -o CMakeFiles/hello_rectangle.dir/main.cpp.o -c /home/thy/Documents/learnopengl/hello_rectangle/main.cpp",
+  "file": "/home/thy/Documents/learnopengl/hello_rectangle/main.cpp"
+},
+{
+  "directory": "/home/thy/Documents/learnopengl/build/get_started_with_glfw",
+  "command": "/usr/bin/c++   -I/home/thy/Documents/learnopengl/. -I/home/thy/Documents/learnopengl/3rdparty/glad/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/include -I/home/thy/Documents/learnopengl/3rdparty/fmt/include -I/home/thy/Documents/learnopengl/3rdparty/linmath/include -I/home/thy/Documents/learnopengl/3rdparty/stb/include -I/home/thy/Documents/learnopengl/3rdparty/cxxopts/include    -DGLFW_DLL -DSTB_IMAGE_IMPLEMENTATION -std=gnu++1z -o CMakeFiles/get_started_with_glfw.dir/main.cpp.o -c /home/thy/Documents/learnopengl/get_started_with_glfw/main.cpp",
+  "file": "/home/thy/Documents/learnopengl/get_started_with_glfw/main.cpp"
+},
+{
+  "directory": "/home/thy/Documents/learnopengl/build/shaders",
+  "command": "/usr/bin/c++   -I/home/thy/Documents/learnopengl/. -I/home/thy/Documents/learnopengl/3rdparty/glad/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/include -I/home/thy/Documents/learnopengl/3rdparty/fmt/include -I/home/thy/Documents/learnopengl/3rdparty/linmath/include -I/home/thy/Documents/learnopengl/3rdparty/stb/include -I/home/thy/Documents/learnopengl/3rdparty/cxxopts/include    -DGLFW_DLL -DSTB_IMAGE_IMPLEMENTATION -std=gnu++1z -o CMakeFiles/shaders.dir/main.cpp.o -c /home/thy/Documents/learnopengl/shaders/main.cpp",
+  "file": "/home/thy/Documents/learnopengl/shaders/main.cpp"
+},
+{
+  "directory": "/home/thy/Documents/learnopengl/build/textures",
+  "command": "/usr/bin/c++   -I/home/thy/Documents/learnopengl/. -I/home/thy/Documents/learnopengl/3rdparty/glad/include -I/home/thy/Documents/learnopengl/3rdparty/glfw3/include -I/home/thy/Documents/learnopengl/3rdparty/fmt/include -I/home/thy/Documents/learnopengl/3rdparty/linmath/include -I/home/thy/Documents/learnopengl/3rdparty/stb/include -I/home/thy/Documents/learnopengl/3rdparty/cxxopts/include    -DGLFW_DLL -DSTB_IMAGE_IMPLEMENTATION -std=gnu++1z -o CMakeFiles/textures.dir/main.cpp.o -c /home/thy/Documents/learnopengl/textures/main.cpp",
+  "file": "/home/thy/Documents/learnopengl/textures/main.cpp"
+}
+]

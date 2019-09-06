@@ -2,8 +2,10 @@ cmake_minimum_required(VERSION 3.10)
 
 project(learn_opengl)
 
+set(CMAKE_CXX_STANDARD 17)
+
 if ("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
-set(OPENGL_LIB X11 dl pthread Xxf86vm Xrandr Xcursor Xinerama GL)
+set(OPENGL_LIB X11 dl pthread Xxf86vm Xrandr Xcursor Xinerama GL stdc++fs)
 endif()
 
 link_libraries(${OPENGL_LIB})
@@ -16,6 +18,10 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin)
+
+# generate compile_commands.json if possible
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_VERBOSE_MAKEFILE ON)
 
 # library compilation
 set(BUILD_SHARED_LIBS OFF)
@@ -36,11 +42,12 @@ add_subdirectory(3rdparty)
 link_libraries(fmt glfw glad)
 
 # glfw required this macro for DLL version
-add_compile_definitions(GLFW_DLL)
+# add_compile_definitions(GLFW_DLL)
+add_compile_options(-DGLFW_DLL)
 
 # std_image implementation switch
-add_compile_definitions(STB_IMAGE_IMPLEMENTATION)
-
+# add_compile_definitions(STB_IMAGE_IMPLEMENTATION)
+add_compile_options(-DSTB_IMAGE_IMPLEMENTATION)
 # compile common libs
 add_subdirectory(common)
 

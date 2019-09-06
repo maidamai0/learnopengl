@@ -78,7 +78,7 @@ class Shader {
         shader_reader.open(shader_file_path);
         if (!shader_reader.is_open()) {
             fmt::print(stderr, "path:{} is invalid\n", shader_file_path);
-            throw ::std::exception("path invalid");
+            throw ::std::runtime_error("path invalid");
         }
         buff << shader_reader.rdbuf();
 
@@ -93,7 +93,7 @@ class Shader {
         if (success != GL_TRUE) {
             glGetShaderInfoLog(shader, sizeof(msg), nullptr, msg);
             fmt::print(stderr, "compile shader failed:{}\nsource:{}\n", msg, shader_source);
-            throw std::exception("shader compile error");
+            throw std::runtime_error("shader compile error");
             return false;
         }
 
@@ -108,7 +108,7 @@ class Shader {
         if (success != GL_TRUE) {
             glGetShaderInfoLog(link, sizeof(msg), nullptr, msg);
             fmt::print("compile shader failed:{}\n", msg);
-            throw std::exception("shader program link error");
+            throw std::runtime_error("shader program link error");
             return false;
         }
 
