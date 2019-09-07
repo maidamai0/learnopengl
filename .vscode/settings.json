@@ -8,6 +8,7 @@
         "sstream": "cpp",
         "xlocbuf": "cpp",
         "xstring": "cpp",
-        "filesystem": "cpp"
+        "filesystem": "cpp",
+        "cmath": "cpp"
     }
 }

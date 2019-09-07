@@ -33,7 +33,8 @@ include_directories(./
                     3rdparty/fmt/include
                     3rdparty/linmath/include
                     3rdparty/stb/include
-                    3rdparty/cxxopts/include)
+                    3rdparty/cxxopts/include
+                    3rdparty/glm/include)
 
 # compile 3rdparty libs
 add_subdirectory(3rdparty)
@@ -105,3 +106,4 @@ add_subdirectory(hello_rectangle)
 add_subdirectory(get_started_with_glfw)
 add_subdirectory(shaders)
 add_subdirectory(textures)
+add_subdirectory(transformations)
