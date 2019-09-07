@@ -94,7 +94,6 @@ class Shader {
             glGetShaderInfoLog(shader, sizeof(msg), nullptr, msg);
             fmt::print(stderr, "compile shader failed:{}\nsource:{}\n", msg, shader_source);
             throw std::runtime_error("shader compile error");
-            return false;
         }
 
         return true;
@@ -109,7 +108,6 @@ class Shader {
             glGetShaderInfoLog(link, sizeof(msg), nullptr, msg);
             fmt::print("compile shader failed:{}\n", msg);
             throw std::runtime_error("shader program link error");
-            return false;
         }
 
         return true;
