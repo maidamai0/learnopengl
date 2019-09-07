@@ -18,8 +18,8 @@
 
 #include <experimental/filesystem>  // C++-standard header file name
 
-#ifdef __WIN32
-#include <filesystem>               // Microsoft-specific implementation header file name
+#ifdef _WIN32
+#include <filesystem>  // Microsoft-specific implementation header file name
 namespace stdfs = std::experimental::filesystem::v1;
 #endif
 

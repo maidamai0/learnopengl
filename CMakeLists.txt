@@ -38,9 +38,6 @@ include_directories(./
 # compile 3rdparty libs
 add_subdirectory(3rdparty)
 
-# add 3rdparty lib
-link_libraries(fmt glfw glad)
-
 # glfw required this macro for DLL version
 # add_compile_definitions(GLFW_DLL)
 add_compile_options(-DGLFW_DLL)
@@ -48,6 +45,10 @@ add_compile_options(-DGLFW_DLL)
 # std_image implementation switch
 # add_compile_definitions(STB_IMAGE_IMPLEMENTATION)
 add_compile_options(-DSTB_IMAGE_IMPLEMENTATION)
+
+# add 3rdparty lib
+link_libraries(fmt glfw glad)
+
 # compile common libs
 add_subdirectory(common)
 

@@ -4,6 +4,11 @@
 :: get dev environment
 call "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\Tools\VsDevCmd.bat"
 
+if /I "%1" == "clean" (
+    msbuild %PROJ_FILE% /t:clean
+    goto:EOF
+)
+
 md build 2> nul
 
 set ROOT_DIR=%~dp0
@@ -14,3 +19,5 @@ cd %BUILD_DIR%
 cmake -G "Visual Studio 16 2019" -A x64 ..
 cd ..
 msbuild %PROJ_FILE% /m:20 /v:m /ignore:4099
+
+:EOF
