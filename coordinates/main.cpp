@@ -13,11 +13,11 @@ float g_x_rotate = -55.0f;
 // triangle point
 // clang-format off
 float vertices[] = {
-    // positions          // texture coords
-    0.5f,  0.5f, 0.0f,   1.0f, 1.0f, // top right
-    0.5f, -0.5f, 0.0f,   1.0f, 0.0f, // bottom right
-    -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, // bottom left
-    -0.5f,  0.5f, 0.0f,   0.0f, 1.0f  // top left 
+    // positions          // colors           // texture coords
+     0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+     0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+    -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+    -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left 
 };
 unsigned int indices[] = {
     0, 1, 3, // first triangle
@@ -110,13 +110,19 @@ int main(int argc, char **argv) {
 
     // position
     const auto pos_location = glGetAttribLocation(shader.GetProgram(), "aPos");
-    glVertexAttribPointer(pos_location, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), nullptr);
+    glVertexAttribPointer(pos_location, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), nullptr);
     glEnableVertexAttribArray(pos_location);
+
+    // color
+    const auto color_location = glGetAttribLocation(shader.GetProgram(), "aCol");
+    glVertexAttribPointer(
+        color_location, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(3 * sizeof(float)));
+    glEnableVertexAttribArray(color_location);
 
     // texture cooridinatin
     const auto tex_location = glGetAttribLocation(shader.GetProgram(), "aTexCoord");
     glVertexAttribPointer(
-        tex_location, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
+        tex_location, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(6 * sizeof(float)));
     glEnableVertexAttribArray(tex_location);
 
     // texture
