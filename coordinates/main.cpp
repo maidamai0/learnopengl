@@ -7,31 +7,21 @@
 
 namespace {
 float g_texture_ratio = 0.5;
-}
+}  // namespace
 
 // triangle point
 // clang-format off
-// float vertices[] = {
-//     // positions          // colors           // texture coords
-//      0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   0.55f, 0.55f,   // top right
-//      0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   0.55f, 0.45f,   // bottom right
-//     -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.45f, 0.45f,   // bottom left
-//     -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.45f, 0.55f    // top left 
-// };
-
 float vertices[] = {
-    // positions          // colors           // texture coords
-     0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-     0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-    -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-    -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left 
+    // positions          // texture coords
+    0.5f,  0.5f, 0.0f,   1.0f, 1.0f, // top right
+    0.5f, -0.5f, 0.0f,   1.0f, 0.0f, // bottom right
+    -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, // bottom left
+    -0.5f,  0.5f, 0.0f,   0.0f, 1.0f  // top left 
 };
-
-unsigned int indices[] = {  
+unsigned int indices[] = {
     0, 1, 3, // first triangle
     1, 2, 3  // second triangle
 };
-
 // clang-format on
 
 void key_callback_ratio(GLFWwindow *window, int key, int scan_code, int action, int mods) {
@@ -112,28 +102,22 @@ int main(int argc, char **argv) {
     Shader shader("coordinates_vs.glsl", "coordinates_fs.glsl");
 
     // position
-    const auto pos_location = glGetAttribLocation(shader.GetProgram(), "vPos");
-    glVertexAttribPointer(pos_location, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), nullptr);
+    const auto pos_location = glGetAttribLocation(shader.GetProgram(), "aPos");
+    glVertexAttribPointer(pos_location, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), nullptr);
     glEnableVertexAttribArray(pos_location);
 
-    // color
-    const auto color_location = glGetAttribLocation(shader.GetProgram(), "vCol");
-    glVertexAttribPointer(
-        color_location, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(3 * sizeof(float)));
-    glEnableVertexAttribArray(color_location);
-
     // texture cooridinatin
-    const auto tex_location = glGetAttribLocation(shader.GetProgram(), "vTex");
+    const auto tex_location = glGetAttribLocation(shader.GetProgram(), "aTexCoord");
     glVertexAttribPointer(
-        tex_location, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(6 * sizeof(float)));
+        tex_location, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
     glEnableVertexAttribArray(tex_location);
 
     // texture
     Texture texture("winnie_the_pooh.jpg");
     Texture texture1("awesomeface.png");
 
-    glUniform1i(glGetUniformLocation(shader.GetProgram(), "outTexture"), 0);
-    glUniform1i(glGetUniformLocation(shader.GetProgram(), "outTexture1"), 1);
+    glUniform1i(glGetUniformLocation(shader.GetProgram(), "texture1"), 0);
+    glUniform1i(glGetUniformLocation(shader.GetProgram(), "texture2"), 1);
 
     // clear color
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -157,42 +141,33 @@ int main(int argc, char **argv) {
         // set ratio
         glUniform1f(glGetUniformLocation(shader.GetProgram(), "ratio"), g_texture_ratio);
 
-        // model transformation
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-        glUniformMatrix4fv(
-            glGetUniformLocation(shader.GetProgram(), "model"), 1, GL_FALSE, glm::value_ptr(model));
-
-        // view transformation
+        // create transformations
+        glm::mat4 model =
+            glm::mat4(1.0f);  // make sure to initialize matrix to identity matrix first
         glm::mat4 view = glm::mat4(1.0f);
-        // note that we're translating the scene in the reverse direction of where we want to move
-        view = glm::translate(view, glm::vec3(0.0f, 0.8f, -0.5f));
-        glUniformMatrix4fv(
-            glGetUniformLocation(shader.GetProgram(), "view"), 1, GL_FALSE, glm::value_ptr(view));
-
-        // projection transformation
-        glm::mat4 projection;
+        glm::mat4 projection = glm::mat4(1.0f);
+        model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
         projection = glm::perspective(glm::radians(45.0f), 1920.0f / 1080, 0.1f, 100.0f);
-        glUniformMatrix4fv(glGetUniformLocation(shader.GetProgram(), "projection"),
-                           1,
-                           GL_FALSE,
-                           glm::value_ptr(projection));
+        // retrieve the matrix uniform locations
+        unsigned int modelLoc = glGetUniformLocation(shader.GetProgram(), "model");
+        unsigned int viewLoc = glGetUniformLocation(shader.GetProgram(), "view");
+        unsigned int projectionLoc = glGetUniformLocation(shader.GetProgram(), "projection");
+        // pass them to the shaders (3 different ways)
+        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
+        // note: currently we set the projection matrix each frame, but since the projection matrix
+        // rarely changes it's often best practice to set it outside the main loop only once.
+        glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
-        glm::mat4 trans(1.0f);
-        trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
-        trans = glm::rotate(trans, static_cast<float>(glfwGetTime()), glm::vec3(0.0f, 0.0f, 1.0f));
-
-        glUniformMatrix4fv(
-            glGetUniformLocation(shader.GetProgram(), "trans"), 1, GL_FALSE, glm::value_ptr(view));
-
+        // render container
         glBindVertexArray(vao);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-        // poll event
-        glfwPollEvents();
-
-        // display
+        // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
+        // -------------------------------------------------------------------------------
         glfwSwapBuffers(pWd);
+        glfwPollEvents();
     }
 
     fmt::print("user request to close this window!\n");
