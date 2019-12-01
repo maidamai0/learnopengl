@@ -86,11 +86,12 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif ()
 
 if (MSVC)
+  set(COMMON_COMPILE_FLAGS /EHsc)
   set(PEDANTIC_COMPILE_FLAGS /W4)
   set(WERROR_FLAG /WX)
 endif ()
 
-add_compile_options(${PEDANTIC_COMPILE_FLAGS} ${WERROR_FLAG})
+add_compile_options(${COMMON_COMPILE_FLAGS} ${PEDANTIC_COMPILE_FLAGS} ${WERROR_FLAG})
 
 # add 3rdparty lib
 link_libraries(fmt glfw glad)

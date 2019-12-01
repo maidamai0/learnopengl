@@ -16,14 +16,16 @@
 
 #include <string>
 
-#include <experimental/filesystem>  // C++-standard header file name
-
 #ifdef _WIN32
+// documentation here:
+// https://docs.microsoft.com/en-us/cpp/standard-library/filesystem?view=vs-2019
+// is not correct
 #include <filesystem>  // Microsoft-specific implementation header file name
-namespace stdfs = std::experimental::filesystem::v1;
+namespace stdfs = std::filesystem;
 #endif
 
 #ifdef __linux__
+#include <experimental/filesystem>  // C++-standard header file name
 namespace stdfs = std::experimental::filesystem;
 #endif
 
