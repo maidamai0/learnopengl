@@ -7,6 +7,7 @@
 
 namespace {
 float g_texture_ratio = 0.5;
+float g_x_rotate = -55.0f;
 }  // namespace
 
 // triangle point
@@ -44,6 +45,12 @@ void key_callback_ratio(GLFWwindow *window, int key, int scan_code, int action, 
         if (g_texture_ratio < 0.0f) {
             g_texture_ratio = 0.0f;
         }
+    } else if (key == GLFW_KEY_LEFT && action == GLFW_PRESS) {
+        fmt::print("GLFW_KEY_LEFT pressed\n");
+        g_x_rotate -= 5.0f;
+    } else if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS) {
+        fmt::print("GLFW_KEY_RIGHT pressed\n");
+        g_x_rotate += 5.0f;
     }
 }
 
@@ -141,24 +148,23 @@ int main(int argc, char **argv) {
         // set ratio
         glUniform1f(glGetUniformLocation(shader.GetProgram(), "ratio"), g_texture_ratio);
 
-        // create transformations
-        glm::mat4 model =
-            glm::mat4(1.0f);  // make sure to initialize matrix to identity matrix first
+        // model transformation
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::rotate(model, glm::radians(g_x_rotate), glm::vec3(1.0f, 0.0f, 0.0f));
+        glUniformMatrix4fv(
+            glGetUniformLocation(shader.GetProgram(), "model"), 1, GL_FALSE, glm::value_ptr(model));
+
         glm::mat4 view = glm::mat4(1.0f);
-        glm::mat4 projection = glm::mat4(1.0f);
-        model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
         view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+        glUniformMatrix4fv(
+            glGetUniformLocation(shader.GetProgram(), "view"), 1, GL_FALSE, glm::value_ptr(view));
+
+        glm::mat4 projection = glm::mat4(1.0f);
         projection = glm::perspective(glm::radians(45.0f), 1920.0f / 1080, 0.1f, 100.0f);
-        // retrieve the matrix uniform locations
-        unsigned int modelLoc = glGetUniformLocation(shader.GetProgram(), "model");
-        unsigned int viewLoc = glGetUniformLocation(shader.GetProgram(), "view");
-        unsigned int projectionLoc = glGetUniformLocation(shader.GetProgram(), "projection");
-        // pass them to the shaders (3 different ways)
-        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
-        // note: currently we set the projection matrix each frame, but since the projection matrix
-        // rarely changes it's often best practice to set it outside the main loop only once.
-        glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
+        glUniformMatrix4fv(glGetUniformLocation(shader.GetProgram(), "projection"),
+                           1,
+                           GL_FALSE,
+                           glm::value_ptr(projection));
 
         // render container
         glBindVertexArray(vao);
