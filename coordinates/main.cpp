@@ -149,8 +149,6 @@ int main(int argc, char **argv) {
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, texture1.GetTextureID());
 
-        shader.Use();
-
         // set ratio
         glUniform1f(glGetUniformLocation(shader.GetProgram(), "ratio"), g_texture_ratio);
 
@@ -160,12 +158,14 @@ int main(int argc, char **argv) {
         glUniformMatrix4fv(
             glGetUniformLocation(shader.GetProgram(), "model"), 1, GL_FALSE, glm::value_ptr(model));
 
+        // view transformation
         glm::mat4 view = glm::mat4(1.0f);
-        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+        view = glm::translate(view, glm::vec3(-2.0f, 0.0f, -5.0f));
         glUniformMatrix4fv(
             glGetUniformLocation(shader.GetProgram(), "view"), 1, GL_FALSE, glm::value_ptr(view));
 
-        glm::mat4 projection = glm::mat4(1.0f);
+        // projection trandformation
+        glm::mat4 projection;
         projection = glm::perspective(glm::radians(45.0f), 1920.0f / 1080, 0.1f, 100.0f);
         glUniformMatrix4fv(glGetUniformLocation(shader.GetProgram(), "projection"),
                            1,
@@ -174,6 +174,20 @@ int main(int argc, char **argv) {
 
         // render container
         glBindVertexArray(vao);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+        // view transformation
+        auto view1 = glm::translate(glm::mat4(1.0f), glm::vec3(1.5f, 0.0f, -10.0f));
+        glUniformMatrix4fv(
+            glGetUniformLocation(shader.GetProgram(), "view"), 1, GL_FALSE, glm::value_ptr(view1));
+
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+        // view transformation
+        auto view2 = glm::translate(glm::mat4(1.0f), glm::vec3(10.0f, 0.0f, -20.0f));
+        glUniformMatrix4fv(
+            glGetUniformLocation(shader.GetProgram(), "view"), 1, GL_FALSE, glm::value_ptr(view2));
+
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
