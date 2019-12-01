@@ -23,6 +23,10 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
+# clang-tidy
+# TODO header files-not found
+set(CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,readability-*,cppcoreguidelines-*,clang-analyzer-*,modernize-*,google-* -fix --list-checks)
+
 # library compilation
 set(BUILD_SHARED_LIBS OFF)
 
