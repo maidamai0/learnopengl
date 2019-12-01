@@ -25,7 +25,7 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 
 # clang-tidy
 # TODO header files-not found
-set(CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,readability-*,cppcoreguidelines-*,clang-analyzer-*,modernize-*,google-* -fix --list-checks)
+# set(CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,readability-*,cppcoreguidelines-*,clang-analyzer-*,modernize-*,google-* -fix --list-checks)
 
 # library compilation
 set(BUILD_SHARED_LIBS OFF)
@@ -112,3 +112,4 @@ add_subdirectory(get_started_with_glfw)
 add_subdirectory(shaders)
 add_subdirectory(textures)
 add_subdirectory(transformations)
+add_subdirectory(coordinates)
