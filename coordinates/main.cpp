@@ -5,6 +5,9 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
+#include <chrono>
+#include <thread>
+
 namespace {
 float g_texture_ratio = 0.5;
 float g_x_rotate = -55.0f;
@@ -13,11 +16,47 @@ float g_x_rotate = -55.0f;
 // triangle point
 // clang-format off
 float vertices[] = {
-    // positions          // colors           // texture coords
-     0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-     0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-    -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-    -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left 
+    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+     0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+     0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+     0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 };
 unsigned int indices[] = {
     0, 1, 3, // first triangle
@@ -89,6 +128,9 @@ int main(int argc, char **argv) {
     fmt::print("rederer is {}\n", glGetString(GL_RENDERER));
     fmt::print("version is {}\n", glGetString(GL_VERSION));
 
+    // enable depth testing
+    glEnable(GL_DEPTH_TEST);
+
     // vao
     GLuint vao = 0;
     glGenVertexArrays(1, &vao);
@@ -110,19 +152,19 @@ int main(int argc, char **argv) {
 
     // position
     const auto pos_location = glGetAttribLocation(shader.GetProgram(), "aPos");
-    glVertexAttribPointer(pos_location, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), nullptr);
+    glVertexAttribPointer(pos_location, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), nullptr);
     glEnableVertexAttribArray(pos_location);
 
     // color
-    const auto color_location = glGetAttribLocation(shader.GetProgram(), "aCol");
-    glVertexAttribPointer(
-        color_location, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(3 * sizeof(float)));
-    glEnableVertexAttribArray(color_location);
+    // const auto color_location = glGetAttribLocation(shader.GetProgram(), "aCol");
+    // glVertexAttribPointer(
+    //     color_location, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(3 * sizeof(float)));
+    // glEnableVertexAttribArray(color_location);
 
     // texture cooridinatin
     const auto tex_location = glGetAttribLocation(shader.GetProgram(), "aTexCoord");
     glVertexAttribPointer(
-        tex_location, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(6 * sizeof(float)));
+        tex_location, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
     glEnableVertexAttribArray(tex_location);
 
     // texture
@@ -134,6 +176,18 @@ int main(int argc, char **argv) {
 
     // clear color
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
+    // orientation
+    std::vector<glm::vec3> cubePositions{glm::vec3(0.0f, 0.0f, 0.0f),
+                                         glm::vec3(2.0f, 5.0f, -15.0f),
+                                         glm::vec3(-1.5f, -2.2f, -2.5f),
+                                         glm::vec3(-3.8f, -2.0f, -12.3f),
+                                         glm::vec3(2.4f, -0.4f, -3.5f),
+                                         glm::vec3(-1.7f, 3.0f, -7.5f),
+                                         glm::vec3(1.3f, -2.0f, -2.5f),
+                                         glm::vec3(1.5f, 2.0f, -2.5f),
+                                         glm::vec3(1.5f, 0.2f, -1.5f),
+                                         glm::vec3(-1.3f, 1.0f, -1.5f)};
 
     // running until exit
     while (!glfwWindowShouldClose(pWd)) {
@@ -152,12 +206,6 @@ int main(int argc, char **argv) {
         // set ratio
         glUniform1f(glGetUniformLocation(shader.GetProgram(), "ratio"), g_texture_ratio);
 
-        // model transformation
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::rotate(model, glm::radians(g_x_rotate), glm::vec3(1.0f, 0.0f, 0.0f));
-        glUniformMatrix4fv(
-            glGetUniformLocation(shader.GetProgram(), "model"), 1, GL_FALSE, glm::value_ptr(model));
-
         // view transformation
         glm::mat4 view = glm::mat4(1.0f);
         view = glm::translate(view, glm::vec3(-2.0f, 0.0f, -5.0f));
@@ -172,23 +220,36 @@ int main(int argc, char **argv) {
                            GL_FALSE,
                            glm::value_ptr(projection));
 
-        // render container
+        // model transformation
         glBindVertexArray(vao);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        for (auto &position : cubePositions) {
+            glm::mat4 model = glm::mat4(1.0f);
+            model = glm::translate(model, position);
+            model = glm::rotate(model,
+                                (float)glfwGetTime() * glm::radians(g_x_rotate),
+                                glm::vec3(1.0f, 0.3f, 0.5f));
+            glUniformMatrix4fv(glGetUniformLocation(shader.GetProgram(), "model"),
+                               1,
+                               GL_FALSE,
+                               glm::value_ptr(model));
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
 
         // view transformation
         auto view1 = glm::translate(glm::mat4(1.0f), glm::vec3(1.5f, 0.0f, -10.0f));
         glUniformMatrix4fv(
             glGetUniformLocation(shader.GetProgram(), "view"), 1, GL_FALSE, glm::value_ptr(view1));
 
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         // view transformation
         auto view2 = glm::translate(glm::mat4(1.0f), glm::vec3(10.0f, 0.0f, -20.0f));
         glUniformMatrix4fv(
             glGetUniformLocation(shader.GetProgram(), "view"), 1, GL_FALSE, glm::value_ptr(view2));
 
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
