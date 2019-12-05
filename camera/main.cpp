@@ -5,9 +5,6 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
-#include <chrono>
-#include <thread>
-
 namespace {
 float g_texture_ratio = 0.5;
 float g_x_rotate = -55.0f;
@@ -64,9 +61,18 @@ unsigned int indices[] = {
 };
 // clang-format on
 
+auto cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+auto cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+auto cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+
+auto deltaTime = 0.0f;
+auto lastFrame = 0.0f;
+
 void key_callback_ratio(GLFWwindow *window, int key, int scan_code, int action, int mods) {
     (void)scan_code;
     (void)mods;
+    float cameraSpeed = 2500.0f * deltaTime;
+    fmt::print("deltaTime is {}\n", deltaTime);
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
         fmt::print("Escape pressed\n");
         glfwSetWindowShouldClose(window, GLFW_TRUE);  // not work
@@ -90,6 +96,18 @@ void key_callback_ratio(GLFWwindow *window, int key, int scan_code, int action, 
     } else if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS) {
         fmt::print("GLFW_KEY_RIGHT pressed\n");
         g_x_rotate += 5.0f;
+    } else if (key == GLFW_KEY_W && action == GLFW_PRESS) {
+        fmt::print("GLFW_KEY_W pressed\n");
+        cameraPos += cameraSpeed * cameraFront;
+    } else if (key == GLFW_KEY_S && action == GLFW_PRESS) {
+        fmt::print("GLFW_KEY_S pressed\n");
+        cameraPos -= cameraSpeed * cameraFront;
+    } else if (key == GLFW_KEY_A && action == GLFW_PRESS) {
+        fmt::print("GLFW_KEY_A pressed\n");
+        cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+    } else if (key == GLFW_KEY_D && action == GLFW_PRESS) {
+        fmt::print("GLFW_KEY_D pressed\n");
+        cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
     }
 }
 
@@ -197,6 +215,10 @@ int main(int argc, char **argv) {
         // setup environment
         glBindVertexArray(vao);
 
+        auto currentTime = static_cast<float>(glfwGetTime());
+        deltaTime = currentTime - lastFrame;
+        lastFrame = currentTime;
+
         // draw
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture.GetTextureID());
@@ -207,11 +229,13 @@ int main(int argc, char **argv) {
         glUniform1f(glGetUniformLocation(shader.GetProgram(), "ratio"), g_texture_ratio);
 
         // view transformation
-        float radius = 10.0f;
-        float camX = static_cast<float>(sin(glfwGetTime())) * radius;
-        float camZ = static_cast<float>(cos(glfwGetTime())) * radius;
-        glm::mat4 view = glm::lookAt(
-            glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
+        // float radius = 10.0f;
+        // float camX = static_cast<float>(sin(glfwGetTime())) * radius;
+        // float camZ = static_cast<float>(cos(glfwGetTime())) * radius;
+        // glm::mat4 view = glm::lookAt(
+        //     glm::vec3(camX, 0.0, camZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f,
+        //     0.0f));
+        glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
         glUniformMatrix4fv(
             glGetUniformLocation(shader.GetProgram(), "view"), 1, GL_FALSE, glm::value_ptr(view));
 
