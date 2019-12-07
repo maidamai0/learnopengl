@@ -1,3 +1,4 @@
+#include "common/camera.h"
 #include "common/glfw_helpper.h"
 #include "common/shader.h"
 #include "common/texture.h"
@@ -10,12 +11,11 @@ float g_texture_ratio = 0.5;
 float g_x_rotate = -55.0f;
 const auto g_screen_width = 1920.0f;
 const auto g_screen_height = 1080.0f;
-const auto g_cursor_sensitivity = 0.05;
 auto g_last_pos_x = 0.0;
 auto g_last_pos_y = 0.0;
-auto g_pitch = 0.0;
-auto g_yaw = 0.0;
-auto g_fov = 10.0f;
+
+Camera g_camera({0.0f, 0.0f, 5.0f});
+
 }  // namespace
 
 // triangle point
@@ -69,17 +69,12 @@ unsigned int indices[] = {
 };
 // clang-format on
 
-auto cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-auto cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-auto cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-
 auto deltaTime = 0.0f;
 auto lastFrame = 0.0f;
 
 void key_callback_ratio(GLFWwindow *window, int key, int scan_code, int action, int mods) {
     (void)scan_code;
     (void)mods;
-    float cameraSpeed = 2500.0f * deltaTime;
     fmt::print("deltaTime is {}\n", deltaTime);
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
         fmt::print("Escape pressed\n");
@@ -106,16 +101,16 @@ void key_callback_ratio(GLFWwindow *window, int key, int scan_code, int action, 
         g_x_rotate += 5.0f;
     } else if (key == GLFW_KEY_W && action == GLFW_PRESS) {
         fmt::print("GLFW_KEY_W pressed\n");
-        cameraPos += cameraSpeed * cameraFront;
+        g_camera.ProcessKeyBoardEvent(CameraDirection::kForward, deltaTime);
     } else if (key == GLFW_KEY_S && action == GLFW_PRESS) {
         fmt::print("GLFW_KEY_S pressed\n");
-        cameraPos -= cameraSpeed * cameraFront;
+        g_camera.ProcessKeyBoardEvent(CameraDirection::kBackward, deltaTime);
     } else if (key == GLFW_KEY_A && action == GLFW_PRESS) {
         fmt::print("GLFW_KEY_A pressed\n");
-        cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+        g_camera.ProcessKeyBoardEvent(CameraDirection::kLeft, deltaTime);
     } else if (key == GLFW_KEY_D && action == GLFW_PRESS) {
         fmt::print("GLFW_KEY_D pressed\n");
-        cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+        g_camera.ProcessKeyBoardEvent(CameraDirection::kRight, deltaTime);
     }
 }
 
@@ -128,33 +123,15 @@ void mouse_callback(GLFWwindow *, double x_pos, double y_pos) {
         return;
     }
 
-    auto offset_x = (x_pos - g_last_pos_x) * g_cursor_sensitivity;
-    auto offset_y = (g_last_pos_y - y_pos) * g_cursor_sensitivity;
+    g_camera.ProcessMouseMovement(static_cast<float>((x_pos - g_last_pos_x)),
+                                  static_cast<float>((g_last_pos_y - y_pos)),
+                                  true);
     g_last_pos_x = x_pos;
     g_last_pos_y = y_pos;
-
-    g_yaw += offset_x;
-    g_pitch += offset_y;
-
-    if (g_pitch > 89.0f) {
-        g_pitch = 89.0f;
-    } else if (g_pitch < -89.0f) {
-        g_pitch = -89.0f;
-    }
-
-    glm::vec3 front;
-    front.x = static_cast<float>(cos(glm::radians(g_pitch)) * cos(glm::radians(g_yaw)));
-    front.y = static_cast<float>(sin(glm::radians(g_pitch)));
-    front.z = static_cast<float>(cos(glm::radians(g_pitch)) * sin(glm::radians(g_yaw)));
-    cameraFront = glm::normalize(front);
 }
 
 void scroll_callback(GLFWwindow *, double, double y_offset) {
-    g_fov -= static_cast<float>(y_offset);
-
-    if (g_fov <= 1.0f) {
-        g_fov = 1.0f;
-    }
+    g_camera.ProcessMouseScroll(static_cast<float>(y_offset));
 }
 
 int main(int argc, char **argv) {
@@ -225,13 +202,6 @@ int main(int argc, char **argv) {
     glVertexAttribPointer(pos_location, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), nullptr);
     glEnableVertexAttribArray(pos_location);
 
-    // color
-    // const auto color_location = glGetAttribLocation(shader.GetProgram(), "aCol");
-    // glVertexAttribPointer(
-    //     color_location, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(3 *
-    //     sizeof(float)));
-    // glEnableVertexAttribArray(color_location);
-
     // texture cooridinatin
     const auto tex_location = glGetAttribLocation(shader.GetProgram(), "aTexCoord");
     glVertexAttribPointer(
@@ -289,13 +259,13 @@ int main(int argc, char **argv) {
         //     glm::vec3(camX, 0.0, camZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f,
         //     0.0f));
 
-        glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+        glm::mat4 view = g_camera.GetViewMatrix();
         glUniformMatrix4fv(
             glGetUniformLocation(shader.GetProgram(), "view"), 1, GL_FALSE, glm::value_ptr(view));
 
         // projection transformation
-        glm::mat4 projection =
-            glm::perspective(glm::radians(g_fov), g_screen_width / g_screen_height, 0.1f, 100.0f);
+        glm::mat4 projection = glm::perspective(
+            glm::radians(g_camera.GetZoom()), g_screen_width / g_screen_height, 0.1f, 100.0f);
         glUniformMatrix4fv(glGetUniformLocation(shader.GetProgram(), "projection"),
                            1,
                            GL_FALSE,
