@@ -69,8 +69,7 @@ class Shader {
     }
 
     auto SetVec3(std::string&& name, glm::vec3 vec) {
-        glUniformMatrix3fv(
-            glGetUniformLocation(program_, name.c_str()), 1, false, glm::value_ptr(vec));
+        glUniform3fv(glGetUniformLocation(program_, name.c_str()), 1, glm::value_ptr(vec));
     }
 
     auto SetMat4(std::string&& name, glm::mat4 mat) {

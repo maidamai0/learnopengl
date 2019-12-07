@@ -120,9 +120,9 @@ void mouse_callback(GLFWwindow *, double x_pos, double y_pos) {
         return;
     }
 
-    // g_camera.ProcessMouseMovement(static_cast<float>((x_pos - g_last_pos_x)),
-    //                               static_cast<float>((g_last_pos_y - y_pos)),
-    //                               true);
+    g_camera.ProcessMouseMovement(static_cast<float>((x_pos - g_last_pos_x)),
+                                  static_cast<float>((g_last_pos_y - y_pos)),
+                                  true);
     g_last_pos_x = x_pos;
     g_last_pos_y = y_pos;
 }
@@ -204,9 +204,13 @@ int main(int argc, char **argv) {
     const auto object_pos_location = glGetAttribLocation(object_shader.GetProgram(), "aPos");
     glVertexAttribPointer(object_pos_location, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
     glEnableVertexAttribArray(object_pos_location);
+    object_shader.SetVec3("objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
+    object_shader.SetVec3("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
+    object_shader.SetMat4(
+        "model", glm::rotate(glm::mat4(1.0f), glm::radians(45.0f), glm::vec3(1.0f, 0.3f, 0.0f)));
 
     // clear color
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
     // running until exit
     while (!glfwWindowShouldClose(pWd)) {
@@ -222,9 +226,6 @@ int main(int argc, char **argv) {
 
         // Draw object
         object_shader.Use();
-        object_shader.SetVec3("objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
-        object_shader.SetVec3("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
-        object_shader.SetMat4("model", glm::mat4(1.0f));
         object_shader.SetMat4("projection", projection);
         object_shader.SetMat4("view", g_camera.GetViewMatrix());
         glBindVertexArray(vao_object);
@@ -234,7 +235,6 @@ int main(int argc, char **argv) {
         light_shader.Use();
         light_shader.SetMat4("projection", projection);
         light_shader.SetMat4("view", g_camera.GetViewMatrix());
-
         glBindVertexArray(vao_light);
         glDrawArrays(GL_TRIANGLES, 0, 36);
 
