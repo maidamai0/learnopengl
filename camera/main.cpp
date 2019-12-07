@@ -8,6 +8,14 @@
 namespace {
 float g_texture_ratio = 0.5;
 float g_x_rotate = -55.0f;
+const auto g_screen_width = 1920.0f;
+const auto g_screen_height = 1080.0f;
+const auto g_cursor_sensitivity = 0.05;
+auto g_last_pos_x = 0.0;
+auto g_last_pos_y = 0.0;
+auto g_pitch = 0.0;
+auto g_yaw = 0.0;
+auto g_fov = 10.0f;
 }  // namespace
 
 // triangle point
@@ -111,6 +119,44 @@ void key_callback_ratio(GLFWwindow *window, int key, int scan_code, int action, 
     }
 }
 
+void mouse_callback(GLFWwindow *, double x_pos, double y_pos) {
+    static bool first_time = true;
+    if (first_time) {
+        first_time = false;
+        g_last_pos_x = x_pos;
+        g_last_pos_y = y_pos;
+        return;
+    }
+
+    auto offset_x = (x_pos - g_last_pos_x) * g_cursor_sensitivity;
+    auto offset_y = (g_last_pos_y - y_pos) * g_cursor_sensitivity;
+    g_last_pos_x = x_pos;
+    g_last_pos_y = y_pos;
+
+    g_yaw += offset_x;
+    g_pitch += offset_y;
+
+    if (g_pitch > 89.0f) {
+        g_pitch = 89.0f;
+    } else if (g_pitch < -89.0f) {
+        g_pitch = -89.0f;
+    }
+
+    glm::vec3 front;
+    front.x = static_cast<float>(cos(glm::radians(g_pitch)) * cos(glm::radians(g_yaw)));
+    front.y = static_cast<float>(sin(glm::radians(g_pitch)));
+    front.z = static_cast<float>(cos(glm::radians(g_pitch)) * sin(glm::radians(g_yaw)));
+    cameraFront = glm::normalize(front);
+}
+
+void scroll_callback(GLFWwindow *, double, double y_offset) {
+    g_fov -= static_cast<float>(y_offset);
+
+    if (g_fov <= 1.0f) {
+        g_fov = 1.0f;
+    }
+}
+
 int main(int argc, char **argv) {
     (void)argc;
     (void)argv;
@@ -134,6 +180,12 @@ int main(int argc, char **argv) {
 
     // make opengl context
     glfwMakeContextCurrent(pWd);
+
+    // capture cursor
+    glfwSetInputMode(pWd, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+    glfwSetCursorPosCallback(pWd, mouse_callback);
+    glfwSetScrollCallback(pWd, scroll_callback);
 
     // initialize gl
     if (!gladLoadGL()) {
@@ -176,7 +228,8 @@ int main(int argc, char **argv) {
     // color
     // const auto color_location = glGetAttribLocation(shader.GetProgram(), "aCol");
     // glVertexAttribPointer(
-    //     color_location, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(3 * sizeof(float)));
+    //     color_location, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(3 *
+    //     sizeof(float)));
     // glEnableVertexAttribArray(color_location);
 
     // texture cooridinatin
@@ -235,12 +288,14 @@ int main(int argc, char **argv) {
         // glm::mat4 view = glm::lookAt(
         //     glm::vec3(camX, 0.0, camZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f,
         //     0.0f));
+
         glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
         glUniformMatrix4fv(
             glGetUniformLocation(shader.GetProgram(), "view"), 1, GL_FALSE, glm::value_ptr(view));
 
         // projection transformation
-        glm::mat4 projection = glm::perspective(glm::radians(45.0f), 1920.0f / 1080, 0.1f, 100.0f);
+        glm::mat4 projection =
+            glm::perspective(glm::radians(g_fov), g_screen_width / g_screen_height, 0.1f, 100.0f);
         glUniformMatrix4fv(glGetUniformLocation(shader.GetProgram(), "projection"),
                            1,
                            GL_FALSE,

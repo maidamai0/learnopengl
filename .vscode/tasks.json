@@ -6,7 +6,7 @@
         {
             "label": "compile-vs2019-x64",
             "type": "shell",
-            "command": "${cwd}\\compile.bat",
+            "command": "${cwd}\\make.bat",
             "args": [],
             "presentation": {
                 "echo": true,
@@ -24,7 +24,7 @@
                 "isDefault": true
             },
             "options": {
-                    "cwd": "${workspaceFolder}"
+                "cwd": "${workspaceFolder}"
             }
         },
         {
@@ -48,7 +48,7 @@
                 "isDefault": true
             },
             "options": {
-                    "cwd": "${workspaceFolder}"
+                "cwd": "${workspaceFolder}"
             }
         }
     ]

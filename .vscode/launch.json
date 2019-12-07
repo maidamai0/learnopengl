@@ -58,6 +58,17 @@
             "cwd": "${workspaceFolder}/build/bin/",
             "environment": [],
             "externalConsole": false
+        },
+        {
+            "name": "camera",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "camera.exe",
+            "args": [],
+            "stopAtEntry": true,
+            "cwd": "${workspaceFolder}/build/bin/",
+            "environment": [],
+            "externalConsole": false
         }
     ]
 }
