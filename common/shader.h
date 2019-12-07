@@ -11,14 +11,17 @@
  *
  */
 
-#include "fmt/core.h"
-#include "glad/glad.h"
-
 #include <cassert>
 #include <fstream>
 #include <limits>
 #include <sstream>
 #include <string>
+
+#include "fmt/core.h"
+#include "glad/glad.h"
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 class Shader {
    public:
@@ -63,6 +66,16 @@ class Shader {
 
     void Use() {
         glUseProgram(program_);
+    }
+
+    auto SetVec3(std::string&& name, glm::vec3 vec) {
+        glUniformMatrix3fv(
+            glGetUniformLocation(program_, name.c_str()), 1, false, glm::value_ptr(vec));
+    }
+
+    auto SetMat4(std::string&& name, glm::mat4 mat) {
+        glUniformMatrix4fv(
+            glGetUniformLocation(program_, name.c_str()), 1, false, glm::value_ptr(mat));
     }
 
    private:
