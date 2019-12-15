@@ -68,6 +68,11 @@ class Shader {
         glUseProgram(program_);
     }
 
+    auto SetFloat(std::string&& name, const float value) {
+        glUniform1f(get_location_of_uniform(std::move(name)), value);
+        check_error();
+    }
+
     auto SetVec3(std::string&& name, glm::vec3 vec) {
         glUniform3fv(get_location_of_uniform(std::move(name)), 1, glm::value_ptr(vec));
         check_error();
