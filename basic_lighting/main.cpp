@@ -145,7 +145,7 @@ int main(int argc, char **argv) {
     auto const mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
     // create a window
-    auto pWd = glfwCreateWindow(mode->width, mode->height, "Color", nullptr, nullptr);
+    auto pWd = glfwCreateWindow(mode->width, mode->height, "basic_light", nullptr, nullptr);
     if (!pWd) {
         fmt::print("create window failed!\n");
     }
@@ -216,7 +216,6 @@ int main(int argc, char **argv) {
     object_shader.SetVec3("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
     object_shader.SetMat4(
         "model", glm::rotate(glm::mat4(1.0f), glm::radians(45.0f), glm::vec3(1.0f, 0.3f, 0.0f)));
-    object_shader.SetVec3("lightPos", g_lightPos);
     object_shader.SetVec3("ViewPos", g_camera.GetPosition());
 
     // clear color
@@ -234,19 +233,24 @@ int main(int argc, char **argv) {
         glm::mat4 projection = glm::perspective(
             glm::radians(g_camera.GetZoom()), g_screen_width / g_screen_height, 0.1f, 100.0f);
 
+        g_lightPos.x = static_cast<float>(sin(glfwGetTime())) * 1.0f;
+        g_lightPos.y = static_cast<float>(cos(glfwGetTime())) * 1.0f;
+        g_lightPos.z = static_cast<float>(sin(glfwGetTime())) * 2.0f;
+
         // Draw object
         object_shader.Use();
         object_shader.SetMat4("projection", projection);
         object_shader.SetMat4("view", g_camera.GetViewMatrix());
+        object_shader.SetVec3("lightPos", g_lightPos);
         glBindVertexArray(vao_object);
         glDrawArrays(GL_TRIANGLES, 0, 36);
 
         // draw light
         light_shader.Use();
         auto light_model = glm::mat4(1.0f);
-        light_model = glm::rotate(light_model,
-                                  (float)glfwGetTime() * glm::radians(g_x_rotate),
-                                  glm::vec3(0.0f, 10.5f, 0.0));
+        // light_model = glm::rotate(light_model,
+        //                           (float)glfwGetTime() * glm::radians(g_x_rotate),
+        //                           glm::vec3(0.0f, 10.5f, 0.0));
         light_model = glm::translate(light_model, g_lightPos);
         light_model = glm::scale(light_model, glm::vec3(0.2f));
         light_shader.SetMat4("model", light_model);
