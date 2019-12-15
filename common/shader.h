@@ -23,6 +23,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
+
 class Shader {
    public:
     Shader(std::string&& vertex_source_path, std::string&& fragment_source_path) {
@@ -70,11 +71,13 @@ class Shader {
 
     auto SetVec3(std::string&& name, glm::vec3 vec) {
         glUniform3fv(glGetUniformLocation(program_, name.c_str()), 1, glm::value_ptr(vec));
+        check_error();
     }
 
     auto SetMat4(std::string&& name, glm::mat4 mat) {
         glUniformMatrix4fv(
             glGetUniformLocation(program_, name.c_str()), 1, false, glm::value_ptr(mat));
+        check_error();
     }
 
    private:
@@ -123,6 +126,13 @@ class Shader {
         }
 
         return true;
+    }
+
+    void check_error() const {
+        GLenum err = glGetError();
+        if (err != GL_NO_ERROR) {
+            fmt::print("OpenGL operation error: {}\n", err);
+        }
     }
 
    private:

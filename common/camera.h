@@ -15,6 +15,7 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
+
 enum class CameraDirection { kForward, kBackward, kLeft, kRight };
 
 class Camera {
@@ -37,23 +38,28 @@ class Camera {
         return zoom_;
     }
 
+    auto GetPosition() const {
+        return position_;
+    }
+
     auto ProcessKeyBoardEvent(CameraDirection direction, float delta_time) {
         auto velocity = move_speed_ * delta_time;
         switch (direction) {
             case CameraDirection::kForward: {
-                position_ += front_ * velocity;
-                break;
-            }
-            case CameraDirection::kBackward: {
                 position_ -= front_ * velocity;
                 break;
             }
+            case CameraDirection::kBackward: {
+                position_ += front_ * velocity;
+                break;
+            }
             case CameraDirection::kLeft: {
-                position_ -= right_ * velocity;
+                position_ += right_ * velocity;
                 break;
             }
             case CameraDirection::kRight: {
-                position_ += right_ * velocity;
+                position_ -= right_ * velocity;
+                break;
             }
             default: {
                 assert(false && "invalid direction");
@@ -109,7 +115,7 @@ class Camera {
     glm::vec3 world_up_;
 
     // camera options
-    float move_speed_{2.5f};
+    float move_speed_{250.0f};
     float mouse_sensitivity_{0.1f};
     float zoom_{45.0f};
 
