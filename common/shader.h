@@ -23,7 +23,6 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
-
 class Shader {
    public:
     Shader(std::string&& vertex_source_path, std::string&& fragment_source_path) {
@@ -70,13 +69,12 @@ class Shader {
     }
 
     auto SetVec3(std::string&& name, glm::vec3 vec) {
-        glUniform3fv(glGetUniformLocation(program_, name.c_str()), 1, glm::value_ptr(vec));
+        glUniform3fv(get_location_of_uniform(std::move(name)), 1, glm::value_ptr(vec));
         check_error();
     }
 
     auto SetMat4(std::string&& name, glm::mat4 mat) {
-        glUniformMatrix4fv(
-            glGetUniformLocation(program_, name.c_str()), 1, false, glm::value_ptr(mat));
+        glUniformMatrix4fv(get_location_of_uniform(std::move(name)), 1, false, glm::value_ptr(mat));
         check_error();
     }
 
@@ -132,7 +130,17 @@ class Shader {
         GLenum err = glGetError();
         if (err != GL_NO_ERROR) {
             fmt::print("OpenGL operation error: {}\n", err);
+            abort();
         }
+    }
+
+    GLint get_location_of_uniform(std::string&& name) {
+        const auto loc = glGetUniformLocation(program_, name.c_str());
+        if (loc == -1) {
+            fmt::print("{} is not a valid uniform\n", name);
+            abort();
+        }
+        return loc;
     }
 
    private:
