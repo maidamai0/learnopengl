@@ -207,12 +207,12 @@ int main(int argc, char **argv) {
     object_shader.SetAttribute("aTexCoords", 2);
 
     // texture
-    Texture tex("container2.png");
-    (void)tex;
+    Texture diffuse_map("container2.png");
+    Texture specular_map("container2_specular.png");
 
     auto object_color = glm::vec3(1.0f, 0.5f, 0.31f);
     object_shader.SetInt("material.diffuse", 0);
-    object_shader.SetVec3("material.specular", glm::vec3(0.5f, 0.5f, 0.5f));
+    object_shader.SetInt("material.specular", 1);
     object_shader.SetFloat("material.shininess", 64.0f);
     object_shader.SetMat4(
         "model", glm::rotate(glm::mat4(1.0f), glm::radians(45.0f), glm::vec3(1.0f, 0.3f, 0.0f)));
@@ -250,7 +250,9 @@ int main(int argc, char **argv) {
         object_shader.SetVec3("light.position", g_lightPos);
 
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, tex.GetTextureID());
+        glBindTexture(GL_TEXTURE_2D, diffuse_map.GetTextureID());
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, specular_map.GetTextureID());
         glBindVertexArray(vao_object);
         glDrawArrays(GL_TRIANGLES, 0, 36);
 
