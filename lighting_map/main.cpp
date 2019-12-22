@@ -209,10 +209,12 @@ int main(int argc, char **argv) {
     // texture
     Texture diffuse_map("container2.png");
     Texture specular_map("container2_specular.png");
+    Texture emission_map("matrix.jpg");
 
     auto object_color = glm::vec3(1.0f, 0.5f, 0.31f);
     object_shader.SetInt("material.diffuse", 0);
     object_shader.SetInt("material.specular", 1);
+    object_shader.SetInt("material.emission", 2);
     object_shader.SetFloat("material.shininess", 64.0f);
     object_shader.SetMat4(
         "model", glm::rotate(glm::mat4(1.0f), glm::radians(45.0f), glm::vec3(1.0f, 0.3f, 0.0f)));
@@ -253,6 +255,8 @@ int main(int argc, char **argv) {
         glBindTexture(GL_TEXTURE_2D, diffuse_map.GetTextureID());
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, specular_map.GetTextureID());
+        glActiveTexture(GL_TEXTURE2);
+        glBindTexture(GL_TEXTURE_2D, emission_map.GetTextureID());
         glBindVertexArray(vao_object);
         glDrawArrays(GL_TRIANGLES, 0, 36);
 
