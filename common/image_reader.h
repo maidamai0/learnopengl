@@ -11,10 +11,10 @@
  *
  */
 
+#include <string>
+
 #include "fmt/core.h"
 #include "stb/stb_image.h"
-
-#include <string>
 
 #ifdef _WIN32
 // documentation here:
@@ -42,7 +42,15 @@ class ImageReader {
 
         stdfs::path path_info(image_path);
         if (path_info.extension().generic_string() == std::string(".png")) {
-            image_type_ = GL_RGBA;
+            switch (num_of_color_channels_) {
+                case 1: image_type_ = GL_RED; break;
+                case 3: image_type_ = GL_RGB; break;
+                case 4: image_type_ = GL_RGBA; break;
+                default:
+                    fmt::print("unkonwn image type:{}\n", num_of_color_channels_);
+                    abort();
+                    break;
+            }
         }
 
         fmt::print("image[{}], width:{}, height:{}, channels:{}\n",
