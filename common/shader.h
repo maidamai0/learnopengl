@@ -25,7 +25,9 @@
 
 class Shader {
    public:
-    Shader(std::string&& vertex_source_path, std::string&& fragment_source_path) {
+    Shader(std::string&& vertex_source_path, std::string&& fragment_source_path,
+           const GLsizei stride = 0)
+        : stride_{stride} {
         // create vertex shader
         std::string source_tmp = read_shader_source(vertex_source_path);
         const auto vertex_source = source_tmp.c_str();
@@ -56,6 +58,7 @@ class Shader {
         // use
         Use();
     }
+
     ~Shader() {
         glDeleteProgram(program_);
     }
@@ -81,6 +84,26 @@ class Shader {
     auto SetMat4(std::string&& name, glm::mat4 mat) {
         glUniformMatrix4fv(get_location_of_uniform(std::move(name)), 1, false, glm::value_ptr(mat));
         check_error();
+    }
+
+    auto SetInt(std::string&& name, const int value) {
+        glUniform1i(get_location_of_uniform(std::move(name)), value);
+        check_error();
+    }
+
+    auto SetAttribute(std::string&& name, const GLint size) {
+        assert(stride_ > 0 && "set a valid stride before use this functionn");
+        const auto loc = get_location_of_attribute(std::move(name));
+        glVertexAttribPointer(loc,
+                              size,
+                              GL_FLOAT,
+                              false,
+                              stride_ * sizeof(float),
+                              (void*)(vertex_position_ * sizeof(float)));
+        vertex_position_ += size;
+        assert(vertex_position_ <= stride_ && "position out of range");
+        check_error();
+        glEnableVertexAttribArray(loc);
     }
 
    private:
@@ -131,10 +154,10 @@ class Shader {
         return true;
     }
 
-    void check_error() const {
-        GLenum err = glGetError();
-        if (err != GL_NO_ERROR) {
-            fmt::print("OpenGL operation error: {}\n", err);
+    void check_error() {
+        err_ = glGetError();
+        if (err_ != GL_NO_ERROR) {
+            fmt::print("OpenGL operation error: {}\n", err_);
             abort();
         }
     }
@@ -148,6 +171,18 @@ class Shader {
         return loc;
     }
 
+    GLint get_location_of_attribute(std::string&& name) {
+        const auto loc = glGetAttribLocation(program_, name.c_str());
+        if (loc == -1) {
+            fmt::print("{} is not a valid attribute\n", name);
+            abort();
+        }
+        return loc;
+    }
+
    private:
     GLuint program_{std::numeric_limits<GLuint>::max()};  // invalid value.
+    const GLsizei stride_{0};
+    GLint vertex_position_{0};  // current position of vertex data set by glVertexAttribPointer
+    GLenum err_{GL_NO_ERROR};
 };
