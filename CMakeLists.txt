@@ -22,10 +22,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin)
 # generate compile_commands.json if possible
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_VERBOSE_MAKEFILE ON)
-
-# clang-tidy
-# TODO header files-not found
-# set(CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,readability-*,cppcoreguidelines-*,clang-analyzer-*,modernize-*,google-* -fix --list-checks)
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS YES CACHE BOOL "Export all symbols")
 
 # library compilation
 set(BUILD_SHARED_LIBS ON)
@@ -42,6 +39,10 @@ include_directories(./
 
 # compile 3rdparty libs
 add_subdirectory(3rdparty)
+
+# clang-tidy
+# TODO header files-not found
+set(CMAKE_CXX_CLANG_TIDY clang-tidy --fix --fix-errors)
 
 # glfw required this macro for DLL version
 # add_compile_definitions(GLFW_DLL)
@@ -91,7 +92,7 @@ endif ()
 
 if (MSVC)
   set(COMMON_COMPILE_FLAGS /EHsc)
-  set(PEDANTIC_COMPILE_FLAGS /W4)
+  set(PEDANTIC_COMPILE_FLAGS /W3)
   set(WERROR_FLAG /WX)
 endif ()
 
@@ -118,3 +119,4 @@ add_subdirectory(color)
 add_subdirectory(basic_lighting)
 add_subdirectory(materials)
 add_subdirectory(lighting_map)
+

@@ -9,7 +9,7 @@
 
 #include "common/glfw_helpper.h"
 
-int main(int argc, char **argv) {
+auto main(int argc, char **argv) -> int {
     (void)argc;
     (void)argv;
     // set error callback
@@ -45,7 +45,7 @@ int main(int argc, char **argv) {
     glDepthFunc(GL_LESS);
 
     // triangle point
-    float points[] = {0.0f, 0.5f, 0.0f, 0.5f, -0.5f, 0.0f, -0.5f, -0.5, 0.0f};
+    float points[] = {0.0F, 0.5F, 0.0F, 0.5F, -0.5F, 0.0F, -0.5F, -0.5, 0.0F};
 
     // copy data to graphical card with vbo
     GLuint vbo = 0;

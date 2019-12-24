@@ -13,10 +13,10 @@
 // point for rectangle
 static const float rect[] =
 {
-    0.5f, 0.5f, 0.0f,
-    0.5f, -0.5f, 0.0f,
-    -0.5f, -0.5f, 0.0f,
-    -0.5f, 0.5f, 0.0f
+    0.5F, 0.5F, 0.0F,
+    0.5F, -0.5F, 0.0F,
+    -0.5F, -0.5F, 0.0F,
+    -0.5F, 0.5F, 0.0F
 };
 
 // index for two triangles
@@ -27,7 +27,7 @@ static const unsigned int indices[] =
 };
 // clang-format on
 
-int main(int argc, char **argv) {
+auto main(int argc, char **argv) -> int {
     (void)argc;
     (void)argv;
 
@@ -116,7 +116,8 @@ int main(int argc, char **argv) {
     glBindVertexArray(0);
 
     // set viewport
-    int height = 0, width = 0;
+    int height = 0;
+    int width = 0;
     glfwGetFramebufferSize(pWd, &width, &height);
     glViewport(0, 0, width, height);
 

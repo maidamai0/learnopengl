@@ -9,7 +9,7 @@
 
 #include "common/glfw_helpper.h"
 
-int main(int argc, char **argv) {
+auto main(int argc, char **argv) -> int {
     (void)argc;
     (void)argv;
 
@@ -41,7 +41,8 @@ int main(int argc, char **argv) {
     fmt::print("OpenGL version:{}.{}\n", GLVersion.major, GLVersion.minor);
 
     // set viewport
-    int height = 0, width = 0;
+    int height = 0;
+    int width = 0;
     glfwGetFramebufferSize(pWd, &width, &height);
     glViewport(0, 0, width, height);
 

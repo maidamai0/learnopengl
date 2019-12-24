@@ -8,16 +8,16 @@
 
 namespace {
 float g_texture_ratio = 0.5;
-float g_x_rotate = -55.0f;
-const auto g_screen_width = 1920.0f;
-const auto g_screen_height = 1080.0f;
+float g_x_rotate = -55.0F;
+const auto g_screen_width = 1920.0F;
+const auto g_screen_height = 1080.0F;
 auto g_last_pos_x = 0.0;
 auto g_last_pos_y = 0.0;
 
 Camera g_camera({0.0f, 0.0f, 5.0f});
 
-auto g_delta_time = 0.0f;
-auto g_last_frame = 0.0f;
+auto g_delta_time = 0.0F;
+auto g_last_frame = 0.0F;
 
 // lighting
 glm::vec3 g_lightPos(0.2f, 1.0f, 2.0f);
@@ -28,47 +28,47 @@ glm::vec3 g_lightPos(0.2f, 1.0f, 2.0f);
 // clang-format off
 float vertices[] = {
     // positions          // normals           // texture coords
-    -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
-     0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
-     0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
-    -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
+    -0.5F, -0.5F, -0.5F,  0.0F,  0.0F, -1.0F,  0.0F, 0.0F,
+     0.5F, -0.5F, -0.5F,  0.0F,  0.0F, -1.0F,  1.0F, 0.0F,
+     0.5F,  0.5F, -0.5F,  0.0F,  0.0F, -1.0F,  1.0F, 1.0F,
+     0.5F,  0.5F, -0.5F,  0.0F,  0.0F, -1.0F,  1.0F, 1.0F,
+    -0.5F,  0.5F, -0.5F,  0.0F,  0.0F, -1.0F,  0.0F, 1.0F,
+    -0.5F, -0.5F, -0.5F,  0.0F,  0.0F, -1.0F,  0.0F, 0.0F,
 
-    -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
-     0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
-     0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
-    -0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
+    -0.5F, -0.5F,  0.5F,  0.0F,  0.0F, 1.0F,   0.0F, 0.0F,
+     0.5F, -0.5F,  0.5F,  0.0F,  0.0F, 1.0F,   1.0F, 0.0F,
+     0.5F,  0.5F,  0.5F,  0.0F,  0.0F, 1.0F,   1.0F, 1.0F,
+     0.5F,  0.5F,  0.5F,  0.0F,  0.0F, 1.0F,   1.0F, 1.0F,
+    -0.5F,  0.5F,  0.5F,  0.0F,  0.0F, 1.0F,   0.0F, 1.0F,
+    -0.5F, -0.5F,  0.5F,  0.0F,  0.0F, 1.0F,   0.0F, 0.0F,
 
-    -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
-    -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
+    -0.5F,  0.5F,  0.5F, -1.0F,  0.0F,  0.0F,  1.0F, 0.0F,
+    -0.5F,  0.5F, -0.5F, -1.0F,  0.0F,  0.0F,  1.0F, 1.0F,
+    -0.5F, -0.5F, -0.5F, -1.0F,  0.0F,  0.0F,  0.0F, 1.0F,
+    -0.5F, -0.5F, -0.5F, -1.0F,  0.0F,  0.0F,  0.0F, 1.0F,
+    -0.5F, -0.5F,  0.5F, -1.0F,  0.0F,  0.0F,  0.0F, 0.0F,
+    -0.5F,  0.5F,  0.5F, -1.0F,  0.0F,  0.0F,  1.0F, 0.0F,
 
-     0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-     0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
+     0.5F,  0.5F,  0.5F,  1.0F,  0.0F,  0.0F,  1.0F, 0.0F,
+     0.5F,  0.5F, -0.5F,  1.0F,  0.0F,  0.0F,  1.0F, 1.0F,
+     0.5F, -0.5F, -0.5F,  1.0F,  0.0F,  0.0F,  0.0F, 1.0F,
+     0.5F, -0.5F, -0.5F,  1.0F,  0.0F,  0.0F,  0.0F, 1.0F,
+     0.5F, -0.5F,  0.5F,  1.0F,  0.0F,  0.0F,  0.0F, 0.0F,
+     0.5F,  0.5F,  0.5F,  1.0F,  0.0F,  0.0F,  1.0F, 0.0F,
 
-    -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 1.0f,
-     0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
-     0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 0.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
+    -0.5F, -0.5F, -0.5F,  0.0F, -1.0F,  0.0F,  0.0F, 1.0F,
+     0.5F, -0.5F, -0.5F,  0.0F, -1.0F,  0.0F,  1.0F, 1.0F,
+     0.5F, -0.5F,  0.5F,  0.0F, -1.0F,  0.0F,  1.0F, 0.0F,
+     0.5F, -0.5F,  0.5F,  0.0F, -1.0F,  0.0F,  1.0F, 0.0F,
+    -0.5F, -0.5F,  0.5F,  0.0F, -1.0F,  0.0F,  0.0F, 0.0F,
+    -0.5F, -0.5F, -0.5F,  0.0F, -1.0F,  0.0F,  0.0F, 1.0F,
 
-    -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f,
-     0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 1.0f,
-     0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
-    -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f
+    -0.5F,  0.5F, -0.5F,  0.0F,  1.0F,  0.0F,  0.0F, 1.0F,
+     0.5F,  0.5F, -0.5F,  0.0F,  1.0F,  0.0F,  1.0F, 1.0F,
+     0.5F,  0.5F,  0.5F,  0.0F,  1.0F,  0.0F,  1.0F, 0.0F,
+     0.5F,  0.5F,  0.5F,  0.0F,  1.0F,  0.0F,  1.0F, 0.0F,
+    -0.5F,  0.5F,  0.5F,  0.0F,  1.0F,  0.0F,  0.0F, 0.0F,
+    -0.5F,  0.5F, -0.5F,  0.0F,  1.0F,  0.0F,  0.0F, 1.0F
 };
 // clang-format on
 
@@ -81,24 +81,24 @@ void key_callback_ratio(GLFWwindow *window, int key, int scan_code, int action, 
         glfwSetWindowShouldClose(window, GLFW_TRUE);  // not work
     } else if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
         fmt::print("GLFW_KEY_UP pressed\n");
-        g_texture_ratio += 0.1f;
+        g_texture_ratio += 0.1F;
 
-        if (g_texture_ratio > 1.0f) {
-            g_texture_ratio = 1.0f;
+        if (g_texture_ratio > 1.0F) {
+            g_texture_ratio = 1.0F;
         }
     } else if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
         fmt::print("GLFW_KEY_DOWN pressed\n");
-        g_texture_ratio -= 0.1f;
+        g_texture_ratio -= 0.1F;
 
-        if (g_texture_ratio < 0.0f) {
-            g_texture_ratio = 0.0f;
+        if (g_texture_ratio < 0.0F) {
+            g_texture_ratio = 0.0F;
         }
     } else if (key == GLFW_KEY_LEFT && action == GLFW_PRESS) {
         fmt::print("GLFW_KEY_LEFT pressed\n");
-        g_x_rotate -= 5.0f;
+        g_x_rotate -= 5.0F;
     } else if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS) {
         fmt::print("GLFW_KEY_RIGHT pressed\n");
-        g_x_rotate += 5.0f;
+        g_x_rotate += 5.0F;
     } else if (key == GLFW_KEY_W && action == GLFW_PRESS) {
         fmt::print("GLFW_KEY_W pressed\n");
         g_camera.ProcessKeyBoardEvent(CameraDirection::kForward, g_delta_time);
@@ -114,7 +114,7 @@ void key_callback_ratio(GLFWwindow *window, int key, int scan_code, int action, 
     }
 }
 
-void mouse_callback(GLFWwindow *, double x_pos, double y_pos) {
+void mouse_callback(GLFWwindow * /*unused*/, double x_pos, double y_pos) {
     static bool first_time = true;
     if (first_time) {
         first_time = false;
@@ -130,11 +130,11 @@ void mouse_callback(GLFWwindow *, double x_pos, double y_pos) {
     g_last_pos_y = y_pos;
 }
 
-void scroll_callback(GLFWwindow *, double, double y_offset) {
+void scroll_callback(GLFWwindow * /*unused*/, double /*unused*/, double y_offset) {
     g_camera.ProcessMouseScroll(static_cast<float>(y_offset));
 }
 
-int main(int argc, char **argv) {
+auto main(int argc, char **argv) -> int {
     (void)argc;
     (void)argv;
 

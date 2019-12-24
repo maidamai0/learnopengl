@@ -10,7 +10,7 @@
 #include "common/glfw_helpper.h"
 #include "common/shader.h"
 
-int main(int argc, char **argv) {
+auto main(int argc, char **argv) -> int {
     (void)argc;
     (void)argv;
     // set error callback
@@ -51,9 +51,9 @@ int main(int argc, char **argv) {
     // triangle point
     // clang-format off
     float vertices[] = {
-        -0.5f, -0.5f, 0.0f, 1.0f,0.0f,0.0f,
-        0.5f, -0.5f, 0.0f,  0.0f,1.0f,0.0f,
-        0.0f, 0.5, 0.0f,    0.0f,0.0f,1.0f
+        -0.5F, -0.5F, 0.0F, 1.0F,0.0F,0.0F,
+        0.5F, -0.5F, 0.0F,  0.0F,1.0F,0.0F,
+        0.0F, 0.5, 0.0F,    0.0F,0.0F,1.0F
     };
     // clang-format on
 

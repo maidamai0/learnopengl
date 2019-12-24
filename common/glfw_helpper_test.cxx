@@ -1,6 +1,6 @@
 #include "glfw_helpper.h"
 
-int main() {
+auto main() -> int {
     GLFW_GUARD;
     return 0;
 }

@@ -19,7 +19,7 @@ static const struct {
     float x, y;
     float r, g, b;
 } vertices[3] = {
-    {-0.6f, -0.4f, 1.f, 0.f, 0.f}, {0.6f, -0.4f, 0.f, 1.f, 0.f}, {0.f, 0.6f, 0.f, 0.f, 1.f}};
+    {-0.6F, -0.4F, 1.F, 0.F, 0.F}, {0.6F, -0.4F, 0.F, 1.F, 0.F}, {0.F, 0.6F, 0.F, 0.F, 1.F}};
 
 // vertex shader
 static const char *vertex_shader_text =
@@ -50,7 +50,7 @@ static const char *fragment_shader_text =
  * @param argv
  * @return int
  */
-int main(int argc, char **argv) {
+auto main(int argc, char **argv) -> int {
     UNUSED(argc);
     UNUSED(argv);
 
