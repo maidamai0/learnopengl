@@ -8,14 +8,14 @@
  * @date 2019-08-27
  *
  */
+#include "fmt/core.h"
+#include "fmt/format.h"
 
 // glad must be included before glfw
 // clang-format off
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 // clang-format on
-
-#include "fmt/core.h"
 
 #include <fstream>
 #include <sstream>

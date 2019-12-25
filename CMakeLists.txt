@@ -22,10 +22,12 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin)
 # generate compile_commands.json if possible
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_VERBOSE_MAKEFILE ON)
-set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS YES CACHE BOOL "Export all symbols")
+# set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS YES CACHE BOOL "Export all symbols")
 
 # library compilation
 set(BUILD_SHARED_LIBS ON)
+
+add_compile_definitions(FMT_HEADER_ONLY)
 
 # 3rdparty headers
 include_directories(./ 
@@ -39,6 +41,10 @@ include_directories(./
 
 # compile 3rdparty libs
 add_subdirectory(3rdparty)
+
+# TODO move all 3rdparty to dependency
+set(ASSIMP_BUILD_TESTS OFF)
+add_subdirectory(dependency)
 
 # clang-tidy
 # TODO header files-not found
@@ -99,7 +105,7 @@ endif ()
 add_compile_options(${COMMON_COMPILE_FLAGS} ${PEDANTIC_COMPILE_FLAGS} ${WERROR_FLAG})
 
 # add 3rdparty lib
-link_libraries(fmt glfw glad)
+link_libraries(glfw glad)
 
 # compile common libs
 add_subdirectory(common)
