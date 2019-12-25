@@ -47,7 +47,6 @@ include_directories(./
 add_subdirectory(3rdparty)
 
 # TODO move all 3rdparty to dependency
-set(ASSIMP_BUILD_TESTS OFF)
 add_subdirectory(dependency)
 
 # clang-tidy

@@ -1,3 +1,6 @@
 [submodule "dependency/fmt"]
 	path = dependency/fmt
 	url = https://github.com/fmtlib/fmt.git
+[submodule "dependency/assimp"]
+	path = dependency/assimp
+	url = https://github.com/assimp/assimp.git
