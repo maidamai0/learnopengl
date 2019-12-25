@@ -6,7 +6,10 @@
                 "${workspaceFolder}/",
                 "${workspaceFolder}/dependency/glm/include",
                 "${workspaceFolder}/dependency/fmt/include",
-                "${workspaceFolder}/dependency/glad/include"
+                "${workspaceFolder}/dependency/glad/include",
+                "${workspaceFolder}/dependency/assimp/include",
+                "${workspaceFolder}/build/dependency/assimp/include",
+                "${workspaceFolder}/dependency/stb/include"
             ],
             "defines": [
                 "_DEBUG",

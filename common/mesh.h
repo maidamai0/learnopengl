@@ -15,16 +15,17 @@
 #include "common/shader.h"
 #include "glm/glm.hpp"
 
-
+namespace mesh {
 struct Vertex {
-    glm::vec3 Position;
-    glm::vec3 Normal;
-    glm::vec2 Texcoord;
+    glm::vec3 Position{0.0F};
+    glm::vec3 Normal{0.0F};
+    glm::vec2 Texcoord{0.0F};
 };
 
 struct Texture {
-    unsigned int id;
+    unsigned int id = 0;
     std::string type;
+    std::string path;
 };
 
 class Mesh {
@@ -34,7 +35,7 @@ class Mesh {
         setup_mesh();
     }
     ~Mesh();
-    void Draw(Shader& shader) {
+    void Draw(Shader& shader) const {
         unsigned int diffuseNr = 1;
         unsigned int specularNr = 1;
         for (unsigned int i = 0; i < textures.size(); ++i) {
@@ -107,3 +108,4 @@ class Mesh {
 };
 
 Mesh::~Mesh() {}
+}  // namespace mesh
