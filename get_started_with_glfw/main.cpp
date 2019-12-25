@@ -7,12 +7,12 @@
  *
  */
 
-#include "linmath/linmath.h"
+#include <functional>
 
 #include "common/define.h"
 #include "common/glfw_helpper.h"
+#include "dependency/glfw/deps/linmath.h"
 
-#include <functional>
 
 // vertex
 static const struct {

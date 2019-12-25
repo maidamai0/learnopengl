@@ -33,20 +33,15 @@ add_compile_definitions(FMT_HEADER_ONLY)
 # for msvc max min confilct
 add_compile_definitions(NOMINMAX)
 
-# 3rdparty headers
+# dependency headers
 include_directories(./ 
-                    3rdparty/glad/include
-                    3rdparty/glfw3/include
+                    dependency/glad/include
+                    dependency/glfw3/include
                     dependency/fmt/include
-                    3rdparty/linmath/include
-                    3rdparty/stb/include
-                    3rdparty/cxxopts/include
-                    3rdparty/glm/include)
+                    dependency/stb/include
+                    dependency/cxxopts/include
+                    dependency/glm/include)
 
-# compile 3rdparty libs
-add_subdirectory(3rdparty)
-
-# TODO move all 3rdparty to dependency
 add_subdirectory(dependency)
 
 # clang-tidy
@@ -107,7 +102,7 @@ endif ()
 
 add_compile_options(${COMMON_COMPILE_FLAGS} ${PEDANTIC_COMPILE_FLAGS} ${WERROR_FLAG})
 
-# add 3rdparty lib
+# add dependency lib
 link_libraries(glfw glad)
 
 # compile common libs

@@ -3,14 +3,7 @@
         {
             "name": "Win32-csdc",
             "includePath": [
-                "${workspaceFolder}/",
-                "${workspaceFolder}/3rdparty/glfw3/include/",
-                "${workspaceFolder}/3rdparty/glad/include/",
-                "${workspaceFolder}/3rdparty/fmt/include/",
-                "${workspaceFolder}/3rdparty/linmath/include/",
-                "${workspaceFolder}/3rdparty/stb/include/",
-                "${workspaceFolder}/3rdparty/cxxopts/include/",
-                "${workspaceFolder}/3rdparty/glm/include/"
+                "${workspaceFolder}/"
             ],
             "defines": [
                 "_DEBUG",
@@ -24,7 +17,8 @@
             "cStandard": "c11",
             "cppStandard": "c++17",
             "intelliSenseMode": "msvc-x64",
-            "configurationProvider": "go2sh.cmake-integration"
+            "configurationProvider": "go2sh.cmake-integration",
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json"
         }
     ],
     "version": 4

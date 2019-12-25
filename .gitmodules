@@ -4,3 +4,15 @@
 [submodule "dependency/assimp"]
 	path = dependency/assimp
 	url = https://github.com/assimp/assimp.git
+[submodule "dependency/glm/include"]
+	path = dependency/glm/include
+	url = https://github.com/g-truc/glm.git
+[submodule "dependency/cxxopts/include"]
+	path = dependency/cxxopts/include
+	url = https://github.com/jarro2783/cxxopts.git
+[submodule "dependency/glfw"]
+	path = dependency/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "dependency/stb/include/stb"]
+	path = dependency/stb/include/stb
+	url = https://github.com/nothings/stb
