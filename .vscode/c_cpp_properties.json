@@ -3,7 +3,10 @@
         {
             "name": "Win32-csdc",
             "includePath": [
-                "${workspaceFolder}/"
+                "${workspaceFolder}/",
+                "${workspaceFolder}/dependency/glm/include",
+                "${workspaceFolder}/dependency/fmt/include",
+                "${workspaceFolder}/dependency/glad/include"
             ],
             "defines": [
                 "_DEBUG",

@@ -62,6 +62,19 @@
         "xstddef": "cpp",
         "xtr1common": "cpp",
         "xtree": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "array": "cpp",
+        "bitset": "cpp",
+        "clocale": "cpp",
+        "deque": "cpp",
+        "forward_list": "cpp",
+        "hash_map": "cpp",
+        "hash_set": "cpp",
+        "mutex": "cpp",
+        "numeric": "cpp",
+        "set": "cpp",
+        "stack": "cpp",
+        "variant": "cpp",
+        "format": "cpp"
     }
 }
