@@ -1,4 +1,4 @@
 build/
 *.user
-dependency/*
-!dependency/CMakeLists.txt
+# dependency/*
+# !dependency/CMakeLists.txt

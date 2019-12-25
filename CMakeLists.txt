@@ -27,13 +27,17 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 # library compilation
 set(BUILD_SHARED_LIBS ON)
 
+# use fmt as header only
 add_compile_definitions(FMT_HEADER_ONLY)
+
+# for msvc max min confilct
+add_compile_definitions(NOMINMAX)
 
 # 3rdparty headers
 include_directories(./ 
                     3rdparty/glad/include
                     3rdparty/glfw3/include
-                    3rdparty/fmt/include
+                    dependency/fmt/include
                     3rdparty/linmath/include
                     3rdparty/stb/include
                     3rdparty/cxxopts/include
@@ -98,7 +102,7 @@ endif ()
 
 if (MSVC)
   set(COMMON_COMPILE_FLAGS /EHsc)
-  set(PEDANTIC_COMPILE_FLAGS /W3)
+  set(PEDANTIC_COMPILE_FLAGS /W3 /wd4267)
   set(WERROR_FLAG /WX)
 endif ()
 
