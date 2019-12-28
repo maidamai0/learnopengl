@@ -34,13 +34,15 @@ add_compile_definitions(FMT_HEADER_ONLY)
 add_compile_definitions(NOMINMAX)
 
 # dependency headers
-include_directories(./ 
-                    dependency/glad/include
-                    dependency/glfw3/include
-                    dependency/fmt/include
-                    dependency/stb/include
-                    dependency/cxxopts/include
-                    dependency/glm/include)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}
+                    ${CMAKE_CURRENT_SOURCE_DIR}/dependency/glad/include
+                    ${CMAKE_CURRENT_SOURCE_DIR}/dependency/glfw3/include
+                    ${CMAKE_CURRENT_SOURCE_DIR}/dependency/fmt/include
+                    ${CMAKE_CURRENT_SOURCE_DIR}/dependency/stb/include
+                    ${CMAKE_CURRENT_SOURCE_DIR}/dependency/cxxopts/include
+                    ${CMAKE_CURRENT_SOURCE_DIR}/dependency/glm/include
+                    ${CMAKE_CURRENT_SOURCE_DIR}/dependency/assimp/include
+                    ${CMAKE_BINARY_DIR}/dependency/assimp/include)
 
 add_subdirectory(dependency)
 
@@ -103,7 +105,7 @@ endif ()
 add_compile_options(${COMMON_COMPILE_FLAGS} ${PEDANTIC_COMPILE_FLAGS} ${WERROR_FLAG})
 
 # add dependency lib
-link_libraries(glfw glad)
+link_libraries(glfw glad assimp)
 
 # compile common libs
 add_subdirectory(common)
@@ -123,4 +125,5 @@ add_subdirectory(color)
 add_subdirectory(basic_lighting)
 add_subdirectory(materials)
 add_subdirectory(lighting_map)
+add_subdirectory(model)
 

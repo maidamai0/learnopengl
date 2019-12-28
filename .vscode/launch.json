@@ -102,6 +102,18 @@
             "cwd": "${workspaceFolder}/build/bin/",
             "environment": [],
             "externalConsole": false
+        },
+        {
+            "name": "model",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "model.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build/bin/",
+            "environment": [],
+            "externalConsole": false
         }
     ]
+]
 }

@@ -23,6 +23,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
+
 class Shader {
    public:
     Shader(std::string&& vertex_source_path, std::string&& fragment_source_path,
@@ -157,8 +158,8 @@ class Shader {
     void check_error() {
         err_ = glGetError();
         if (err_ != GL_NO_ERROR) {
-            fmt::print("OpenGL operation error: {}\n", err_);
-            abort();
+            fmt::print("WARN:OpenGL operation error: {}\n", err_);
+            // abort();
         }
     }
 
@@ -166,7 +167,7 @@ class Shader {
         const auto loc = glGetUniformLocation(program_, name.c_str());
         if (loc == -1) {
             fmt::print("{} is not a valid uniform\n", name);
-            abort();
+            // abort();
         }
         return loc;
     }

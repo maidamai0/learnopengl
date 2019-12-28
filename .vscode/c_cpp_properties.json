@@ -9,7 +9,8 @@
                 "${workspaceFolder}/dependency/glad/include",
                 "${workspaceFolder}/dependency/assimp/include",
                 "${workspaceFolder}/build/dependency/assimp/include",
-                "${workspaceFolder}/dependency/stb/include"
+                "${workspaceFolder}/dependency/stb/include",
+                "${workspaceFolder}/dependency/glfw/include"
             ],
             "defines": [
                 "_DEBUG",

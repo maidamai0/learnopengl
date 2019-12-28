@@ -18,10 +18,9 @@
 #include "common/mesh.h"
 #include "common/texture.h"
 
-
 class Model {
    public:
-    Model(std::string&& path) {
+    Model(std::string&& path, const bool gamma = false) : gammaCorrection{gamma} {
         load_model(std::move(path));
     }
     void Draw(Shader& shader) {
@@ -34,8 +33,8 @@ class Model {
    private:
     void load_model(std::string&& path) {
         Assimp::Importer importer;
-        const auto scene =
-            importer.ReadFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs);
+        const auto scene = importer.ReadFile(
+            path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
         if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
             fmt::print("assimp load model failed:{}\n", importer.GetErrorString());
@@ -60,7 +59,7 @@ class Model {
     mesh::Mesh process_mesh(aiMesh* mesh, const aiScene* scene) {
         std::vector<mesh::Vertex> vertices;
         std::vector<unsigned int> ids;
-        std::vector<Texture> texs;
+        std::vector<mesh::Texture> texs;
 
         for (unsigned int i = 0; i < mesh->mNumVertices; ++i) {
             mesh::Vertex vtx;
@@ -76,13 +75,24 @@ class Model {
 
             // texcoord
             if (mesh->mTextureCoords[0]) {
-                vtx.Texcoord.x = mesh->mTextureCoords[0][i].x;
-                vtx.Texcoord.y = mesh->mTextureCoords[0][i].y;
+                vtx.TexCoords.x = mesh->mTextureCoords[0][i].x;
+                vtx.TexCoords.y = mesh->mTextureCoords[0][i].y;
             }
+
+            // Tangents
+            vtx.Tangent.x = mesh->mTangents[i].x;
+            vtx.Tangent.y = mesh->mTangents[i].y;
+            vtx.Tangent.z = mesh->mTangents[i].z;
+
+            // bittangent
+            vtx.Bitangent.x = mesh->mBitangents[i].x;
+            vtx.Bitangent.y = mesh->mBitangents[i].y;
+            vtx.Bitangent.z = mesh->mBitangents[i].z;
 
             vertices.push_back(vtx);
         }
 
+        // faces
         for (unsigned int i = 0; i < mesh->mNumFaces; ++i) {
             auto face = mesh->mFaces[i];
             for (unsigned j = 0; j < face.mNumIndices; ++j) {
@@ -94,13 +104,22 @@ class Model {
         if (mesh->mMaterialIndex >= 0) {
             auto material = scene->mMaterials[mesh->mMaterialIndex];
             std::vector<mesh::Texture> diffuse_maps =
-                load_material_textures(material, aiTextureType_DIFFUSE, "material_diffuse");
+                load_material_textures(material, aiTextureType_DIFFUSE, "texture_diffuse");
             texs.insert(texs.end(), diffuse_maps.begin(), diffuse_maps.end());
             std::vector<mesh::Texture> specular_maps =
-                load_material_textures(material, aiTextureType_SPECULAR, "material_specular");
+                load_material_textures(material, aiTextureType_SPECULAR, "texture_specular");
             texs.insert(texs.end(), specular_maps.begin(), specular_maps.end());
+            std::vector<mesh::Texture> normal_maps =
+                load_material_textures(material, aiTextureType_HEIGHT, "texture_normal");
+            texs.insert(texs.end(), normal_maps.begin(), normal_maps.end());
+            std::vector<mesh::Texture> height_maps =
+                load_material_textures(material, aiTextureType_AMBIENT, "texture_height");
+            texs.insert(texs.end(), height_maps.begin(), height_maps.end());
         }
+
+        return {std::move(vertices), std::move(ids), std::move(texs)};
     }
+
     std::vector<mesh::Texture> load_material_textures(aiMaterial* mat, aiTextureType type,
                                                       std::string type_name) {
         std::vector<mesh::Texture> texs;
@@ -109,7 +128,7 @@ class Model {
             mat->GetTexture(type, i, &str);
             bool skip = false;
             for (const auto tex : textures_loaded_) {
-                if (tex.path == std::string(str.C_Str)) {
+                if (tex.path == std::string(str.C_Str())) {
                     skip = true;
                     texs.push_back(tex);
                     break;
@@ -132,6 +151,5 @@ class Model {
     std::vector<mesh::Mesh> meshes_;
     std::string directory_;
     std::vector<mesh::Texture> textures_loaded_;
+    bool gammaCorrection = false;
 };
-
-Model::~Model() {}
