@@ -126,4 +126,4 @@ add_subdirectory(basic_lighting)
 add_subdirectory(materials)
 add_subdirectory(lighting_map)
 add_subdirectory(model)
-
+add_subdirectory(frame_buffer)
