@@ -13,7 +13,6 @@
 #include "common/glfw_helpper.h"
 #include "dependency/glfw/deps/linmath.h"
 
-
 // vertex
 static const struct {
     float x, y;
@@ -124,6 +123,7 @@ auto main(int argc, char **argv) -> int {
     glVertexAttribPointer(
         vcol_location, 3, GL_FLOAT, GL_FALSE, sizeof(vertices[0]), (void *)(sizeof(float) * 2));
 
+    glfwMaximizeWindow(pWd);
     // running until exit
     while (!glfwWindowShouldClose(pWd)) {
         // rendering
