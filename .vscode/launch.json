@@ -5,109 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "hello_opengl",
+            "name": "debug",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "hello_opengl.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/build/bin/",
-            "environment": [],
-            "externalConsole": false
-        },
-        {
-            "name": "hello_rectangle",
-            "type": "cppvsdbg",
-            "request": "launch",
-            "program": "hello_rectangle.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/build/bin/",
-            "environment": [],
-            "externalConsole": false
-        },
-        {
-            "name": "hello_triangle",
-            "type": "cppvsdbg",
-            "request": "launch",
-            "program": "hello_triangle.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/build/bin/",
-            "environment": [],
-            "externalConsole": false
-        },
-        {
-            "name": "vao_and_shader",
-            "type": "cppvsdbg",
-            "request": "launch",
-            "program": "vao_and_shader.exe",
-            "args": [],
-            "stopAtEntry": true,
-            "cwd": "${workspaceFolder}/build/bin/",
-            "environment": [],
-            "externalConsole": false
-        },
-        {
-            "name": "get_started_with_glfw",
-            "type": "cppvsdbg",
-            "request": "launch",
-            "program": "get_started_with_glfw.exe",
-            "args": [],
-            "stopAtEntry": true,
-            "cwd": "${workspaceFolder}/build/bin/",
-            "environment": [],
-            "externalConsole": false
-        },
-        {
-            "name": "camera",
-            "type": "cppvsdbg",
-            "request": "launch",
-            "program": "camera.exe",
-            "args": [],
-            "stopAtEntry": true,
-            "cwd": "${workspaceFolder}/build/bin/",
-            "environment": [],
-            "externalConsole": false
-        },
-        {
-            "name": "basic_lighting",
-            "type": "cppvsdbg",
-            "request": "launch",
-            "program": "basic_lighting.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/build/bin/",
-            "environment": [],
-            "externalConsole": false
-        },
-        {
-            "name": "materials",
-            "type": "cppvsdbg",
-            "request": "launch",
-            "program": "materials.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/build/bin/",
-            "environment": [],
-            "externalConsole": false
-        },
-        {
-            "name": "lighting_map",
-            "type": "cppvsdbg",
-            "request": "launch",
-            "program": "lighting_map.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/build/bin/",
-            "environment": [],
-            "externalConsole": false
-        },
-        {
-            "name": "model",
-            "type": "cppvsdbg",
-            "request": "launch",
-            "program": "model.exe",
+            "program": "${command:cmake.launchTargetPath}",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/build/bin/",
@@ -115,5 +16,4 @@
             "externalConsole": false
         }
     ]
-]
 }

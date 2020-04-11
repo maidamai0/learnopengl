@@ -48,7 +48,7 @@ auto main(int argc, char **argv) -> int {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    auto pWd = glfwCreateWindow(640, 480, "hello, opengl", nullptr, nullptr);
+    auto pWd = glfwCreateWindow(640, 480, "hello, triangle", nullptr, nullptr);
     if (!pWd) {
         fmt::print("create window failed!\n");
     }

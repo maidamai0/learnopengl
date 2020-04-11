@@ -2,3 +2,4 @@ build/
 *.user
 # dependency/*
 # !dependency/CMakeLists.txt
+.clangd

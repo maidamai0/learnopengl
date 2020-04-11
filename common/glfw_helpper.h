@@ -8,6 +8,7 @@
  * @date 2019-08-27
  *
  */
+#include "common/common_headers.h"
 #include "fmt/core.h"
 #include "fmt/format.h"
 
@@ -17,6 +18,7 @@
 #include "GLFW/glfw3.h"
 // clang-format on
 
+#include <filesystem>
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -82,6 +84,7 @@ std::string read_shader(std::string &&shader_file_path) {
     std::stringstream buff;
     shader_reader.open(shader_file_path);
     if (!shader_reader.is_open()) {
+        auto current_path = fs::current_path();
         throw ::std::runtime_error("file not exist");
     }
     buff << shader_reader.rdbuf();
