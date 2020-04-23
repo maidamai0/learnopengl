@@ -11,6 +11,7 @@
  *
  */
 
+#include <array>
 #include <cassert>
 #include <fstream>
 #include <limits>
@@ -23,40 +24,14 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
-
-class Shader {
+class Shader final {
    public:
     Shader(std::string&& vertex_source_path, std::string&& fragment_source_path,
            const GLsizei stride = 0)
-        : stride_{stride} {
-        // create vertex shader
-        std::string source_tmp = read_shader_source(vertex_source_path);
-        const auto vertex_source = source_tmp.c_str();
-        GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-        glShaderSource(vertex_shader, 1, &vertex_source, nullptr);
-        glCompileShader(vertex_shader);
-        check_compile(vertex_shader, vertex_source);
-
-        // create fragment shader
-        source_tmp = read_shader_source(fragment_source_path);
-        const auto fragment_source = source_tmp.c_str();
-        GLuint fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-        glShaderSource(fragment_shader, 1, &fragment_source, nullptr);
-        glCompileShader(fragment_shader);
-        check_compile(fragment_shader, fragment_source);
-
-        // create program
-        program_ = glCreateProgram();
-        glAttachShader(program_, vertex_shader);
-        glAttachShader(program_, fragment_shader);
-        glLinkProgram(program_);
-        check_link(program_);
-
-        // delete shader
-        glDeleteShader(vertex_shader);
-        glDeleteShader(fragment_shader);
-
-        // use
+        : stride_{stride},
+          vertex_source_path_(vertex_source_path),
+          fragment_source_path_(fragment_source_path) {
+        init();
         Use();
     }
 
@@ -64,7 +39,13 @@ class Shader {
         glDeleteProgram(program_);
     }
 
-    auto GetProgram() const {
+    Shader(const Shader& lhs) = delete;
+    auto operator=(const Shader& lhs) -> Shader& = delete;
+
+    Shader(Shader&& lhs) = delete;
+    auto operator=(Shader&& lhs) -> Shader& = delete;
+
+    [[nodiscard]] auto GetProgram() const {
         return program_;
     }
 
@@ -83,7 +64,7 @@ class Shader {
     }
 
     auto SetMat4(std::string&& name, glm::mat4 mat) {
-        glUniformMatrix4fv(get_location_of_uniform(std::move(name)), 1, false, glm::value_ptr(mat));
+        glUniformMatrix4fv(get_location_of_uniform(std::move(name)), 1, 0U, glm::value_ptr(mat));
         check_error();
     }
 
@@ -98,7 +79,7 @@ class Shader {
         glVertexAttribPointer(loc,
                               size,
                               GL_FLOAT,
-                              false,
+                              0U,
                               stride_ * sizeof(float),
                               (void*)(vertex_position_ * sizeof(float)));
         vertex_position_ += size;
@@ -108,13 +89,42 @@ class Shader {
     }
 
    private:
+    auto init() -> void {
+        // create vertex shader
+        std::string source_tmp = read_shader_source(vertex_source_path_);
+        const auto vertex_source = source_tmp.c_str();
+        GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
+        glShaderSource(vertex_shader, 1, &vertex_source, nullptr);
+        glCompileShader(vertex_shader);
+        check_compile(vertex_shader, vertex_source);
+
+        // create fragment shader
+        source_tmp = read_shader_source(fragment_source_path_);
+        const auto fragment_source = source_tmp.c_str();
+        GLuint fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
+        glShaderSource(fragment_shader, 1, &fragment_source, nullptr);
+        glCompileShader(fragment_shader);
+        check_compile(fragment_shader, fragment_source);
+
+        // create program
+        program_ = glCreateProgram();
+        glAttachShader(program_, vertex_shader);
+        glAttachShader(program_, fragment_shader);
+        glLinkProgram(program_);
+        check_link(program_);
+
+        // delete shader
+        glDeleteShader(vertex_shader);
+        glDeleteShader(fragment_shader);
+    }
+
     /**
      * @brief read shader file, return shader source in std::string
      *
      * @param shader_file_path  file path
      * @return read_shader      shader source
      */
-    std::string read_shader_source(const std::string& shader_file_path) const {
+    static auto read_shader_source(const std::string& shader_file_path) -> std::string {
         std::ifstream shader_reader;
         std::stringstream buff;
         shader_reader.open(shader_file_path);
@@ -127,28 +137,28 @@ class Shader {
         return buff.str();
     }
 
-    bool check_compile(const GLuint shader, const GLchar* const shader_source) {
+    static auto check_compile(const GLuint shader, const GLchar* const shader_source) -> bool {
         GLint success = 0;
-        GLchar msg[512] = {0};
+        std::array<GLchar, 512> msg = {0};
 
         glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
         if (success != GL_TRUE) {
-            glGetShaderInfoLog(shader, sizeof(msg), nullptr, msg);
-            fmt::print(stderr, "compile shader failed:{}\nsource:{}\n", msg, shader_source);
+            glGetShaderInfoLog(shader, msg.size(), nullptr, msg.data());
+            fmt::print(stderr, "compile shader failed:{}\nsource:{}\n", msg.data(), shader_source);
             throw std::runtime_error("shader compile error");
         }
 
         return true;
     }
 
-    bool check_link(const GLuint link) {
+    static auto check_link(const GLuint link) -> bool {
         GLint success = 0;
-        GLchar msg[512] = {0};
+        std::array<GLchar, 512> msg = {0};
 
         glGetProgramiv(link, GL_LINK_STATUS, &success);
         if (success != GL_TRUE) {
-            glGetShaderInfoLog(link, sizeof(msg), nullptr, msg);
-            fmt::print("compile shader failed:{}\n", msg);
+            glGetShaderInfoLog(link, msg.size(), nullptr, msg.data());
+            fmt::print("compile shader failed:{}\n", msg.data());
             throw std::runtime_error("shader program link error");
         }
 
@@ -163,7 +173,7 @@ class Shader {
         }
     }
 
-    GLint get_location_of_uniform(std::string&& name) {
+    auto get_location_of_uniform(std::string&& name) -> GLint {
         const auto loc = glGetUniformLocation(program_, name.c_str());
         if (loc == -1) {
             fmt::print("{} is not a valid uniform\n", name);
@@ -172,7 +182,7 @@ class Shader {
         return loc;
     }
 
-    GLint get_location_of_attribute(std::string&& name) {
+    auto get_location_of_attribute(std::string&& name) -> GLint {
         const auto loc = glGetAttribLocation(program_, name.c_str());
         if (loc == -1) {
             fmt::print("{} is not a valid attribute\n", name);
@@ -186,4 +196,6 @@ class Shader {
     const GLsizei stride_{0};
     GLint vertex_position_{0};  // current position of vertex data set by glVertexAttribPointer
     GLenum err_{GL_NO_ERROR};
+    std::string vertex_source_path_;
+    std::string fragment_source_path_;
 };
