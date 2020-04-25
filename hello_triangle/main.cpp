@@ -24,8 +24,8 @@
 static const float vertices[] =
 {
     0.0F, 0.5F, 0.0F,
-    0.5F, 0.0F, 0.0F,
     0.0F, 0.0F, 0.0F,
+    0.5F, 0.0F, 0.0F,
 
 
     -0.5F, 0.0F, 0.0F,
@@ -46,10 +46,10 @@ auto main(int argc, char **argv) -> int {
 
     // create a window
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     auto pWd = glfwCreateWindow(640, 480, "hello, triangle", nullptr, nullptr);
-    if (!pWd) {
+    if (pWd == nullptr) {
         fmt::print("create window failed!\n");
     }
 
@@ -63,7 +63,7 @@ auto main(int argc, char **argv) -> int {
     glfwMakeContextCurrent(pWd);
 
     // initialize gl
-    if (!gladLoadGL()) {
+    if (gladLoadGL() == 0) {
         fmt::print("Load OpenGL failed!\n");
         return -1;
     }
@@ -136,9 +136,9 @@ auto main(int argc, char **argv) -> int {
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     // running until exit
-    while (!glfwWindowShouldClose(pWd)) {
+    while (glfwWindowShouldClose(pWd) == 0) {
         // clear color
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClearColor(0.0F, 0.0F, 0.0F, 1.0F);
         glClear(GL_COLOR_BUFFER_BIT);
 
         // draw triangle
