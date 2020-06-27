@@ -59,6 +59,9 @@ add_compile_options(-DGLFW_DLL)
 # add_compile_definitions(STB_IMAGE_IMPLEMENTATION)
 add_compile_options(-DSTB_IMAGE_IMPLEMENTATION)
 
+# resource path
+add_definitions(-DRES_PATH="${CMAKE_CURRENT_SOURCE_DIR}/res/")
+
 # compile flags
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
   set(PEDANTIC_COMPILE_FLAGS -pedantic-errors -Wall -Wextra -pedantic
@@ -89,7 +92,7 @@ endif ()
 if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   set(PEDANTIC_COMPILE_FLAGS -Wall -Wextra -pedantic -Wconversion
       -Wno-sign-conversion)
-  check_cxx_compiler_flag(-Wzero-as-null-pointer-constant HAS_NULLPTR_WARNING)
+
   if (HAS_NULLPTR_WARNING)
     set(PEDANTIC_COMPILE_FLAGS ${PEDANTIC_COMPILE_FLAGS}
         -Wzero-as-null-pointer-constant)

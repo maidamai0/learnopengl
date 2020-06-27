@@ -15,8 +15,10 @@
 #include <string>
 
 #include "common/image_reader.h"
+#include "common/path.h"
 #include "fmt/core.h"
 #include "glad/glad.h"
+
 
 class Texture {
    public:
@@ -33,7 +35,7 @@ class Texture {
         check_error();
 
         // read image to memory
-        ImageReader image_reader{std::move(image_path)};
+        ImageReader image_reader{get_resource_full_path(std::move(image_path))};
 
         // copy image data to OpenGL
         glTexImage2D(GL_TEXTURE_2D,

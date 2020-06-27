@@ -14,13 +14,13 @@ const auto g_screen_height = 1080.0F;
 auto g_last_pos_x = 0.0;
 auto g_last_pos_y = 0.0;
 
-Camera g_camera({0.0f, 0.0f, 5.0f});
+Camera g_camera({0.0F, 0.0F, 5.0F});
 
 auto g_delta_time = 0.0F;
 auto g_last_frame = 0.0F;
 
 // lighting
-glm::vec3 g_lightPos(0.2f, 1.0f, 2.0f);
+// glm::vec3 g_lightPos(0.2F, 1.0F, 2.0F);
 
 // clang-format off
     float g_cubeVertices[] = {
@@ -162,11 +162,11 @@ auto main(int argc, char **argv) -> int {
 
     GLFW_GUARD;
 
-    auto const mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+    const auto *const mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
     // create a window
-    auto pWd = glfwCreateWindow(mode->width, mode->height, "load model", nullptr, nullptr);
-    if (!pWd) {
+    auto *pWd = glfwCreateWindow(mode->width, mode->height, "load model", nullptr, nullptr);
+    if (pWd == nullptr) {
         fmt::print("create window failed!\n");
     }
     fmt::print("window size is {}x{}\n", mode->width, mode->height);
@@ -184,7 +184,7 @@ auto main(int argc, char **argv) -> int {
     glfwSetScrollCallback(pWd, scroll_callback);
 
     // initialize gl
-    if (!gladLoadGL()) {
+    if (gladLoadGL() == 0) {
         fmt::print("Load OpenGL failed!\n");
         return -1;
     }
@@ -201,42 +201,42 @@ auto main(int argc, char **argv) -> int {
     Shader screenShader("frame_buffer_screen.vs", "frame_buffer_screen.fs");
 
     // clear color
-    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+    glClearColor(0.1F, 0.1F, 0.1F, 1.0F);
 
     // cube VAO
-    unsigned int cubeVAO;
-    unsigned int cubeVBO;
+    unsigned int cubeVAO = 0;
+    unsigned int cubeVBO = 0;
     glGenVertexArrays(1, &cubeVAO);
     glGenBuffers(1, &cubeVBO);
     glBindVertexArray(cubeVAO);
     glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_cubeVertices), &g_cubeVertices, GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)nullptr);
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
     // plane VAO
-    unsigned int planeVAO;
-    unsigned int planeVBO;
+    unsigned int planeVAO = 0;
+    unsigned int planeVBO = 0;
     glGenVertexArrays(1, &planeVAO);
     glGenBuffers(1, &planeVBO);
     glBindVertexArray(planeVAO);
     glBindBuffer(GL_ARRAY_BUFFER, planeVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_planeVertices), &g_planeVertices, GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)nullptr);
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
     // screen quad VAO
-    unsigned int quadVAO;
-    unsigned int quadVBO;
+    unsigned int quadVAO = 0;
+    unsigned int quadVBO = 0;
     glGenVertexArrays(1, &quadVAO);
     glGenBuffers(1, &quadVBO);
     glBindVertexArray(quadVAO);
     glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_quadVertices), &g_quadVertices, GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)nullptr);
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)(2 * sizeof(float)));
 
@@ -251,11 +251,11 @@ auto main(int argc, char **argv) -> int {
 
     // framebuffer configuration
     // -------------------------
-    unsigned int framebuffer;
+    unsigned int framebuffer = 0;
     glGenFramebuffers(1, &framebuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
     // create a color attachment texture
-    unsigned int textureColorbuffer;
+    unsigned int textureColorbuffer = 0;
     glGenTextures(1, &textureColorbuffer);
     glBindTexture(GL_TEXTURE_2D, textureColorbuffer);
     glTexImage2D(GL_TEXTURE_2D,
@@ -266,13 +266,13 @@ auto main(int argc, char **argv) -> int {
                  0,
                  GL_RGB,
                  GL_UNSIGNED_BYTE,
-                 NULL);
+                 nullptr);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glFramebufferTexture2D(
         GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorbuffer, 0);
     // create a renderbuffer object for depth and stencil attachment (we won't be sampling these)
-    unsigned int rbo;
+    unsigned int rbo = 0;
     glGenRenderbuffers(1, &rbo);
     glBindRenderbuffer(GL_RENDERBUFFER, rbo);
     glRenderbufferStorage(
@@ -287,12 +287,14 @@ auto main(int argc, char **argv) -> int {
                               rbo);  // now actually attach it
     // now that we actually created the framebuffer and added all attachments we want to check if it
     // is actually complete now
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) { {
         fmt::print("ERROR::FRAMEBUFFER:: Framebuffer is not complete!");
+}
+}
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     // running until exit
-    while (!glfwWindowShouldClose(pWd)) {
+    while (glfwWindowShouldClose(pWd) == 0) {
         auto current_time = static_cast<float>(glfwGetTime());
         g_delta_time = current_time - g_last_frame;
         g_last_frame = current_time;
@@ -305,31 +307,31 @@ auto main(int argc, char **argv) -> int {
             GL_DEPTH_TEST);  // enable depth testing (is disabled for rendering screen-space quad)
 
         // make sure we clear the framebuffer's content
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        glClearColor(0.1F, 0.1F, 0.1F, 1.0F);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         shader.Use();
-        glm::mat4 model = glm::mat4(1.0f);
+        glm::mat4 model = glm::mat4(1.0F);
         glm::mat4 view = g_camera.GetViewMatrix();
         glm::mat4 projection = glm::perspective(
-            glm::radians(g_camera.GetZoom()), g_screen_width / g_screen_height, 0.1f, 100.0f);
+            glm::radians(g_camera.GetZoom()), g_screen_width / g_screen_height, 0.1F, 100.0F);
         shader.SetMat4("view", view);
         shader.SetMat4("projection", projection);
         // cubes
         glBindVertexArray(cubeVAO);
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, cube_texture.GetTextureID());
-        model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -1.0f));
+        model = glm::translate(model, glm::vec3(-1.0F, 0.0F, -1.0F));
         shader.SetMat4("model", model);
         glDrawArrays(GL_TRIANGLES, 0, 36);
-        model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+        model = glm::mat4(1.0F);
+        model = glm::translate(model, glm::vec3(2.0F, 0.0F, 0.0F));
         shader.SetMat4("model", model);
         glDrawArrays(GL_TRIANGLES, 0, 36);
         // floor
         glBindVertexArray(planeVAO);
         glBindTexture(GL_TEXTURE_2D, floor_texture.GetTextureID());
-        shader.SetMat4("model", glm::mat4(1.0f));
+        shader.SetMat4("model", glm::mat4(1.0F));
         glDrawArrays(GL_TRIANGLES, 0, 6);
         glBindVertexArray(0);
 
@@ -340,7 +342,7 @@ auto main(int argc, char **argv) -> int {
                                    // depth test.
         // clear all relevant buffers
         glClearColor(
-            1.0f, 1.0f, 1.0f, 1.0f);  // set clear color to white (not really necessery actually,
+            1.0F, 1.0F, 1.0F, 1.0F);  // set clear color to white (not really necessery actually,
                                       // since we won't be able to see behind the quad anyways)
         glClear(GL_COLOR_BUFFER_BIT);
 
