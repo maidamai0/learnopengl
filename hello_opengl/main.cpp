@@ -19,8 +19,8 @@ auto main(int argc, char **argv) -> int {
     glfwSetErrorCallback(err_callback);
 
     // create a window
-    auto pWd = glfwCreateWindow(640, 480, "hello, opengl", nullptr, nullptr);
-    if (!pWd) {
+    auto *pWd = glfwCreateWindow(640, 480, "hello, opengl", nullptr, nullptr);
+    if (pWd == nullptr) {
         fmt::print(stderr, "create window failed!\n");
     }
 
@@ -34,7 +34,7 @@ auto main(int argc, char **argv) -> int {
     glfwMakeContextCurrent(pWd);
 
     // initialize gl
-    if (!gladLoadGL()) {
+    if (gladLoadGL() == 0) {
         fmt::print("Load OpenGL failed!\n");
         return -1;
     }
@@ -49,10 +49,10 @@ auto main(int argc, char **argv) -> int {
     // buffer swapping setting
     glfwSwapInterval(1);
 
-    glClearColor(0.5f, 0.4f, 0.5f, 1.0f);
+    glClearColor(0.5F, 0.4F, 0.5F, 1.0F);
 
     // running until exit
-    while (!glfwWindowShouldClose(pWd)) {
+    while (glfwWindowShouldClose(pWd) == 0) {
         // rendering
         glClear(GL_COLOR_BUFFER_BIT);
 

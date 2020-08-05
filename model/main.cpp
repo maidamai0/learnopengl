@@ -15,13 +15,13 @@ const auto g_screen_height = 1080.0F;
 auto g_last_pos_x = 0.0;
 auto g_last_pos_y = 0.0;
 
-Camera g_camera({0.0f, 0.0f, 5.0f});
+Camera g_camera({0.0F, 0.0F, 5.0F});
 
 auto g_delta_time = 0.0F;
 auto g_last_frame = 0.0F;
 
 // lighting
-glm::vec3 g_lightPos(0.2f, 1.0f, 2.0f);
+glm::vec3 g_lightPos(0.2F, 1.0F, 2.0F);
 
 }  // namespace
 
@@ -96,11 +96,11 @@ auto main(int argc, char **argv) -> int {
 
     GLFW_GUARD;
 
-    auto const mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+    const auto *const mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
     // create a window
-    auto pWd = glfwCreateWindow(mode->width, mode->height, "load model", nullptr, nullptr);
-    if (!pWd) {
+    auto *pWd = glfwCreateWindow(mode->width, mode->height, "load model", nullptr, nullptr);
+    if (pWd == nullptr) {
         fmt::print("create window failed!\n");
     }
     fmt::print("window size is {}x{}\n", mode->width, mode->height);
@@ -118,7 +118,7 @@ auto main(int argc, char **argv) -> int {
     glfwSetScrollCallback(pWd, scroll_callback);
 
     // initialize gl
-    if (!gladLoadGL()) {
+    if (gladLoadGL() == 0) {
         fmt::print("Load OpenGL failed!\n");
         return -1;
     }
@@ -135,10 +135,10 @@ auto main(int argc, char **argv) -> int {
     Model render_model("nanosuit.obj");
 
     // clear color
-    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+    glClearColor(0.1F, 0.1F, 0.1F, 1.0F);
 
     // running until exit
-    while (!glfwWindowShouldClose(pWd)) {
+    while (glfwWindowShouldClose(pWd) == 0) {
         auto current_time = static_cast<float>(glfwGetTime());
         g_delta_time = current_time - g_last_frame;
         g_last_frame = current_time;
@@ -148,19 +148,19 @@ auto main(int argc, char **argv) -> int {
 
         // Draw object
         glm::mat4 projection = glm::perspective(
-            glm::radians(g_camera.GetZoom()), g_screen_width / g_screen_height, 0.1f, 100.0f);
+            glm::radians(g_camera.GetZoom()), g_screen_width / g_screen_height, 0.1F, 100.0F);
         glm::mat4 view = g_camera.GetViewMatrix();
         shader.SetMat4("projection", projection);
         shader.SetMat4("view", view);
 
         // render the loaded model
-        glm::mat4 model = glm::mat4(1.0f);
+        glm::mat4 model = glm::mat4(1.0F);
         model = glm::translate(
             model,
-            glm::vec3(0.0f, -1.75f, 0.0f));  // translate it down so it's at the center of the scene
+            glm::vec3(0.0F, -1.75F, 0.0F));  // translate it down so it's at the center of the scene
         model = glm::scale(
             model,
-            glm::vec3(0.2f, 0.2f, 0.2f));  // it's a bit too big for our scene, so scale it down
+            glm::vec3(0.2F, 0.2F, 0.2F));  // it's a bit too big for our scene, so scale it down
         shader.SetMat4("model", model);
         render_model.Draw(shader);
 

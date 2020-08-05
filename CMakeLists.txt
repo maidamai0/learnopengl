@@ -27,27 +27,19 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 # library compilation
 set(BUILD_SHARED_LIBS ON)
 
-# use fmt as header only
-add_compile_definitions(FMT_HEADER_ONLY)
-
 # for msvc max min confilct
 add_compile_definitions(NOMINMAX)
 
 # dependency headers
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}
                     ${CMAKE_CURRENT_SOURCE_DIR}/dependency/glad/include
-                    ${CMAKE_CURRENT_SOURCE_DIR}/dependency/fmt/include
-                    ${CMAKE_CURRENT_SOURCE_DIR}/dependency/stb/include
-                    ${CMAKE_CURRENT_SOURCE_DIR}/dependency/cxxopts/include
-                    ${CMAKE_CURRENT_SOURCE_DIR}/dependency/glm/include
-                    ${CMAKE_CURRENT_SOURCE_DIR}/dependency/freetype-2.10.1/include
 )
 
 add_subdirectory(dependency)
 
 # clang-tidy
 # TODO header files-not found
-set(CMAKE_CXX_CLANG_TIDY clang-tidy --fix --fix-errors)
+# set(CMAKE_CXX_CLANG_TIDY clang-tidy --fix --fix-errors)
 
 # std_image implementation switch
 # add_compile_definitions(STB_IMAGE_IMPLEMENTATION)
@@ -104,9 +96,13 @@ add_compile_options(${COMMON_COMPILE_FLAGS} ${PEDANTIC_COMPILE_FLAGS} ${WERROR_F
 
 find_package(assimp CONFIG REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
+find_package(freetype CONFIG REQUIRED)
+find_package(fmt CONFIG REQUIRED)
+find_package(cxxopts CONFIG REQUIRED)
+find_package(glm CONFIG REQUIRED)
 
 # add dependency lib
-link_libraries(glfw glad assimp::assimp freetype)
+link_libraries(glfw glad assimp::assimp freetype fmt::fmt-header-only cxxopts::cxxopts glm)
 
 # compile common libs
 add_subdirectory(common)

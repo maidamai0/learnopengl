@@ -38,8 +38,8 @@ auto main(int argc, char **argv) -> int {
     glfwSetErrorCallback(err_callback);
 
     // create a window
-    auto pWd = glfwCreateWindow(640, 480, "hello, opengl", nullptr, nullptr);
-    if (!pWd) {
+    auto *pWd = glfwCreateWindow(640, 480, "hello, opengl", nullptr, nullptr);
+    if (pWd == nullptr) {
         fmt::print("create window failed!\n");
     }
 
@@ -53,7 +53,7 @@ auto main(int argc, char **argv) -> int {
     glfwMakeContextCurrent(pWd);
 
     // initialize gl
-    if (!gladLoadGL()) {
+    if (gladLoadGL() == 0) {
         fmt::print("Load OpenGL failed!\n");
         return -1;
     }
@@ -128,15 +128,15 @@ auto main(int argc, char **argv) -> int {
     // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     // running until exit
-    while (!glfwWindowShouldClose(pWd)) {
+    while (glfwWindowShouldClose(pWd) == 0) {
         // clear color
-        glClearColor(0.5f, 0.4f, 0.5f, 1.0f);
+        glClearColor(0.5F, 0.4F, 0.5F, 1.0F);
         glClear(GL_COLOR_BUFFER_BIT);
 
         // draw triangle
         glUseProgram(shader_program);
         glBindVertexArray(vao);
-        glDrawElements(GL_TRIANGLES, 5, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, 5, GL_UNSIGNED_INT, nullptr);
 
         // event loop
         glfwPollEvents();

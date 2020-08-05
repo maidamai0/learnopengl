@@ -14,7 +14,7 @@ const auto g_screen_height = 1080.0F;
 auto g_last_pos_x = 0.0;
 auto g_last_pos_y = 0.0;
 
-Camera g_camera({0.0f, 0.0f, 5.0f});
+Camera g_camera({0.0F, 0.0F, 5.0F});
 
 auto g_delta_time = 0.0F;
 auto g_last_frame = 0.0F;
@@ -141,8 +141,8 @@ auto main(int argc, char **argv) -> int {
     GLFW_GUARD;
 
     // create a window
-    auto pWd = glfwCreateWindow(640, 480, "Color", nullptr, nullptr);
-    if (!pWd) {
+    auto *pWd = glfwCreateWindow(640, 480, "Color", nullptr, nullptr);
+    if (pWd == nullptr) {
         fmt::print("create window failed!\n");
     }
 
@@ -162,7 +162,7 @@ auto main(int argc, char **argv) -> int {
     glfwSetScrollCallback(pWd, scroll_callback);
 
     // initialize gl
-    if (!gladLoadGL()) {
+    if (gladLoadGL() == 0) {
         fmt::print("Load OpenGL failed!\n");
         return -1;
     }
@@ -190,9 +190,9 @@ auto main(int argc, char **argv) -> int {
     const auto light_pos_location = glGetAttribLocation(light_shader.GetProgram(), "aPos");
     glVertexAttribPointer(light_pos_location, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
     glEnableVertexAttribArray(light_pos_location);
-    auto light_model = glm::mat4(1.0f);
-    light_model = glm::translate(light_model, {1.2f, 1.0f, 2.0f});
-    light_model = glm::scale(light_model, glm::vec3(0.2f));
+    auto light_model = glm::mat4(1.0F);
+    light_model = glm::translate(light_model, {1.2F, 1.0F, 2.0F});
+    light_model = glm::scale(light_model, glm::vec3(0.2F));
     light_shader.SetMat4("model", light_model);
 
     // object vao
@@ -204,16 +204,16 @@ auto main(int argc, char **argv) -> int {
     const auto object_pos_location = glGetAttribLocation(object_shader.GetProgram(), "aPos");
     glVertexAttribPointer(object_pos_location, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
     glEnableVertexAttribArray(object_pos_location);
-    object_shader.SetVec3("objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
-    object_shader.SetVec3("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
+    object_shader.SetVec3("objectColor", glm::vec3(1.0F, 0.5F, 0.31F));
+    object_shader.SetVec3("lightColor", glm::vec3(1.0F, 1.0F, 1.0F));
     object_shader.SetMat4(
-        "model", glm::rotate(glm::mat4(1.0f), glm::radians(45.0f), glm::vec3(1.0f, 0.3f, 0.0f)));
+        "model", glm::rotate(glm::mat4(1.0F), glm::radians(45.0F), glm::vec3(1.0F, 0.3F, 0.0F)));
 
     // clear color
-    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+    glClearColor(0.1F, 0.1F, 0.1F, 1.0F);
 
     // running until exit
-    while (!glfwWindowShouldClose(pWd)) {
+    while (glfwWindowShouldClose(pWd) == 0) {
         auto current_time = static_cast<float>(glfwGetTime());
         g_delta_time = current_time - g_last_frame;
         g_last_frame = current_time;
@@ -222,7 +222,7 @@ auto main(int argc, char **argv) -> int {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glm::mat4 projection = glm::perspective(
-            glm::radians(g_camera.GetZoom()), g_screen_width / g_screen_height, 0.1f, 100.0f);
+            glm::radians(g_camera.GetZoom()), g_screen_width / g_screen_height, 0.1F, 100.0F);
 
         // Draw object
         object_shader.Use();

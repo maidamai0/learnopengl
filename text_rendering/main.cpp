@@ -29,8 +29,8 @@
 
 struct Character {
     GLuint texture_id_{0};
-    glm::ivec2 size_;
-    glm::ivec2 bearing_;
+    glm::ivec2 size_{};
+    glm::ivec2 bearing_{};
     FT_Pos advance_{0};
 };
 
@@ -110,7 +110,7 @@ auto main(int argc, char **argv) -> int {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    auto pWd = glfwCreateWindow(640, 480, "hello, opengl", nullptr, nullptr);
+    auto *pWd = glfwCreateWindow(640, 480, "hello, opengl", nullptr, nullptr);
     if (pWd == nullptr) {
         fmt::print("create window failed!\n");
         return -1;

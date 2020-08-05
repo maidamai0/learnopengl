@@ -14,13 +14,13 @@ const auto g_screen_height = 1080.0F;
 auto g_last_pos_x = 0.0;
 auto g_last_pos_y = 0.0;
 
-Camera g_camera({0.0f, 0.0f, 5.0f});
+Camera g_camera({0.0F, 0.0F, 5.0F});
 
 auto g_delta_time = 0.0F;
 auto g_last_frame = 0.0F;
 
 // lighting
-glm::vec3 g_lightPos(0.2f, 1.0f, 2.0f);
+glm::vec3 g_lightPos(0.2F, 1.0F, 2.0F);
 
 }  // namespace
 
@@ -142,11 +142,11 @@ auto main(int argc, char **argv) -> int {
 
     GLFW_GUARD;
 
-    auto const mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+    const auto *const mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
     // create a window
-    auto pWd = glfwCreateWindow(mode->width, mode->height, "materials", nullptr, nullptr);
-    if (!pWd) {
+    auto *pWd = glfwCreateWindow(mode->width, mode->height, "materials", nullptr, nullptr);
+    if (pWd == nullptr) {
         fmt::print("create window failed!\n");
     }
     fmt::print("window size is {}x{}\n", mode->width, mode->height);
@@ -167,7 +167,7 @@ auto main(int argc, char **argv) -> int {
     glfwSetScrollCallback(pWd, scroll_callback);
 
     // initialize gl
-    if (!gladLoadGL()) {
+    if (gladLoadGL() == 0) {
         fmt::print("Load OpenGL failed!\n");
         return -1;
     }
@@ -209,22 +209,22 @@ auto main(int argc, char **argv) -> int {
 
     const auto object_normal_location = glGetAttribLocation(object_shader.GetProgram(), "aNormal");
     glVertexAttribPointer(
-        object_normal_location, 3, GL_FLOAT, false, 6 * sizeof(float), (void *)(3 * sizeof(float)));
+        object_normal_location, 3, GL_FLOAT, 0U, 6 * sizeof(float), (void *)(3 * sizeof(float)));
     glEnableVertexAttribArray(object_normal_location);
-    auto object_color = glm::vec3(1.0f, 0.5f, 0.31f);
+    auto object_color = glm::vec3(1.0F, 0.5F, 0.31F);
     object_shader.SetVec3("material.ambient", object_color);
     object_shader.SetVec3("material.diffuse", object_color);
-    object_shader.SetVec3("material.specular", glm::vec3(0.5f, 0.5f, 0.5f));
-    object_shader.SetFloat("material.shininess", 32.0f);
+    object_shader.SetVec3("material.specular", glm::vec3(0.5F, 0.5F, 0.5F));
+    object_shader.SetFloat("material.shininess", 32.0F);
     object_shader.SetMat4(
-        "model", glm::rotate(glm::mat4(1.0f), glm::radians(45.0f), glm::vec3(1.0f, 0.3f, 0.0f)));
+        "model", glm::rotate(glm::mat4(1.0F), glm::radians(45.0F), glm::vec3(1.0F, 0.3F, 0.0F)));
     object_shader.SetVec3("ViewPos", g_camera.GetPosition());
 
     // clear color
-    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+    glClearColor(0.1F, 0.1F, 0.1F, 1.0F);
 
     // running until exit
-    while (!glfwWindowShouldClose(pWd)) {
+    while (glfwWindowShouldClose(pWd) == 0) {
         auto current_time = static_cast<float>(glfwGetTime());
         g_delta_time = current_time - g_last_frame;
         g_last_frame = current_time;
@@ -233,37 +233,37 @@ auto main(int argc, char **argv) -> int {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glm::mat4 projection = glm::perspective(
-            glm::radians(g_camera.GetZoom()), g_screen_width / g_screen_height, 0.1f, 100.0f);
+            glm::radians(g_camera.GetZoom()), g_screen_width / g_screen_height, 0.1F, 100.0F);
 
-        g_lightPos.x = static_cast<float>(sin(glfwGetTime())) * 1.0f;
-        g_lightPos.y = static_cast<float>(cos(glfwGetTime())) * 1.0f;
-        g_lightPos.z = static_cast<float>(sin(glfwGetTime())) * 2.0f;
+        g_lightPos.x = static_cast<float>(sin(glfwGetTime())) * 1.0F;
+        g_lightPos.y = static_cast<float>(cos(glfwGetTime())) * 1.0F;
+        g_lightPos.z = static_cast<float>(sin(glfwGetTime())) * 2.0F;
 
         // Draw object
         object_shader.Use();
         object_shader.SetMat4("projection", projection);
         object_shader.SetMat4("view", g_camera.GetViewMatrix());
         glm::vec3 light_color;
-        light_color.x = static_cast<float>(sin(glfwGetTime() * 2.0f));
-        light_color.y = static_cast<float>(sin(glfwGetTime() * 0.7f));
-        light_color.z = static_cast<float>(sin(glfwGetTime() * 1.3f));
-        const auto light_ambient_color = light_color * glm::vec3(0.2f);
-        const auto light_diffuse_color = light_color * glm::vec3(0.5f);
+        light_color.x = static_cast<float>(sin(glfwGetTime() * 2.0F));
+        light_color.y = static_cast<float>(sin(glfwGetTime() * 0.7F));
+        light_color.z = static_cast<float>(sin(glfwGetTime() * 1.3F));
+        const auto light_ambient_color = light_color * glm::vec3(0.2F);
+        const auto light_diffuse_color = light_color * glm::vec3(0.5F);
         object_shader.SetVec3("light.ambient", light_ambient_color);
         object_shader.SetVec3("light.diffuse", light_diffuse_color);
-        object_shader.SetVec3("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+        object_shader.SetVec3("light.specular", glm::vec3(1.0F, 1.0F, 1.0F));
         object_shader.SetVec3("light.position", g_lightPos);
         glBindVertexArray(vao_object);
         glDrawArrays(GL_TRIANGLES, 0, 36);
 
         // draw light
         light_shader.Use();
-        auto light_model = glm::mat4(1.0f);
+        auto light_model = glm::mat4(1.0F);
         // light_model = glm::rotate(light_model,
         //                           (float)glfwGetTime() * glm::radians(g_x_rotate),
         //                           glm::vec3(0.0f, 10.5f, 0.0));
         light_model = glm::translate(light_model, g_lightPos);
-        light_model = glm::scale(light_model, glm::vec3(0.2f));
+        light_model = glm::scale(light_model, glm::vec3(0.2F));
         light_shader.SetMat4("model", light_model);
         light_shader.SetMat4("projection", projection);
         // light_shader.SetMat4("view", g_camera.GetViewMatrix());

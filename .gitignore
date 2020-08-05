@@ -3,3 +3,4 @@ build/
 # dependency/*
 # !dependency/CMakeLists.txt
 .clangd
+.vscode

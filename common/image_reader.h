@@ -14,7 +14,7 @@
 #include <string>
 
 #include "fmt/core.h"
-#include "stb/stb_image.h"
+#include "stb_image.h"
 
 #ifdef _WIN32
 // documentation here:

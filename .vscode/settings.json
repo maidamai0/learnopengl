@@ -77,5 +77,8 @@
         "variant": "cpp",
         "format": "cpp"
     },
-    "cmake.configureOnOpen": false
+    "cmake.configureOnOpen": false,
+    "cmake.configureArgs": [
+        "-DCMAKE_TOOLCHAIN_FILE=C:/Users/michael/Documents/vcpkg/scripts/buildsystems/vcpkg.cmake"
+    ]
 }
