@@ -41,9 +41,8 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}
                     ${CMAKE_CURRENT_SOURCE_DIR}/dependency/stb/include
                     ${CMAKE_CURRENT_SOURCE_DIR}/dependency/cxxopts/include
                     ${CMAKE_CURRENT_SOURCE_DIR}/dependency/glm/include
-                    ${CMAKE_CURRENT_SOURCE_DIR}/dependency/assimp/include
                     ${CMAKE_CURRENT_SOURCE_DIR}/dependency/freetype-2.10.1/include
-                    ${CMAKE_BINARY_DIR}/dependency/assimp/include)
+)
 
 add_subdirectory(dependency)
 
@@ -108,8 +107,10 @@ endif ()
 
 add_compile_options(${COMMON_COMPILE_FLAGS} ${PEDANTIC_COMPILE_FLAGS} ${WERROR_FLAG})
 
+find_package(assimp CONFIG REQUIRED)
+
 # add dependency lib
-link_libraries(glfw glad assimp freetype)
+link_libraries(glfw glad assimp::assimp freetype)
 
 # compile common libs
 add_subdirectory(common)
