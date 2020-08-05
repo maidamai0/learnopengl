@@ -36,7 +36,6 @@ add_compile_definitions(NOMINMAX)
 # dependency headers
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}
                     ${CMAKE_CURRENT_SOURCE_DIR}/dependency/glad/include
-                    ${CMAKE_CURRENT_SOURCE_DIR}/dependency/glfw3/include
                     ${CMAKE_CURRENT_SOURCE_DIR}/dependency/fmt/include
                     ${CMAKE_CURRENT_SOURCE_DIR}/dependency/stb/include
                     ${CMAKE_CURRENT_SOURCE_DIR}/dependency/cxxopts/include
@@ -49,10 +48,6 @@ add_subdirectory(dependency)
 # clang-tidy
 # TODO header files-not found
 set(CMAKE_CXX_CLANG_TIDY clang-tidy --fix --fix-errors)
-
-# glfw required this macro for DLL version
-# add_compile_definitions(GLFW_DLL)
-add_compile_options(-DGLFW_DLL)
 
 # std_image implementation switch
 # add_compile_definitions(STB_IMAGE_IMPLEMENTATION)
@@ -108,6 +103,7 @@ endif ()
 add_compile_options(${COMMON_COMPILE_FLAGS} ${PEDANTIC_COMPILE_FLAGS} ${WERROR_FLAG})
 
 find_package(assimp CONFIG REQUIRED)
+find_package(glfw3 CONFIG REQUIRED)
 
 # add dependency lib
 link_libraries(glfw glad assimp::assimp freetype)
