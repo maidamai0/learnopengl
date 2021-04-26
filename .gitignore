@@ -4,3 +4,5 @@ build/
 # !dependency/CMakeLists.txt
 .clangd
 .vscode
+.cache
+compile_commands.json

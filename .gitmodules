@@ -1,0 +1,24 @@
+[submodule "deps/assimp"]
+	path = deps/assimp
+	url = https://github.com/assimp/assimp.git
+[submodule "dependency/assimp"]
+	path = dependency/assimp
+	url = https://github.com/assimp/assimp.git
+[submodule "dependency/fmt"]
+	path = dependency/fmt
+	url = https://github.com/fmtlib/fmt.git
+[submodule "dependency/cxxopts"]
+	path = dependency/cxxopts
+	url = https://github.com/jarro2783/cxxopts.git
+[submodule "dependency/glfw"]
+	path = dependency/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "dependency/glm"]
+	path = dependency/glm
+	url = https://github.com/g-truc/glm.git
+[submodule "dependency/stb"]
+	path = dependency/stb
+	url = https://github.com/nothings/stb.git
+[submodule "dependency/freetype"]
+	path = dependency/freetype
+	url = https://github.com/freetype/freetype.git

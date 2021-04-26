@@ -18,6 +18,7 @@
 #include "GLFW/glfw3.h"
 // clang-format on
 
+#include <cassert>
 #include <filesystem>
 #include <fstream>
 #include <sstream>

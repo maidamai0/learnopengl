@@ -33,6 +33,7 @@ add_compile_definitions(NOMINMAX)
 # dependency headers
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}
                     ${CMAKE_CURRENT_SOURCE_DIR}/dependency/glad/include
+                    ${CMAKE_CURRENT_SOURCE_DIR}/dependency/stb
 )
 
 add_subdirectory(dependency)
@@ -93,13 +94,6 @@ if (MSVC)
 endif ()
 
 add_compile_options(${COMMON_COMPILE_FLAGS} ${PEDANTIC_COMPILE_FLAGS} ${WERROR_FLAG})
-
-find_package(assimp CONFIG REQUIRED)
-find_package(glfw3 CONFIG REQUIRED)
-find_package(freetype CONFIG REQUIRED)
-find_package(fmt CONFIG REQUIRED)
-find_package(cxxopts CONFIG REQUIRED)
-find_package(glm CONFIG REQUIRED)
 
 # add dependency lib
 link_libraries(glfw glad assimp::assimp freetype fmt::fmt-header-only cxxopts::cxxopts glm)
