@@ -9,6 +9,8 @@
  *
  */
 
+#include <utility>
+
 template <typename Function>
 class Guard final {
    public:

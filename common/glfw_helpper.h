@@ -12,6 +12,10 @@
 #include "fmt/core.h"
 #include "fmt/format.h"
 
+#if _WIN32
+#include <Windows.h>
+#endif
+
 // glad must be included before glfw
 // clang-format off
 #include "glad/glad.h"
