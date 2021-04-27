@@ -1,6 +1,7 @@
 #include "common/glfw_helpper.h"
 #include "common/shader.h"
 #include "common/texture.h"
+#include "common/win_main.h"
 
 namespace {
 float g_texture_ratio = 0.5;

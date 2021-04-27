@@ -17,6 +17,7 @@
 #include "common/guard.h"
 #include "common/path.h"
 #include "common/shader.h"
+#include "common/win_main.h"
 #include "dependency/glfw/deps/linmath.h"
 #include "fmt/core.h"
 #include "freetype/config/ftheader.h"

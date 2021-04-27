@@ -11,6 +11,7 @@
 
 #include "common/define.h"
 #include "common/glfw_helpper.h"
+#include "common/win_main.h"
 #include "dependency/glfw/deps/linmath.h"
 
 // vertex

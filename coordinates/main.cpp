@@ -1,12 +1,13 @@
+#include <chrono>
+#include <thread>
+
 #include "common/glfw_helpper.h"
 #include "common/shader.h"
 #include "common/texture.h"
+#include "common/win_main.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
-
-#include <chrono>
-#include <thread>
 
 namespace {
 float g_texture_ratio = 0.5;

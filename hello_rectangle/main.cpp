@@ -8,6 +8,7 @@
  */
 
 #include "common/glfw_helpper.h"
+#include "common/win_main.h"
 
 // clang-format off
 // point for rectangle
