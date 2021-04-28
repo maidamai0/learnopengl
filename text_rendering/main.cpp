@@ -214,7 +214,7 @@ auto main(int argc, char **argv) -> int {
     // running until exit
     while (glfwWindowShouldClose(pWd) == 0) {
         // event loop
-        glfwPollEvents();
+        glfwWaitEvents();
 
         glClearColor(0.2F, 0.3F, 0.3F, 1.0F);
         glClear(GL_COLOR_BUFFER_BIT);

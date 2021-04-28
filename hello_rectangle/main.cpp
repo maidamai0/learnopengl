@@ -138,7 +138,7 @@ auto main(int argc, char **argv) -> int {
         glDrawElements(GL_TRIANGLES, 5, GL_UNSIGNED_INT, nullptr);
 
         // event loop
-        glfwPollEvents();
+        glfwWaitEvents();
 
         // display
         glfwSwapBuffers(pWd);

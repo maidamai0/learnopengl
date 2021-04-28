@@ -58,7 +58,7 @@ auto main(int argc, char **argv) -> int {
         glClear(GL_COLOR_BUFFER_BIT);
 
         // event loop
-        glfwPollEvents();
+        glfwWaitEvents();
 
         // display
         glfwSwapBuffers(pWd);

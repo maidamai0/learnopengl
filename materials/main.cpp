@@ -278,7 +278,7 @@ auto main(int argc, char **argv) -> int {
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(pWd);
-        glfwPollEvents();
+        glfwWaitEvents();
     }
 
     fmt::print("user request to close this window!\n");

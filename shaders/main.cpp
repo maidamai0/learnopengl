@@ -99,7 +99,7 @@ auto main(int argc, char **argv) -> int {
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
         // poll event
-        glfwPollEvents();
+        glfwWaitEvents();
 
         // display
         glfwSwapBuffers(pWd);

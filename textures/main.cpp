@@ -159,7 +159,7 @@ auto main(int argc, char **argv) -> int {
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         // poll event
-        glfwPollEvents();
+        glfwWaitEvents();
 
         // display
         glfwSwapBuffers(pWd);
