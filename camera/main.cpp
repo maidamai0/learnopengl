@@ -1,3 +1,5 @@
+#include "camera_fs.glsl.h"
+#include "camera_vs.glsl.h"
 #include "common/camera.h"
 #include "common/glfw_helpper.h"
 #include "common/shader.h"
@@ -196,7 +198,7 @@ auto main(int argc, char **argv) -> int {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    Shader shader("camera_vs.glsl", "camera_fs.glsl");
+    Shader shader(glsl::camera_vs, glsl::camera_fs);
 
     // position
     const auto pos_location = glGetAttribLocation(shader.GetProgram(), "aPos");

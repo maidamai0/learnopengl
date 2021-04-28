@@ -102,6 +102,12 @@ link_libraries(glfw glad assimp::assimp freetype fmt::fmt-header-only cxxopts::c
 # compile common libs
 add_subdirectory(common)
 
+execute_process(
+  COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/glsl_2_header.py
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+  COMMAND_ECHO STDOUT
+)
+
 # compile executables
 # get subdir
 # https://stackoverflow.com/questions/7787823/cmake-how-to-get-the-name-of-all-subdirectories-of-a-directory

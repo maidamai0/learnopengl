@@ -6,6 +6,10 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
+#include "materials_fs.glsl.h"
+#include "materials_light_fs.glsl.h"
+#include "materials_light_vs.glsl.h"
+#include "materials_vs.glsl.h"
 
 namespace {
 float g_texture_ratio = 0.5;
@@ -192,7 +196,7 @@ auto main(int argc, char **argv) -> int {
     glGenVertexArrays(1, &vao_light);
     glBindVertexArray(vao_light);
 
-    Shader light_shader("materials_light_vs.glsl", "materials_light_fs.glsl");
+    Shader light_shader(glsl::materials_light_vs, glsl::materials_light_fs);
     const auto light_pos_location = glGetAttribLocation(light_shader.GetProgram(), "aPos");
     glVertexAttribPointer(light_pos_location, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), nullptr);
     glEnableVertexAttribArray(light_pos_location);
@@ -203,7 +207,7 @@ auto main(int argc, char **argv) -> int {
     glGenVertexArrays(1, &vao_object);
     glBindVertexArray(vao_object);
 
-    Shader object_shader("materials_vs.glsl", "materials_fs.glsl");
+    Shader object_shader(glsl::materials_vs, glsl::materials_fs);
     const auto object_pos_location = glGetAttribLocation(object_shader.GetProgram(), "aPos");
     glVertexAttribPointer(object_pos_location, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), nullptr);
     glEnableVertexAttribArray(object_pos_location);

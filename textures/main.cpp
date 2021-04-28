@@ -2,6 +2,8 @@
 #include "common/shader.h"
 #include "common/texture.h"
 #include "common/win_main.h"
+#include "textures_fs.glsl.h"
+#include "textures_vs.glsl.h"
 
 namespace {
 float g_texture_ratio = 0.5;
@@ -107,7 +109,7 @@ auto main(int argc, char **argv) -> int {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    Shader shader("textures_vs.glsl", "textures_fs.glsl");
+    Shader shader(glsl::textures_vs, glsl::textures_fs);
 
     // position
     const auto pos_location = glGetAttribLocation(shader.GetProgram(), "vPos");

@@ -5,6 +5,8 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
+#include "transformations_fs.glsl.h"
+#include "transformations_vs.glsl.h"
 
 namespace {
 float g_texture_ratio = 0.5;
@@ -110,7 +112,7 @@ auto main(int argc, char **argv) -> int {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    Shader shader("transformations_vs.glsl", "transformations_fs.glsl");
+    Shader shader(glsl::transformations_vs, glsl::transformations_fs);
 
     // position
     const auto pos_location = glGetAttribLocation(shader.GetProgram(), "vPos");

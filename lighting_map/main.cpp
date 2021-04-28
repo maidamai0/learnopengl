@@ -6,6 +6,10 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
+#include "lighting_map_fs.glsl.h"
+#include "lighting_map_light_fs.glsl.h"
+#include "lighting_map_light_vs.glsl.h"
+#include "lighting_map_vs.glsl.h"
 
 namespace {
 float g_texture_ratio = 0.5;
@@ -193,7 +197,7 @@ auto main(int argc, char **argv) -> int {
     glGenVertexArrays(1, &vao_light);
     glBindVertexArray(vao_light);
 
-    Shader light_shader("lighting_map_light_vs.glsl", "lighting_map_light_fs.glsl", 8);
+    Shader light_shader(glsl::lighting_map_light_vs, glsl::lighting_map_light_fs, 8);
     light_shader.SetAttribute("aPos", 3);
     light_shader.SetMat4("view", g_camera.GetViewMatrix());
 
@@ -202,7 +206,7 @@ auto main(int argc, char **argv) -> int {
     glGenVertexArrays(1, &vao_object);
     glBindVertexArray(vao_object);
 
-    Shader object_shader("lighting_map_vs.glsl", "lighting_map_fs.glsl", 8);
+    Shader object_shader(glsl::lighting_map_vs, glsl::lighting_map_fs, 8);
     object_shader.SetAttribute("aPos", 3);
     object_shader.SetAttribute("aNormal", 3);
     object_shader.SetAttribute("aTexCoords", 2);

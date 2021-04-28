@@ -20,6 +20,7 @@
 #include "common/win_main.h"
 #include "dependency/glfw/deps/linmath.h"
 #include "fmt/core.h"
+#include "fragment.fs.h"
 #include "freetype/config/ftheader.h"
 #include "freetype/freetype.h"
 #include "freetype/ftimage.h"
@@ -27,6 +28,7 @@
 #include "glm/ext/vector_int2.hpp"
 #include "glm/fwd.hpp"
 #include "glm/glm.hpp"
+#include "vertex.vs.h"
 
 struct Character {
     GLuint texture_id_{0};
@@ -149,7 +151,7 @@ auto main(int argc, char **argv) -> int {
     glViewport(0, 0, g_width, g_height);
 
     // load shaders
-    Shader shader(get_shader_full_path("vertex.vs"), get_shader_full_path("fragment.fs"));
+    Shader shader(glsl::vertex, glsl::fragment);
     glm::mat4 projection =
         glm::ortho(0.0F, static_cast<GLfloat>(g_width), 0.0F, static_cast<GLfloat>(g_height));
     shader.Use();

@@ -17,6 +17,7 @@
 #include <limits>
 #include <sstream>
 #include <string>
+#include <string_view>
 
 #include "fmt/core.h"
 #include "glad/glad.h"
@@ -26,11 +27,11 @@
 
 class Shader final {
    public:
-    Shader(std::string&& vertex_source_path, std::string&& fragment_source_path,
+    Shader(std::string_view vertex_source, std::string_view fragment_source,
            const GLsizei stride = 0)
         : stride_{stride},
-          vertex_source_path_(vertex_source_path),
-          fragment_source_path_(fragment_source_path) {
+          vertex_source_(vertex_source),
+          fragment_source_(fragment_source) {
         init();
         Use();
     }
@@ -49,7 +50,7 @@ class Shader final {
         return program_;
     }
 
-    void Use() {
+    void Use() const {
         glUseProgram(program_);
     }
 
@@ -91,16 +92,14 @@ class Shader final {
    private:
     auto init() -> void {
         // create vertex shader
-        std::string source_tmp = read_shader_source(vertex_source_path_);
-        const auto vertex_source = source_tmp.c_str();
+        const auto *const vertex_source = vertex_source_.data();
         GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
         glShaderSource(vertex_shader, 1, &vertex_source, nullptr);
         glCompileShader(vertex_shader);
         check_compile(vertex_shader, vertex_source);
 
         // create fragment shader
-        source_tmp = read_shader_source(fragment_source_path_);
-        const auto fragment_source = source_tmp.c_str();
+        const auto* const fragment_source = fragment_source_.data();
         GLuint fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
         glShaderSource(fragment_shader, 1, &fragment_source, nullptr);
         glCompileShader(fragment_shader);
@@ -173,7 +172,7 @@ class Shader final {
         }
     }
 
-    auto get_location_of_uniform(std::string&& name) -> GLint {
+    auto get_location_of_uniform(std::string&& name) const -> GLint {
         const auto loc = glGetUniformLocation(program_, name.c_str());
         if (loc == -1) {
             fmt::print("{} is not a valid uniform\n", name);
@@ -182,7 +181,7 @@ class Shader final {
         return loc;
     }
 
-    auto get_location_of_attribute(std::string&& name) -> GLint {
+    auto get_location_of_attribute(std::string&& name) const -> GLint {
         const auto loc = glGetAttribLocation(program_, name.c_str());
         if (loc == -1) {
             fmt::print("{} is not a valid attribute\n", name);
@@ -191,11 +190,10 @@ class Shader final {
         return loc;
     }
 
-   private:
     GLuint program_{std::numeric_limits<GLuint>::max()};  // invalid value.
     const GLsizei stride_{0};
     GLint vertex_position_{0};  // current position of vertex data set by glVertexAttribPointer
     GLenum err_{GL_NO_ERROR};
-    std::string vertex_source_path_;
-    std::string fragment_source_path_;
+    std::string_view vertex_source_;
+    std::string_view fragment_source_;
 };

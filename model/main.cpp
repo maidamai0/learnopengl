@@ -1,12 +1,15 @@
 #include "common/camera.h"
 #include "common/glfw_helpper.h"
 #include "common/model.h"
+#include "common/path.h"
 #include "common/shader.h"
 #include "common/texture.h"
 #include "common/win_main.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
+#include "model_fs.glsl.h"
+#include "model_vs.glsl.h"
 
 namespace {
 float g_texture_ratio = 0.5;
@@ -132,8 +135,8 @@ auto main(int argc, char **argv) -> int {
     // enable depth testing
     glEnable(GL_DEPTH_TEST);
 
-    Shader shader("model_vs.glsl", "model_fs.glsl");
-    Model render_model("nanosuit.obj");
+    Shader shader(glsl::model_vs, glsl::model_fs);
+    Model render_model("nanosuit.obj"_res);
 
     // clear color
     glClearColor(0.1F, 0.1F, 0.1F, 1.0F);

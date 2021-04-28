@@ -9,6 +9,9 @@
 
 #include "common/glfw_helpper.h"
 #include "common/win_main.h"
+#include "fs.glsl.h"
+#include "text_rendering/fragment.fs.h"
+#include "vs.glsl.h"
 
 auto main(int argc, char **argv) -> int {
     (void)argc;
@@ -63,17 +66,12 @@ auto main(int argc, char **argv) -> int {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
     // shader
-    std::string tmp{read_shader("vs.glsl")};
-    const char *vertex_shader = tmp.c_str();
-
     GLuint vs = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vs, 1, &vertex_shader, nullptr);
+    glShaderSource(vs, 1, &glsl::vs, nullptr);
     glCompileShader(vs);
 
-    tmp = read_shader("fs.glsl");
-    const char *fragment_shader = tmp.c_str();
     GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fs, 1, &fragment_shader, nullptr);
+    glShaderSource(fs, 1, &glsl::fs, nullptr);
     glCompileShader(fs);
 
     // gpu shade program

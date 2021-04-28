@@ -5,6 +5,8 @@
 #include "common/shader.h"
 #include "common/texture.h"
 #include "common/win_main.h"
+#include "coordinates_fs.glsl.h"
+#include "coordinates_vs.glsl.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
@@ -149,7 +151,7 @@ auto main(int argc, char **argv) -> int {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    Shader shader("coordinates_vs.glsl", "coordinates_fs.glsl");
+    Shader shader(glsl::coordinates_vs, glsl::coordinates_fs);
 
     // position
     const auto pos_location = glGetAttribLocation(shader.GetProgram(), "aPos");

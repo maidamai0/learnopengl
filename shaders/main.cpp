@@ -10,6 +10,8 @@
 #include "common/glfw_helpper.h"
 #include "common/shader.h"
 #include "common/win_main.h"
+#include "shaders_fs.glsl.h"
+#include "shaders_vs.glsl.h"
 
 auto main(int argc, char **argv) -> int {
     (void)argc;
@@ -69,7 +71,7 @@ auto main(int argc, char **argv) -> int {
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    Shader shader("shaders_vs.glsl", "shaders_fs.glsl");
+    Shader shader(glsl::shaders_vs, glsl::shaders_fs);
 
     // position
     const auto pos_location = glGetAttribLocation(shader.GetProgram(), "vPos");

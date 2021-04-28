@@ -1,3 +1,7 @@
+#include "basic_lighting_fs.glsl.h"
+#include "basic_lighting_light_fs.glsl.h"
+#include "basic_lighting_light_vs.glsl.h"
+#include "basic_lighting_vs.glsl.h"
 #include "common/camera.h"
 #include "common/glfw_helpper.h"
 #include "common/shader.h"
@@ -192,7 +196,7 @@ auto main(int argc, char **argv) -> int {
     glGenVertexArrays(1, &vao_light);
     glBindVertexArray(vao_light);
 
-    Shader light_shader("basic_lighting_light_vs.glsl", "basic_lighting_light_fs.glsl");
+    Shader light_shader(glsl::basic_lighting_light_vs, glsl::basic_lighting_light_fs);
     const auto light_pos_location = glGetAttribLocation(light_shader.GetProgram(), "aPos");
     glVertexAttribPointer(light_pos_location, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), nullptr);
     glEnableVertexAttribArray(light_pos_location);
@@ -203,7 +207,7 @@ auto main(int argc, char **argv) -> int {
     glGenVertexArrays(1, &vao_object);
     glBindVertexArray(vao_object);
 
-    Shader object_shader("basic_lighting_vs.glsl", "basic_lighting_fs.glsl");
+    Shader object_shader(glsl::basic_lighting_vs, glsl::basic_lighting_fs);
     const auto object_pos_location = glGetAttribLocation(object_shader.GetProgram(), "aPos");
     glVertexAttribPointer(object_pos_location, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), nullptr);
     glEnableVertexAttribArray(object_pos_location);

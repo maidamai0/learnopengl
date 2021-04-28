@@ -1,5 +1,6 @@
 {
   "cmake.configureArgs": [
     "-DASSIMP_BUILD_TESTS=OFF"
-  ]
+  ],
+  "editor.formatOnSave": true
 }

@@ -9,6 +9,8 @@
 
 #include "common/glfw_helpper.h"
 #include "common/win_main.h"
+#include "fs.glsl.h"
+#include "vs.glsl.h"
 
 // clang-format off
 // point for rectangle
@@ -61,21 +63,17 @@ auto main(int argc, char **argv) -> int {
     fmt::print("OpenGL version:{}.{}\n", GLVersion.major, GLVersion.minor);
 
     // create shader
-    std::string temp = read_shader("vs.glsl");
-    const GLchar *vertex_shader_source = temp.c_str();
     GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertex_shader, 1, &vertex_shader_source, nullptr);
+    glShaderSource(vertex_shader, 1, &glsl::vs, nullptr);
     glCompileShader(vertex_shader);
-    if (!check_compile(vertex_shader, vertex_shader_source)) {
+    if (!check_compile(vertex_shader, glsl::vs)) {
         return -1;
     }
 
-    temp = read_shader("fs.glsl");
-    const char *fragment_shader_source = temp.c_str();
     GLuint fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragment_shader, 1, &fragment_shader_source, nullptr);
+    glShaderSource(fragment_shader, 1, &glsl::fs, nullptr);
     glCompileShader(fragment_shader);
-    if (!check_compile(fragment_shader, fragment_shader_source)) {
+    if (!check_compile(fragment_shader, glsl::fs)) {
         return -1;
     }
 

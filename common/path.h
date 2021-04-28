@@ -1,3 +1,5 @@
+#pragma once
+
 /**
  * @file path.h
  * @author tonghao.yuan (yuantonghao@gmail.com)
@@ -9,6 +11,7 @@
  *
  */
 
+#include <vcruntime.h>
 #ifndef SHADERS_PATH
 #define SHADERS_PATH ""
 #endif
@@ -18,7 +21,7 @@
 #endif
 
 #include <string>
-
+#include <string_view>
 /**
  * @brief Get the shader full path
  *
@@ -40,4 +43,12 @@ inline auto get_shader_full_path(std::string shader_name) -> std::string {
  */
 inline auto get_resource_full_path(std::string&& resource_name) -> std::string {
     return std::string(RES_PATH) + resource_name;
+}
+
+/**
+ * @brief helper function to get full path of resource
+ *
+ */
+auto operator""_res(const char* name, size_t sz) {
+    return get_resource_full_path(std::string(name));
 }

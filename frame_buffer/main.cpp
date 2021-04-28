@@ -3,6 +3,10 @@
 #include "common/shader.h"
 #include "common/texture.h"
 #include "common/win_main.h"
+#include "frame_buffer_fs.glsl.h"
+#include "frame_buffer_screen_fs.glsl.h"
+#include "frame_buffer_screen_vs.glsl.h"
+#include "frame_buffer_vs.glsl.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
@@ -198,8 +202,8 @@ auto main(int argc, char **argv) -> int {
     // enable depth testing
     glEnable(GL_DEPTH_TEST);
 
-    Shader shader("frame_buffer.vs", "frame_buffer.fs");
-    Shader screenShader("frame_buffer_screen.vs", "frame_buffer_screen.fs");
+    Shader shader(glsl::frame_buffer_vs, glsl::frame_buffer_fs);
+    Shader screenShader(glsl::frame_buffer_screen_vs, glsl::frame_buffer_screen_fs);
 
     // clear color
     glClearColor(0.1F, 0.1F, 0.1F, 1.0F);

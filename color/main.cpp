@@ -1,3 +1,5 @@
+#include "color_fs.glsl.h"
+#include "color_vs.glsl.h"
 #include "common/camera.h"
 #include "common/glfw_helpper.h"
 #include "common/shader.h"
@@ -6,7 +8,8 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
-
+#include "light_fs.glsl.h"
+#include "light_vs.glsl.h"
 namespace {
 float g_texture_ratio = 0.5;
 float g_x_rotate = -55.0F;
@@ -187,7 +190,7 @@ auto main(int argc, char **argv) -> int {
     glGenVertexArrays(1, &vao_light);
     glBindVertexArray(vao_light);
 
-    Shader light_shader("light_vs.glsl", "light_fs.glsl");
+    Shader light_shader(glsl::light_vs, glsl::light_fs);
     const auto light_pos_location = glGetAttribLocation(light_shader.GetProgram(), "aPos");
     glVertexAttribPointer(light_pos_location, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
     glEnableVertexAttribArray(light_pos_location);
@@ -201,7 +204,7 @@ auto main(int argc, char **argv) -> int {
     glGenVertexArrays(1, &vao_object);
     glBindVertexArray(vao_object);
 
-    Shader object_shader("color_vs.glsl", "color_fs.glsl");
+    Shader object_shader(glsl::color_vs, glsl::color_fs);
     const auto object_pos_location = glGetAttribLocation(object_shader.GetProgram(), "aPos");
     glVertexAttribPointer(object_pos_location, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
     glEnableVertexAttribArray(object_pos_location);
