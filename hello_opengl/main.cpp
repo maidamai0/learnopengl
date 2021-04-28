@@ -7,8 +7,12 @@
  *
  */
 
+#include <iostream>
+#include <ostream>
+
 #include "common/glfw_helpper.h"
 #include "common/win_main.h"
+#include "fmt/core.h"
 
 auto main(int argc, char **argv) -> int {
     (void)argc;
@@ -18,12 +22,17 @@ auto main(int argc, char **argv) -> int {
 
     // set error callback
     glfwSetErrorCallback(err_callback);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // create a window
     auto *pWd = glfwCreateWindow(640, 480, "hello, opengl", nullptr, nullptr);
     if (pWd == nullptr) {
         fmt::print(stderr, "create window failed!\n");
     }
+    fmt::print("OpenGL version got:{}\n", glfwGetVersionString());
+    std::flush(std::cout);
 
     // set key callback
     glfwSetKeyCallback(pWd, key_callback);
@@ -39,7 +48,6 @@ auto main(int argc, char **argv) -> int {
         fmt::print("Load OpenGL failed!\n");
         return -1;
     }
-    fmt::print("OpenGL version:{}.{}\n", GLVersion.major, GLVersion.minor);
 
     // set viewport
     int height = 0;
