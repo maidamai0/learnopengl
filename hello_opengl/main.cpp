@@ -10,6 +10,7 @@
 #include <iostream>
 #include <ostream>
 
+#include "common/color.h"
 #include "common/glfw_helpper.h"
 #include "common/win_main.h"
 #include "fmt/core.h"
@@ -58,7 +59,7 @@ auto main(int argc, char **argv) -> int {
     // buffer swapping setting
     glfwSwapInterval(1);
 
-    glClearColor(0.5F, 0.4F, 0.5F, 1.0F);
+    glClearColor(color::linen.R, color::linen.G, color::linen.B, 1.0F);
 
     // running until exit
     while (glfwWindowShouldClose(pWd) == 0) {
