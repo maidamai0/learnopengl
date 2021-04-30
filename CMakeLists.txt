@@ -97,7 +97,7 @@ endif ()
 add_compile_options(${COMMON_COMPILE_FLAGS} ${PEDANTIC_COMPILE_FLAGS} ${WERROR_FLAG})
 
 # add dependency lib
-link_libraries(glfw glad assimp::assimp freetype fmt::fmt-header-only cxxopts::cxxopts glm)
+link_libraries(glfw glad assimp::assimp freetype fmt::fmt-header-only cxxopts::cxxopts glm spdlog)
 
 # compile common libs
 add_subdirectory(common)

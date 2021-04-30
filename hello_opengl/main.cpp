@@ -14,6 +14,7 @@
 #include "common/glfw_helpper.h"
 #include "common/win_main.h"
 #include "fmt/core.h"
+#include "log/log.h"
 
 auto main(int argc, char **argv) -> int {
     (void)argc;
@@ -30,10 +31,9 @@ auto main(int argc, char **argv) -> int {
     // create a window
     auto *pWd = glfwCreateWindow(640, 480, "hello, opengl", nullptr, nullptr);
     if (pWd == nullptr) {
-        fmt::print(stderr, "create window failed!\n");
+        LOGD("create window failed!\n");
     }
-    fmt::print("OpenGL version got:{}\n", glfwGetVersionString());
-    std::flush(std::cout);
+    LOGD("OpenGL version got:{}\n", glfwGetVersionString());
 
     // set key callback
     glfwSetKeyCallback(pWd, key_callback);
@@ -46,7 +46,7 @@ auto main(int argc, char **argv) -> int {
 
     // initialize gl
     if (gladLoadGL() == 0) {
-        fmt::print("Load OpenGL failed!\n");
+        LOGD("Load OpenGL failed!\n");
         return -1;
     }
 
@@ -73,7 +73,7 @@ auto main(int argc, char **argv) -> int {
         glfwSwapBuffers(pWd);
     }
 
-    fmt::print("user request to close this window!\n");
+    LOGD("user request to close this window!\n");
 
     // destroy window
     glfwDestroyWindow(pWd);

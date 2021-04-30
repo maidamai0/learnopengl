@@ -22,3 +22,6 @@
 [submodule "dependency/freetype"]
 	path = dependency/freetype
 	url = https://github.com/freetype/freetype.git
+[submodule "dependency/spdlog"]
+	path = dependency/spdlog
+	url = https://github.com/gabime/spdlog.git
