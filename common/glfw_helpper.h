@@ -8,6 +8,9 @@
  * @date 2019-08-27
  *
  */
+#include <iostream>
+#include <ostream>
+
 #include "common/common_headers.h"
 #include "fmt/core.h"
 #include "fmt/format.h"
@@ -28,22 +31,28 @@
 #include <sstream>
 #include <string>
 
-#define GLFW_GUARD                                              \
-    class GlfwGuard {                                           \
-       public:                                                  \
-        GlfwGuard() {                                           \
-            if (!glfwInit()) {                                  \
-                fmt::print(stderr, "glfw initialize failed\n"); \
-                exit(-1);                                       \
-            }                                                   \
-                                                                \
-            fmt::print(stderr, "glfw initialize succeed\n");    \
-        }                                                       \
-        ~GlfwGuard() {                                          \
-            glfwTerminate();                                    \
-            fmt::print(stderr, "glfw terminated\n");            \
-        }                                                       \
-    } gurard;
+#define GLFW_GUARD GlfwGuard gurard;
+
+class GlfwGuard {
+   public:
+    GlfwGuard() {
+        if (glfwInit() == 0) {
+            fmt::print(stderr, "glfw initialize failed\n");
+            exit(-1);
+        }
+
+        fmt::print(stderr, "glfw initialize succeed\n");
+        std::flush(std::cerr);
+    }
+    GlfwGuard(const GlfwGuard &) = delete;
+    auto operator=(const GlfwGuard &) -> GlfwGuard & = delete;
+    GlfwGuard(GlfwGuard &&) = delete;
+    auto operator=(GlfwGuard &&) -> GlfwGuard & = delete;
+    ~GlfwGuard() {
+        glfwTerminate();
+        fmt::print(stderr, "glfw terminated\n");
+    }
+};
 
 /**
  * @brief glfw error callback

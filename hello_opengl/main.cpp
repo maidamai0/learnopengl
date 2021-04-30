@@ -59,7 +59,7 @@ auto main(int argc, char **argv) -> int {
     // buffer swapping setting
     glfwSwapInterval(1);
 
-    glClearColor(color::linen.R, color::linen.G, color::linen.B, 1.0F);
+    glClearColor(COLOR(color::linen), 1.0F);
 
     // running until exit
     while (glfwWindowShouldClose(pWd) == 0) {

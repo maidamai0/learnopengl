@@ -3,6 +3,8 @@
 #include <cassert>
 #include <string>
 
+#define COLOR(c) c.R, c.G, c.B
+
 namespace color {
 struct Color {
     Color(const int r, const int g, const int b, const int a = 255)
