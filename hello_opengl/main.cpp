@@ -13,7 +13,6 @@
 #include "common/color.h"
 #include "common/glfw_helpper.h"
 #include "common/win_main.h"
-#include "fmt/core.h"
 #include "log/log.h"
 
 auto main(int argc, char **argv) -> int {
@@ -31,9 +30,9 @@ auto main(int argc, char **argv) -> int {
     // create a window
     auto *pWd = glfwCreateWindow(640, 480, "hello, opengl", nullptr, nullptr);
     if (pWd == nullptr) {
-        LOGD("create window failed!\n");
+        LOGE("create window failed!");
     }
-    LOGD("OpenGL version got:{}\n", glfwGetVersionString());
+    LOGI("OpenGL version got:{}", glfwGetVersionString());
 
     // set key callback
     glfwSetKeyCallback(pWd, key_callback);
@@ -46,7 +45,7 @@ auto main(int argc, char **argv) -> int {
 
     // initialize gl
     if (gladLoadGL() == 0) {
-        LOGD("Load OpenGL failed!\n");
+        LOGE("Load OpenGL failed!");
         return -1;
     }
 
@@ -73,7 +72,7 @@ auto main(int argc, char **argv) -> int {
         glfwSwapBuffers(pWd);
     }
 
-    LOGD("user request to close this window!\n");
+    LOGI("user request to close this window!");
 
     // destroy window
     glfwDestroyWindow(pWd);

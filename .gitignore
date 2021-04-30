@@ -1,4 +1,4 @@
-build/
+build_*/
 *.user
 # dependency/*
 # !dependency/CMakeLists.txt
@@ -6,3 +6,4 @@ build/
 .vscode
 .cache
 compile_commands.json
+logs*

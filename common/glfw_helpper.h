@@ -8,12 +8,18 @@
  * @date 2019-08-27
  *
  */
+
+#include <array>
+#include <cassert>
+#include <filesystem>
+#include <fstream>
 #include <iostream>
 #include <ostream>
+#include <sstream>
+#include <string>
 
 #include "common/common_headers.h"
-#include "fmt/core.h"
-#include "fmt/format.h"
+#include "log/log.h"
 
 #if _WIN32
 #include <Windows.h>
@@ -25,24 +31,17 @@
 #include "GLFW/glfw3.h"
 // clang-format on
 
-#include <cassert>
-#include <filesystem>
-#include <fstream>
-#include <sstream>
-#include <string>
-
 #define GLFW_GUARD GlfwGuard gurard;
 
 class GlfwGuard {
    public:
     GlfwGuard() {
         if (glfwInit() == 0) {
-            fmt::print(stderr, "glfw initialize failed\n");
+            LOGE("glfw initialize failed");
             exit(-1);
         }
 
-        fmt::print(stderr, "glfw initialize succeed\n");
-        std::flush(std::cerr);
+        LOGI("glfw initialize succeed");
     }
     GlfwGuard(const GlfwGuard &) = delete;
     auto operator=(const GlfwGuard &) -> GlfwGuard & = delete;
@@ -50,7 +49,7 @@ class GlfwGuard {
     auto operator=(GlfwGuard &&) -> GlfwGuard & = delete;
     ~GlfwGuard() {
         glfwTerminate();
-        fmt::print(stderr, "glfw terminated\n");
+        LOGI("glfw terminated");
     }
 };
 
@@ -61,7 +60,7 @@ class GlfwGuard {
  * @param msg   error message
  */
 void err_callback(int err, const char *msg) {
-    fmt::print("error:{}[{}]\n", err, msg);
+    LOGE("error:{}[{}]", err, msg);
 }
 
 /**
@@ -71,7 +70,7 @@ void key_callback(GLFWwindow *window, int key, int scan_code, int action, int mo
     (void)scan_code;
     (void)mods;
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-        fmt::print("Escape pressed\n");
+        LOGE("Escape pressed");
         glfwSetWindowShouldClose(window, GLFW_TRUE);  // not work
     }
 }
@@ -83,7 +82,7 @@ void resize_callback(GLFWwindow *pWd, int w, int h) {
     int h_old = 0;
     int w_old = 0;
     glfwGetFramebufferSize(pWd, &w_old, &h_old);
-    fmt::print("resize from{}x{} to {}x{}\n", w_old, h_old, w, h);
+    LOGD("resize from{}x{} to {}x{}", w_old, h_old, w, h);
     glViewport(0, 0, w, h);
     glfwSwapBuffers(pWd);
 }
@@ -94,7 +93,7 @@ void resize_callback(GLFWwindow *pWd, int w, int h) {
  * @param shader_file_path  file path
  * @return read_shader      shader source
  */
-std::string read_shader(std::string &&shader_file_path) {
+auto read_shader(std::string &&shader_file_path) -> std::string {
     std::ifstream shader_reader;
     std::stringstream buff;
     shader_reader.open(shader_file_path);
@@ -107,28 +106,28 @@ std::string read_shader(std::string &&shader_file_path) {
     return buff.str();
 }
 
-bool check_compile(const GLuint shader, const GLchar *const shader_source) {
+auto check_compile(const GLuint shader, const GLchar *const shader_source) -> bool {
     GLint success = 0;
-    GLchar msg[512] = {0};
+    std::array<GLchar, 512> msg{};
 
     glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
     if (success != GL_TRUE) {
-        glGetShaderInfoLog(shader, sizeof(msg), nullptr, msg);
-        fmt::print(stderr, "compile shader failed:{}\nsource:{}\n", msg, shader_source);
+        glGetShaderInfoLog(shader, sizeof(msg), nullptr, msg.data());
+        LOGE("compile shader failed:{}source:{}", msg.data(), shader_source);
         return false;
     }
 
     return true;
 }
 
-bool check_link(const GLuint link) {
+auto check_link(const GLuint link) -> bool {
     GLint success = 0;
-    GLchar msg[512] = {0};
+    std::array<GLchar, 512> msg{};
 
     glGetProgramiv(link, GL_LINK_STATUS, &success);
     if (success != GL_TRUE) {
-        glGetShaderInfoLog(link, sizeof(msg), nullptr, msg);
-        fmt::print("compile shader failed:{}\n", msg);
+        glGetShaderInfoLog(link, sizeof(msg), nullptr, msg.data());
+        LOGE("compile shader failed:{}", msg.data());
         return false;
     }
 

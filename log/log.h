@@ -13,28 +13,41 @@
 
 #include <memory>
 
-#include "spdlog/common.h"
+#include "fmt/core.h"
+#include "log/log.h"
 
 #define LOGD SPDLOG_DEBUG
+#define LOGI SPDLOG_INFO
 #define LOGW SPDLOG_WARN
 #define LOGE SPDLOG_ERROR
 
+#ifndef NDEBUG
+#define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_DEBUG
+#endif
+
+#ifndef APP_NAME
+#define APP_NAME "learn_opengl"
+#endif
+
+#include "spdlog/common.h"
 #include "spdlog/sinks/basic_file_sink.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include "spdlog/sinks/stdout_sinks.h"
 #include "spdlog/spdlog.h"
+#include "spdlog/stopwatch.h"
 
 namespace log_details {
 class Log {
    public:
     Log() {
+        auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(
+            fmt::format("logs/{}_log.txt", APP_NAME), true);
         auto std_cout_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-        auto file_sink =
-            std::make_shared<spdlog::sinks::basic_file_sink_mt>("logs/learn_opengl_log.txt", true);
 
         spdlog::set_default_logger(std::make_shared<spdlog::logger>(
             "OpenGL", spdlog::sinks_init_list{std_cout_sink, file_sink}));
 
+        spdlog::set_level(spdlog::level::debug);
         spdlog::enable_backtrace(10);
         spdlog::flush_on(spdlog::level::debug);
         spdlog::set_pattern("[%Y-%m-%d %T.%e] [%L] [%s:%#] [%!] %v");

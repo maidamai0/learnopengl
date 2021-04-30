@@ -2,5 +2,9 @@
   "cmake.configureArgs": [
     "-DASSIMP_BUILD_TESTS=OFF"
   ],
-  "editor.formatOnSave": true
+  "cmake.buildDirectory": "${workspaceFolder}/build_${buildType}",
+  "editor.formatOnSave": true,
+  "conventionalCommits.scopes": [
+    "log"
+  ]
 }
