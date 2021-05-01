@@ -18,7 +18,7 @@
 static const struct {
     float x, y;
     float r, g, b;
-} vertices[3] = {
+} vertices_data[3] = {
     {-0.6F, -0.4F, 1.F, 0.F, 0.F}, {0.6F, -0.4F, 0.F, 1.F, 0.F}, {0.F, 0.6F, 0.F, 0.F, 1.F}};
 
 // vertex shader
@@ -96,7 +96,7 @@ auto main(int argc, char **argv) -> int {
     GLuint vertex_buffer{0};
     glGenBuffers(1, &vertex_buffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices_data), vertices_data, GL_STATIC_DRAW);
 
     // vertest shader
     GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
@@ -118,11 +118,16 @@ auto main(int argc, char **argv) -> int {
     GLuint vcol_location = glGetAttribLocation(program, "vCol");
 
     glEnableVertexAttribArray(vpos_location);
-    glVertexAttribPointer(vpos_location, 2, GL_FLOAT, GL_FALSE, sizeof(vertices[0]), (void *)(0));
+    glVertexAttribPointer(
+        vpos_location, 2, GL_FLOAT, GL_FALSE, sizeof(vertices_data[0]), (void *)(0));
 
     glEnableVertexAttribArray(vcol_location);
-    glVertexAttribPointer(
-        vcol_location, 3, GL_FLOAT, GL_FALSE, sizeof(vertices[0]), (void *)(sizeof(float) * 2));
+    glVertexAttribPointer(vcol_location,
+                          3,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          sizeof(vertices_data[0]),
+                          (void *)(sizeof(float) * 2));
 
     glfwMaximizeWindow(pWd);
     // running until exit

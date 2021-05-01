@@ -52,7 +52,7 @@ class Log {
         spdlog::flush_on(spdlog::level::debug);
         spdlog::set_pattern("[%Y-%m-%d %T.%e] [%L] [%s:%#] [%!] %v");
 
-        SPDLOG_INFO("App started");
+        SPDLOG_INFO(fmt::format("{} started", APP_NAME));
     }
 
     Log(const Log&) = delete;
@@ -61,7 +61,7 @@ class Log {
     auto operator=(Log&&) -> Log& = delete;
 
     ~Log() {
-        SPDLOG_INFO("App terminated");
+        SPDLOG_INFO(fmt::format("{} terminated", APP_NAME));
     };
 };
 const static Log global_log;

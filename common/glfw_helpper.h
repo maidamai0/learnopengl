@@ -82,7 +82,7 @@ void resize_callback(GLFWwindow *pWd, int w, int h) {
     int h_old = 0;
     int w_old = 0;
     glfwGetFramebufferSize(pWd, &w_old, &h_old);
-    LOGD("resize from{}x{} to {}x{}", w_old, h_old, w, h);
+    LOGD("resize from {}x{} to {}x{}", w_old, h_old, w, h);
     glViewport(0, 0, w, h);
     glfwSwapBuffers(pWd);
 }

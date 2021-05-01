@@ -6,9 +6,14 @@
  * @date 2019-08-27
  *
  */
+
+#include <array>
+
+#include "common/color.h"
 #include "common/glfw_helpper.h"
 #include "common/win_main.h"
 #include "fs.glsl.h"
+#include "log/log.h"
 #include "vs.glsl.h"
 
 /*              |
@@ -22,23 +27,18 @@
                 |
  */
 
-// clang-format off
-static const float vertices[] =
-{
-    0.0F, 0.5F, 0.0F,
-    0.0F, 0.0F, 0.0F,
-    0.5F, 0.0F, 0.0F,
-
-
-    -0.5F, 0.0F, 0.0F,
-    0.0F, 0.0F, 0.0F,
-    0.0F, -0.5F, 0.0F,
-};
-// clang-format on
-
 auto main(int argc, char **argv) -> int {
     (void)argc;
     (void)argv;
+
+    // clang-format off
+    static std::array<float, 9> position =
+    {
+        -0.5F, -0.5F, 0.0F,
+        0.5F, -0.5F, 0.0F,
+        0.0F, 0.5F, 0.0F,
+    };
+    // clang-format on
 
     // initialize glfw
     GLFW_GUARD;
@@ -50,26 +50,27 @@ auto main(int argc, char **argv) -> int {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    auto *pWd = glfwCreateWindow(640, 480, "hello, triangle", nullptr, nullptr);
-    if (pWd == nullptr) {
-        fmt::print("create window failed!\n");
+    auto *window = glfwCreateWindow(640, 480, APP_NAME, nullptr, nullptr);
+    if (window == nullptr) {
+        LOGE("create window failed!");
+        return -1;
     }
 
     // set key callback
-    glfwSetKeyCallback(pWd, key_callback);
+    glfwSetKeyCallback(window, key_callback);
 
     // resize callback
-    glfwSetFramebufferSizeCallback(pWd, resize_callback);
+    glfwSetFramebufferSizeCallback(window, resize_callback);
 
     // make opengl context
-    glfwMakeContextCurrent(pWd);
+    glfwMakeContextCurrent(window);
 
     // initialize gl
     if (gladLoadGL() == 0) {
-        fmt::print("Load OpenGL failed!\n");
+        LOGE("Load OpenGL failed!");
         return -1;
     }
-    fmt::print("OpenGL version:{}.{}\n", GLVersion.major, GLVersion.minor);
+    LOGI("OpenGL version:{}", glfwGetVersionString());
 
     // create shader
 
@@ -106,12 +107,10 @@ auto main(int argc, char **argv) -> int {
     glBindVertexArray(vao);
 
     // create vbo
-    GLuint vbo = 0;
-    glGenBuffers(1, &vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    // tell opengl how to interpret our data
+    GLuint position_buffer = 0;
+    glGenBuffers(1, &position_buffer);
+    glBindBuffer(GL_ARRAY_BUFFER, position_buffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(position), position.data(), GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
     glEnableVertexAttribArray(0);
 
@@ -121,47 +120,46 @@ auto main(int argc, char **argv) -> int {
     // set viewport
     int height = 0;
     int width = 0;
-    glfwGetFramebufferSize(pWd, &width, &height);
+    glfwGetFramebufferSize(window, &width, &height);
     glViewport(0, 0, width, height);
 
     // buffer swapping setting
     glfwSwapInterval(1);
 
     // draw line instead of fill
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glPointSize(5);
 
     // running until exit
-    while (glfwWindowShouldClose(pWd) == 0) {
+    while (glfwWindowShouldClose(window) == 0) {
         // clear color
-        glClearColor(0.0F, 0.0F, 0.0F, 1.0F);
+        glClearColor(COLOR(color::floralwhite), 1.0F);
         glClear(GL_COLOR_BUFFER_BIT);
 
         // draw triangle
         glUseProgram(shader_program);
         glBindVertexArray(vao);
 
-        const GLuint len = sizeof(vertices);
+        const GLuint len = sizeof(position);
         assert(!(len % 3) && "size of vertices must be times of 3");
-        const GLuint num = sizeof(vertices) / 3 / sizeof(vertices[0]);
-        //        cout << "numer is " << num << "\n";
 
-        glDrawArrays(GL_TRIANGLES, 0, num);
+        glDrawArrays(GL_TRIANGLES, 0, 4);
 
         // event loop
         glfwWaitEvents();
 
         // display
-        glfwSwapBuffers(pWd);
+        glfwSwapBuffers(window);
     }
 
-    fmt::print("user request to close this window!\n");
+    LOGI("user request to close this window!");
 
     // delete vertex array object and vertex buffer object
     glDeleteVertexArrays(1, &vao);
-    glDeleteBuffers(1, &vbo);
+    glDeleteBuffers(1, &position_buffer);
 
     // destroy window
-    glfwDestroyWindow(pWd);
+    glfwDestroyWindow(window);
 
     // terminate
     glfwTerminate();
