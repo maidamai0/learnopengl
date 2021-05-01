@@ -38,6 +38,13 @@ auto main(int argc, char **argv) -> int {
         0.5F, -0.5F, 0.0F,
         0.0F, 0.5F, 0.0F,
     };
+    
+    static std::array<float, 9> color =
+    {
+        1.0F, 1.0F, 0.0F,
+        0.0F, 1.0F, 1.0F,
+        1.0F, 0.0F, 1.0F,
+    };
     // clang-format on
 
     // initialize glfw
@@ -113,6 +120,13 @@ auto main(int argc, char **argv) -> int {
     glBufferData(GL_ARRAY_BUFFER, sizeof(position), position.data(), GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
     glEnableVertexAttribArray(0);
+
+    GLuint color_buffer = 0;
+    glGenBuffers(1, &color_buffer);
+    glBindBuffer(GL_ARRAY_BUFFER, color_buffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(color), color.data(), GL_STATIC_DRAW);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+    glEnableVertexAttribArray(1);
 
     // unbind vao
     glBindVertexArray(0);
