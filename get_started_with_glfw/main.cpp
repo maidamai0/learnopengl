@@ -14,20 +14,34 @@
 #include "common/win_main.h"
 #include "dependency/glfw/deps/linmath.h"
 
+void GLAPIENTRY MessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity,
+                                GLsizei length, const GLchar *message, const void *userParam) {
+    fprintf(stderr,
+            "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+            (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : ""),
+            type,
+            severity,
+            message);
+}
+
 // vertex
-static const struct {
+struct data {
     float x, y;
     float r, g, b;
-} vertices_data[3] = {
+};
+data vertices_data[3] = {
+    {-0.6F, -0.4F, 1.F, 0.F, 0.F}, {0.6F, -0.4F, 0.F, 1.F, 0.F}, {0.F, 0.6F, 0.F, 0.F, 1.F}};
+
+data color_data[3] = {
     {-0.6F, -0.4F, 1.F, 0.F, 0.F}, {0.6F, -0.4F, 0.F, 1.F, 0.F}, {0.F, 0.6F, 0.F, 0.F, 1.F}};
 
 // vertex shader
 static const char *vertex_shader_text =
-    "#version 110\n"
+    "#version 130\n"
     "uniform mat4 MVP;\n"
-    "attribute vec3 vCol;\n"
-    "attribute vec2 vPos;\n"
-    "varying vec3 color;\n"
+    "in vec3 vCol;\n"
+    "in vec2 vPos;\n"
+    "out vec3 color;\n"
     "void main()\n"
     "{\n"
     "    gl_Position = MVP * vec4(vPos, 0.0, 1.0);\n"
@@ -36,20 +50,13 @@ static const char *vertex_shader_text =
 
 // fragment shader
 static const char *fragment_shader_text =
-    "#version 110\n"
-    "varying vec3 color;\n"
+    "#version 130\n"
+    "in vec3 color;\n"
     "void main()\n"
     "{\n"
     "    gl_FragColor = vec4(color, 1.0);\n"
     "}\n";
 
-/**
- * @brief main function
- *
- * @param argc
- * @param argv
- * @return int
- */
 auto main(int argc, char **argv) -> int {
     UNUSED(argc);
     UNUSED(argv);
@@ -62,9 +69,9 @@ auto main(int argc, char **argv) -> int {
     glfwSetErrorCallback(err_callback);
 
     // create a window
-    // glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    // glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
-    // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     auto pWd = glfwCreateWindow(640, 480, "hello, opengl", nullptr, nullptr);
     if (!pWd) {
         fmt::print("create window failed!\n");
@@ -91,6 +98,11 @@ auto main(int argc, char **argv) -> int {
     glfwSwapInterval(1);
 
     // glClearColor(0.5f, 0.4f, 0.5f, 1.0f);
+
+    // create vao
+    GLuint vao = 0;
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
 
     // vertex buffer
     GLuint vertex_buffer{0};
@@ -122,12 +134,12 @@ auto main(int argc, char **argv) -> int {
         vpos_location, 2, GL_FLOAT, GL_FALSE, sizeof(vertices_data[0]), (void *)(0));
 
     glEnableVertexAttribArray(vcol_location);
-    glVertexAttribPointer(vcol_location,
-                          3,
-                          GL_FLOAT,
-                          GL_FALSE,
-                          sizeof(vertices_data[0]),
-                          (void *)(sizeof(float) * 2));
+    glVertexAttribPointer(
+        vcol_location, 3, GL_FLOAT, GL_FALSE, sizeof(color_data[0]), (void *)(sizeof(float) * 2));
+
+    // During init, enable debug output
+    glEnable(GL_DEBUG_OUTPUT);
+    glDebugMessageCallback(MessageCallback, 0);
 
     glfwMaximizeWindow(pWd);
     // running until exit
@@ -150,6 +162,7 @@ auto main(int argc, char **argv) -> int {
         mat4x4_mul(mvp, p, m);
 
         glUseProgram(program);
+        glBindVertexArray(vao);
         glUniformMatrix4fv(mvp_location, 1, GL_FALSE, (const GLfloat *)mvp);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
