@@ -18,7 +18,6 @@
 #include <sstream>
 #include <string>
 
-#include "common/common_headers.h"
 #include "log/log.h"
 
 #if _WIN32
@@ -98,7 +97,7 @@ auto read_shader(std::string &&shader_file_path) -> std::string {
     std::stringstream buff;
     shader_reader.open(shader_file_path);
     if (!shader_reader.is_open()) {
-        auto current_path = fs::current_path();
+        auto current_path = std::filesystem::current_path();
         throw ::std::runtime_error("file not exist");
     }
     buff << shader_reader.rdbuf();

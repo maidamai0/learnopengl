@@ -15,16 +15,13 @@
 #include "common/win_main.h"
 #include "log/log.h"
 
-auto main(int argc, char **argv) -> int {
-    (void)argc;
-    (void)argv;
-
+auto main() -> int {
     GLFW_GUARD;
 
     // set error callback
     glfwSetErrorCallback(err_callback);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // create a window

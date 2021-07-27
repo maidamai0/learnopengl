@@ -11,23 +11,11 @@
  *
  */
 
+#include <filesystem>
 #include <string>
 
 #include "fmt/core.h"
 #include "stb_image.h"
-
-#ifdef _WIN32
-// documentation here:
-// https://docs.microsoft.com/en-us/cpp/standard-library/filesystem?view=vs-2019
-// is not correct
-#include <filesystem>  // Microsoft-specific implementation header file name
-namespace stdfs = std::filesystem;
-#endif
-
-#ifdef __linux__
-#include <experimental/filesystem>  // C++-standard header file name
-namespace stdfs = std::experimental::filesystem;
-#endif
 
 class ImageReader {
    public:
@@ -40,7 +28,7 @@ class ImageReader {
             throw std::runtime_error("load image failed");
         }
 
-        stdfs::path path_info(image_path);
+        std::filesystem::path path_info(image_path);
         if (path_info.extension().generic_string() == std::string(".png")) {
             switch (num_of_color_channels_) {
                 case 1: image_type_ = GL_RED; break;
@@ -54,7 +42,7 @@ class ImageReader {
         }
 
         fmt::print("image[{}], width:{}, height:{}, channels:{}\n",
-                   stdfs::absolute(path_info).generic_string(),
+                   std::filesystem::absolute(path_info).generic_string(),
                    widht_,
                    height_,
                    num_of_color_channels_);

@@ -11,7 +11,6 @@
  *
  */
 
-#include <vcruntime.h>
 #ifndef SHADERS_PATH
 #define SHADERS_PATH ""
 #endif
