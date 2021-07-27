@@ -25,7 +25,7 @@ auto main() -> int {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // create a window
-    auto *pWd = glfwCreateWindow(640, 480, "hello, opengl", nullptr, nullptr);
+    auto *pWd = glfwCreateWindow(640, 480, APP_NAME, nullptr, nullptr);
     if (pWd == nullptr) {
         LOGE("create window failed!");
     }

@@ -7,6 +7,8 @@
  *
  */
 
+#include <array>
+#include <cstdlib>
 #include <functional>
 
 #include "common/define.h"
@@ -24,43 +26,32 @@ void GLAPIENTRY MessageCallback(GLenum source, GLenum type, GLuint id, GLenum se
             message);
 }
 
-// vertex
-struct data {
-    float x, y;
-    float r, g, b;
+// clang-format off
+const std::array<float, 9> vertices = {
+    -0.5F, -0.5F, 0.F,
+    0.5F, -0.5F, 0.F,
+    0.F, 0.5F, 0.F,
 };
-data vertices_data[3] = {
-    {-0.6F, -0.4F, 1.F, 0.F, 0.F}, {0.6F, -0.4F, 0.F, 1.F, 0.F}, {0.F, 0.6F, 0.F, 0.F, 1.F}};
-
-data color_data[3] = {
-    {-0.6F, -0.4F, 1.F, 0.F, 0.F}, {0.6F, -0.4F, 0.F, 1.F, 0.F}, {0.F, 0.6F, 0.F, 0.F, 1.F}};
+// clang-format on
 
 // vertex shader
-static const char *vertex_shader_text =
-    "#version 130\n"
-    "uniform mat4 MVP;\n"
-    "in vec3 vCol;\n"
-    "in vec2 vPos;\n"
-    "out vec3 color;\n"
-    "void main()\n"
-    "{\n"
-    "    gl_Position = MVP * vec4(vPos, 0.0, 1.0);\n"
-    "    color = vCol;\n"
-    "}\n";
+constexpr auto vertex_shader_text = R"(
+#version 410
+layout(location = 0) in vec3 vPos;
+void main() {
+    gl_Position = vec4(vPos, 1.0);
+}
+)";
 
 // fragment shader
-static const char *fragment_shader_text =
-    "#version 130\n"
-    "in vec3 color;\n"
-    "void main()\n"
-    "{\n"
-    "    gl_FragColor = vec4(color, 1.0);\n"
-    "}\n";
+constexpr auto fragment_shader_text = R"(
+#version 130
+void main() {
+    gl_FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+}
+)";
 
-auto main(int argc, char **argv) -> int {
-    UNUSED(argc);
-    UNUSED(argv);
-
+auto main() -> int {
     if (!glfwInit()) {
         return -1;
     }
@@ -72,9 +63,9 @@ auto main(int argc, char **argv) -> int {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    auto pWd = glfwCreateWindow(640, 480, "hello, opengl", nullptr, nullptr);
+    auto *pWd = glfwCreateWindow(640, 480, APP_NAME, nullptr, nullptr);
     if (!pWd) {
-        fmt::print("create window failed!\n");
+        LOGE("create window failed!");
         return -1;
     }
 
@@ -89,15 +80,39 @@ auto main(int argc, char **argv) -> int {
 
     // initialize gl
     if (!gladLoadGL()) {
-        fmt::print("Load OpenGL failed!\n");
+        LOGE("Load OpenGL failed!");
         exit(-1);
     }
-    fmt::print("OpenGL version:{}.{}\n", GLVersion.major, GLVersion.minor);
+    LOGI("OpenGL version:{}.{}", GLVersion.major, GLVersion.minor);
 
     // buffer swapping setting
     glfwSwapInterval(1);
 
-    // glClearColor(0.5f, 0.4f, 0.5f, 1.0f);
+    glClearColor(0.5f, 0.4f, 0.5f, 1.0f);
+
+    // vertest shader
+    GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vertex_shader, 1, &vertex_shader_text, nullptr);
+    glCompileShader(vertex_shader);
+    if (!check_compile(vertex_shader, vertex_shader_text)) {
+        return EXIT_FAILURE;
+    }
+
+    // fragment shader
+    GLuint fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fragment_shader, 1, &fragment_shader_text, nullptr);
+    glCompileShader(fragment_shader);
+    if (!check_compile(fragment_shader, fragment_shader_text)) {
+        return EXIT_FAILURE;
+    }
+
+    GLuint program = glCreateProgram();
+    glAttachShader(program, vertex_shader);
+    glAttachShader(program, fragment_shader);
+    glLinkProgram(program);
+    if (!check_link(program)) {
+        return EXIT_FAILURE;
+    }
 
     // create vao
     GLuint vao = 0;
@@ -108,34 +123,13 @@ auto main(int argc, char **argv) -> int {
     GLuint vertex_buffer{0};
     glGenBuffers(1, &vertex_buffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices_data), vertices_data, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices.data(), GL_STATIC_DRAW);
 
-    // vertest shader
-    GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertex_shader, 1, &vertex_shader_text, nullptr);
-    glCompileShader(vertex_shader);
-
-    // fragment shader
-    GLuint fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragment_shader, 1, &fragment_shader_text, nullptr);
-    glCompileShader(fragment_shader);
-
-    GLuint program = glCreateProgram();
-    glAttachShader(program, vertex_shader);
-    glAttachShader(program, fragment_shader);
-    glLinkProgram(program);
-
-    GLuint mvp_location = glGetUniformLocation(program, "MVP");
     GLuint vpos_location = glGetAttribLocation(program, "vPos");
-    GLuint vcol_location = glGetAttribLocation(program, "vCol");
+    assert(vpos_location == 0);
 
     glEnableVertexAttribArray(vpos_location);
-    glVertexAttribPointer(
-        vpos_location, 2, GL_FLOAT, GL_FALSE, sizeof(vertices_data[0]), (void *)(0));
-
-    glEnableVertexAttribArray(vcol_location);
-    glVertexAttribPointer(
-        vcol_location, 3, GL_FLOAT, GL_FALSE, sizeof(color_data[0]), (void *)(sizeof(float) * 2));
+    glVertexAttribPointer(vpos_location, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
     // During init, enable debug output
     glEnable(GL_DEBUG_OUTPUT);
@@ -147,23 +141,8 @@ auto main(int argc, char **argv) -> int {
         // rendering
         glClear(GL_COLOR_BUFFER_BIT);
 
-        mat4x4 m;
-        mat4x4_identity(m);
-        mat4x4_rotate_Z(m, m, static_cast<float>(glfwGetTime()));
-
-        int height = 0, width = 0;
-        glfwGetFramebufferSize(pWd, &width, &height);
-        float ratio = width / static_cast<float>(height);
-
-        mat4x4 p;
-        mat4x4_ortho(p, -ratio, ratio, -1.0f, 1.0f, 1.0f, -1.0f);
-
-        mat4x4 mvp;
-        mat4x4_mul(mvp, p, m);
-
         glUseProgram(program);
         glBindVertexArray(vao);
-        glUniformMatrix4fv(mvp_location, 1, GL_FALSE, (const GLfloat *)mvp);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
         // event loop
@@ -173,7 +152,7 @@ auto main(int argc, char **argv) -> int {
         glfwSwapBuffers(pWd);
     }
 
-    fmt::print("user request to close this window!\n");
+    LOGI("user request to close this window!");
 
     // destroy window
     glfwDestroyWindow(pWd);
