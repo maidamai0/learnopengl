@@ -38,7 +38,7 @@ auto main(int argc, char **argv) -> int {
         0.5F, -0.5F, 0.0F,
         0.0F, 0.5F, 0.0F,
     };
-    
+
     static std::array<float, 9> color =
     {
         1.0F, 1.0F, 0.0F,
