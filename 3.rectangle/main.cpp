@@ -19,7 +19,7 @@
 
 // clang-format off
 // point for rectangle
-static const std::array<float, 3*4> position =
+static constexpr std::array<float, 3*4> position =
 {
     0.5F, 0.5F, 0.0F,
     0.5F, -0.5F, 0.0F,
@@ -28,7 +28,7 @@ static const std::array<float, 3*4> position =
 };
 
 // index for two triangles
-static const std::array<unsigned int, 3*2> indices =
+static constexpr std::array<unsigned int, 3*2> indices =
 {
     0,1,3,
     1,2,3
@@ -40,7 +40,7 @@ auto main(int argc, char **argv) -> int {
     (void)argv;
 
     // clang-format off
-    static const std::array<float, 3*4> color =
+    static constexpr std::array<float, position.size()> color =
     {
         1.0F, 1.0F, 0.0F,
         0.0F, 1.0F, 1.0F,
@@ -59,7 +59,7 @@ auto main(int argc, char **argv) -> int {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
-    auto *pWd = glfwCreateWindow(640, 480, "hello, opengl", nullptr, nullptr);
+    auto *pWd = glfwCreateWindow(640, 480, APP_NAME, nullptr, nullptr);
     if (pWd == nullptr) {
         LOGE("create window failed!");
     }
