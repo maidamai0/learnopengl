@@ -7,9 +7,12 @@
  *
  */
 
+#include <cstdlib>
+
 #include "common/glfw_helpper.h"
 #include "common/shader.h"
 #include "common/win_main.h"
+#include "log/log.h"
 #include "shaders_fs.glsl.h"
 #include "shaders_vs.glsl.h"
 
@@ -22,9 +25,10 @@ auto main(int argc, char **argv) -> int {
     GLFW_GUARD;
 
     // create a window
-    auto pWd = glfwCreateWindow(640, 480, "hello, opengl", nullptr, nullptr);
+    auto *pWd = glfwCreateWindow(640, 480, APP_NAME, nullptr, nullptr);
     if (!pWd) {
-        fmt::print("create window failed!\n");
+        LOGE("Create window failed!");
+        return EXIT_FAILURE;
     }
 
     // set key callback
@@ -38,14 +42,14 @@ auto main(int argc, char **argv) -> int {
 
     // initialize gl
     if (!gladLoadGL()) {
-        fmt::print("Load OpenGL failed!\n");
-        return -1;
+        LOGE("Load OpenGL failed!");
+        return EXIT_FAILURE;
     }
-    fmt::print("OpenGL version:{}.{}\n", GLVersion.major, GLVersion.minor);
+    LOGI("OpenGL version:{}.{}", GLVersion.major, GLVersion.minor);
 
     // get gl info
-    fmt::print("rederer is {}\n", glGetString(GL_RENDERER));
-    fmt::print("version is {}\n", glGetString(GL_VERSION));
+    LOGI("rederer is {}", glGetString(GL_RENDERER));
+    LOGI("version is {}", glGetString(GL_VERSION));
 
     // config
     glEnable(GL_DEPTH_TEST);
@@ -105,7 +109,7 @@ auto main(int argc, char **argv) -> int {
         glfwSwapBuffers(pWd);
     }
 
-    fmt::print("user request to close this window!\n");
+    LOGE("user request to close this window!");
 
     // destroy window
     glfwDestroyWindow(pWd);

@@ -61,6 +61,7 @@ float vertices[] = {
     -0.5F,  0.5F,  0.5F,  0.0F, 0.0F,
     -0.5F,  0.5F, -0.5F,  0.0F, 1.0F
 };
+
 unsigned int indices[] = {
     0, 1, 3, // first triangle
     1, 2, 3  // second triangle
@@ -106,7 +107,7 @@ auto main(int argc, char **argv) -> int {
     GLFW_GUARD;
 
     // create a window
-    auto pWd = glfwCreateWindow(640, 480, "textures", nullptr, nullptr);
+    auto *pWd = glfwCreateWindow(640, 480, "textures", nullptr, nullptr);
     if (!pWd) {
         fmt::print("create window failed!\n");
     }
