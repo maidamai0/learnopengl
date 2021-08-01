@@ -117,25 +117,6 @@ class Shader final {
         glDeleteShader(fragment_shader);
     }
 
-    /**
-     * @brief read shader file, return shader source in std::string
-     *
-     * @param shader_file_path  file path
-     * @return read_shader      shader source
-     */
-    static auto read_shader_source(const std::string& shader_file_path) -> std::string {
-        std::ifstream shader_reader;
-        std::stringstream buff;
-        shader_reader.open(shader_file_path);
-        if (!shader_reader.is_open()) {
-            fmt::print(stderr, "path:{} is invalid\n", shader_file_path);
-            throw ::std::runtime_error("path invalid");
-        }
-        buff << shader_reader.rdbuf();
-
-        return buff.str();
-    }
-
     static auto check_compile(const GLuint shader, const GLchar* const shader_source) -> bool {
         GLint success = 0;
         std::array<GLchar, 512> msg = {0};
