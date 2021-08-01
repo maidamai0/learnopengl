@@ -5,7 +5,7 @@
 namespace glsl {
 
 [[maybe_unused]] constexpr auto fs = R"(
-#version 400
+#version 410
 out vec4 frag_colour;
 void main() {
     frag_colour = vec4(0.2, 0.3, 0.5, 1.0);
