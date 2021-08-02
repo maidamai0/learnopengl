@@ -89,7 +89,7 @@ auto main(int argc, char **argv) -> int {
     glEnableVertexAttribArray(col_location);
 
     // clear color
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.0F, 0.0F, 0.0F, 1.0F);
 
     // running until exit
     while (!glfwWindowShouldClose(pWd)) {

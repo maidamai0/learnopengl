@@ -47,7 +47,7 @@ void main() {
 constexpr auto fragment_shader_text = R"(
 #version 130
 void main() {
-    gl_FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);
+    gl_FragColor = vec4(1.0F, 0.5F, 0.2F, 1.0F);
 }
 )";
 
@@ -88,7 +88,7 @@ auto main() -> int {
     // buffer swapping setting
     glfwSwapInterval(1);
 
-    glClearColor(0.5f, 0.4f, 0.5f, 1.0f);
+    glClearColor(0.5F, 0.4F, 0.5F, 1.0F);
 
     // vertest shader
     GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);

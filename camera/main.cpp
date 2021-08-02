@@ -1,7 +1,10 @@
+#include <cstdlib>
+
 #include "camera_fs.glsl.h"
 #include "camera_vs.glsl.h"
 #include "common/camera.h"
 #include "common/glfw_helpper.h"
+#include "common/log.h"
 #include "common/shader.h"
 #include "common/texture.h"
 #include "common/win_main.h"
@@ -17,7 +20,7 @@ const auto g_screen_height = 1080.0F;
 auto g_last_pos_x = 0.0;
 auto g_last_pos_y = 0.0;
 
-Camera g_camera({0.0f, 0.0f, 5.0f});
+Camera g_camera({0.0F, 0.0F, 5.0F});
 
 }  // namespace
 
@@ -78,41 +81,41 @@ auto lastFrame = 0.0F;
 void key_callback_ratio(GLFWwindow *window, int key, int scan_code, int action, int mods) {
     (void)scan_code;
     (void)mods;
-    fmt::print("deltaTime is {}\n", deltaTime);
+    LOGI("deltaTime is {}", deltaTime);
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-        fmt::print("Escape pressed\n");
+        LOGI("Escape pressed");
         glfwSetWindowShouldClose(window, GLFW_TRUE);  // not work
     } else if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
-        fmt::print("GLFW_KEY_UP pressed\n");
+        LOGI("GLFW_KEY_UP pressed");
         g_texture_ratio += 0.1F;
 
         if (g_texture_ratio > 1.0F) {
             g_texture_ratio = 1.0F;
         }
     } else if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
-        fmt::print("GLFW_KEY_DOWN pressed\n");
+        LOGI("GLFW_KEY_DOWN pressed");
         g_texture_ratio -= 0.1F;
 
         if (g_texture_ratio < 0.0F) {
             g_texture_ratio = 0.0F;
         }
     } else if (key == GLFW_KEY_LEFT && action == GLFW_PRESS) {
-        fmt::print("GLFW_KEY_LEFT pressed\n");
+        LOGI("GLFW_KEY_LEFT pressed");
         g_x_rotate -= 5.0F;
     } else if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS) {
-        fmt::print("GLFW_KEY_RIGHT pressed\n");
+        LOGI("GLFW_KEY_RIGHT pressed");
         g_x_rotate += 5.0F;
     } else if (key == GLFW_KEY_W && action == GLFW_PRESS) {
-        fmt::print("GLFW_KEY_W pressed\n");
+        LOGI("GLFW_KEY_W pressed");
         g_camera.ProcessKeyBoardEvent(CameraDirection::kForward, deltaTime);
     } else if (key == GLFW_KEY_S && action == GLFW_PRESS) {
-        fmt::print("GLFW_KEY_S pressed\n");
+        LOGI("GLFW_KEY_S pressed");
         g_camera.ProcessKeyBoardEvent(CameraDirection::kBackward, deltaTime);
     } else if (key == GLFW_KEY_A && action == GLFW_PRESS) {
-        fmt::print("GLFW_KEY_A pressed\n");
+        LOGI("GLFW_KEY_A pressed");
         g_camera.ProcessKeyBoardEvent(CameraDirection::kLeft, deltaTime);
     } else if (key == GLFW_KEY_D && action == GLFW_PRESS) {
-        fmt::print("GLFW_KEY_D pressed\n");
+        LOGI("GLFW_KEY_D pressed");
         g_camera.ProcessKeyBoardEvent(CameraDirection::kRight, deltaTime);
     }
 }
@@ -147,9 +150,10 @@ auto main(int argc, char **argv) -> int {
     GLFW_GUARD;
 
     // create a window
-    auto pWd = glfwCreateWindow(640, 480, "Camera", nullptr, nullptr);
+    auto *pWd = glfwCreateWindow(640, 480, APP_NAME, nullptr, nullptr);
     if (!pWd) {
-        fmt::print("create window failed!\n");
+        LOGE("create window failed!");
+        return EXIT_FAILURE;
     }
 
     // set key callback
@@ -169,14 +173,14 @@ auto main(int argc, char **argv) -> int {
 
     // initialize gl
     if (!gladLoadGL()) {
-        fmt::print("Load OpenGL failed!\n");
-        return -1;
+        LOGE("Load OpenGL failed!");
+        return EXIT_FAILURE;
     }
-    fmt::print("OpenGL version:{}.{}\n", GLVersion.major, GLVersion.minor);
+    LOGI("OpenGL version:{}.{}", GLVersion.major, GLVersion.minor);
 
     // get gl info
-    fmt::print("rederer is {}\n", glGetString(GL_RENDERER));
-    fmt::print("version is {}\n", glGetString(GL_VERSION));
+    LOGI("rederer is {}", glGetString(GL_RENDERER));
+    LOGI("version is {}", glGetString(GL_VERSION));
 
     // enable depth testing
     glEnable(GL_DEPTH_TEST);
@@ -219,19 +223,19 @@ auto main(int argc, char **argv) -> int {
     glUniform1i(glGetUniformLocation(shader.GetProgram(), "texture2"), 1);
 
     // clear color
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.0F, 0.0F, 0.0F, 1.0F);
 
     // orientation
-    std::vector<glm::vec3> cubePositions{glm::vec3(0.0f, 0.0f, 0.0f),
-                                         glm::vec3(2.0f, 5.0f, -15.0f),
-                                         glm::vec3(-1.5f, -2.2f, -2.5f),
-                                         glm::vec3(-3.8f, -2.0f, -12.3f),
-                                         glm::vec3(2.4f, -0.4f, -3.5f),
-                                         glm::vec3(-1.7f, 3.0f, -7.5f),
-                                         glm::vec3(1.3f, -2.0f, -2.5f),
-                                         glm::vec3(1.5f, 2.0f, -2.5f),
-                                         glm::vec3(1.5f, 0.2f, -1.5f),
-                                         glm::vec3(-1.3f, 1.0f, -1.5f)};
+    std::vector<glm::vec3> cubePositions{glm::vec3(0.0F, 0.0F, 0.0F),
+                                         glm::vec3(2.0F, 5.0F, -15.0F),
+                                         glm::vec3(-1.5F, -2.2F, -2.5F),
+                                         glm::vec3(-3.8F, -2.0F, -12.3F),
+                                         glm::vec3(2.4F, -0.4F, -3.5F),
+                                         glm::vec3(-1.7F, 3.0F, -7.5F),
+                                         glm::vec3(1.3F, -2.0F, -2.5F),
+                                         glm::vec3(1.5F, 2.0F, -2.5F),
+                                         glm::vec3(1.5F, 0.2F, -1.5F),
+                                         glm::vec3(-1.3F, 1.0F, -1.5F)};
 
     // running until exit
     while (!glfwWindowShouldClose(pWd)) {
@@ -255,12 +259,12 @@ auto main(int argc, char **argv) -> int {
         glUniform1f(glGetUniformLocation(shader.GetProgram(), "ratio"), g_texture_ratio);
 
         // view transformation
-        // float radius = 10.0f;
+        // float radius = 10.0F;
         // float camX = static_cast<float>(sin(glfwGetTime())) * radius;
         // float camZ = static_cast<float>(cos(glfwGetTime())) * radius;
         // glm::mat4 view = glm::lookAt(
-        //     glm::vec3(camX, 0.0, camZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f,
-        //     0.0f));
+        //     glm::vec3(camX, 0.0, camZ), glm::vec3(0.0F, 0.0F, 0.0F), glm::vec3(0.0F, 1.0F,
+        //     0.0F));
 
         glm::mat4 view = g_camera.GetViewMatrix();
         glUniformMatrix4fv(
@@ -268,7 +272,7 @@ auto main(int argc, char **argv) -> int {
 
         // projection transformation
         glm::mat4 projection = glm::perspective(
-            glm::radians(g_camera.GetZoom()), g_screen_width / g_screen_height, 0.1f, 100.0f);
+            glm::radians(g_camera.GetZoom()), g_screen_width / g_screen_height, 0.1F, 100.0F);
         glUniformMatrix4fv(glGetUniformLocation(shader.GetProgram(), "projection"),
                            1,
                            GL_FALSE,
@@ -277,11 +281,11 @@ auto main(int argc, char **argv) -> int {
         // model transformation
         glBindVertexArray(vao);
         for (auto &position : cubePositions) {
-            glm::mat4 model = glm::mat4(1.0f);
+            glm::mat4 model = glm::mat4(1.0F);
             model = glm::translate(model, position);
             model = glm::rotate(model,
                                 (float)glfwGetTime() * glm::radians(g_x_rotate),
-                                glm::vec3(1.0f, 0.3f, 0.5f));
+                                glm::vec3(1.0F, 0.3F, 0.5F));
             glUniformMatrix4fv(glGetUniformLocation(shader.GetProgram(), "model"),
                                1,
                                GL_FALSE,
@@ -290,7 +294,7 @@ auto main(int argc, char **argv) -> int {
         }
 
         // view transformation
-        auto view1 = glm::translate(glm::mat4(1.0f), glm::vec3(1.5f, 0.0f, -10.0f));
+        auto view1 = glm::translate(glm::mat4(1.0F), glm::vec3(1.5F, 0.0F, -10.0F));
         glUniformMatrix4fv(
             glGetUniformLocation(shader.GetProgram(), "view"), 1, GL_FALSE, glm::value_ptr(view1));
 
@@ -298,7 +302,7 @@ auto main(int argc, char **argv) -> int {
         // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         // view transformation
-        auto view2 = glm::translate(glm::mat4(1.0f), glm::vec3(10.0f, 0.0f, -20.0f));
+        auto view2 = glm::translate(glm::mat4(1.0F), glm::vec3(10.0F, 0.0F, -20.0F));
         glUniformMatrix4fv(
             glGetUniformLocation(shader.GetProgram(), "view"), 1, GL_FALSE, glm::value_ptr(view2));
 
@@ -311,7 +315,7 @@ auto main(int argc, char **argv) -> int {
         glfwWaitEvents();
     }
 
-    fmt::print("user request to close this window!\n");
+    LOGI("user request to close this window!");
 
     // destroy window
     glfwDestroyWindow(pWd);

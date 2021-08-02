@@ -221,7 +221,7 @@ auto main(int argc, char **argv) -> int {
 
         // projection trandformation
         glm::mat4 projection;
-        projection = glm::perspective(glm::radians(45.0F), 1920.0F / 1080, 0.1f, 100.0F);
+        projection = glm::perspective(glm::radians(45.0F), 1920.0F / 1080, 0.1F, 100.0F);
         glUniformMatrix4fv(glGetUniformLocation(shader.GetProgram(), "projection"),
                            1,
                            GL_FALSE,

@@ -16,10 +16,10 @@ float g_texture_ratio = 0.5;
 // clang-format off
 // float vertices[] = {
 //     // positions          // colors           // texture coords
-//      0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   0.55f, 0.55f,   // top right
-//      0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   0.55f, 0.45f,   // bottom right
-//     -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.45f, 0.45f,   // bottom left
-//     -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.45f, 0.55f    // top left 
+//      0.5F,  0.5F, 0.0F,   1.0F, 0.0F, 0.0F,   0.55f, 0.55f,   // top right
+//      0.5F, -0.5F, 0.0F,   0.0F, 1.0F, 0.0F,   0.55f, 0.45f,   // bottom right
+//     -0.5F, -0.5F, 0.0F,   0.0F, 0.0F, 1.0F,   0.45f, 0.45f,   // bottom left
+//     -0.5F,  0.5F, 0.0F,   1.0F, 1.0F, 0.0F,   0.45f, 0.55f    // top left 
 // };
 
 float vertices[] = {
@@ -140,7 +140,7 @@ auto main(int argc, char **argv) -> int {
     glUniform1i(glGetUniformLocation(shader.GetProgram(), "outTexture1"), 1);
 
     // clear color
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.0F, 0.0F, 0.0F, 1.0F);
 
     // running until exit
     while (!glfwWindowShouldClose(pWd)) {

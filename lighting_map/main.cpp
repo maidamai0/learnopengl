@@ -270,7 +270,7 @@ auto main(int argc, char **argv) -> int {
         auto light_model = glm::mat4(1.0F);
         // light_model = glm::rotate(light_model,
         //                           (float)glfwGetTime() * glm::radians(g_x_rotate),
-        //                           glm::vec3(0.0f, 10.5f, 0.0));
+        //                           glm::vec3(0.0F, 10.5F, 0.0));
         light_model = glm::translate(light_model, g_lightPos);
         light_model = glm::scale(light_model, glm::vec3(0.2F));
         light_shader.SetMat4("model", light_model);

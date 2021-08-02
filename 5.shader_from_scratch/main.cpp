@@ -95,7 +95,7 @@ auto main(int argc, char **argv) -> int {
     glDebugMessageCallback(MessageCallback, 0);
 
     // clear color
-    glClearColor(0.6f, 0.6f, 0.8f, 1.0f);
+    glClearColor(0.6F, 0.6F, 0.8F, 1.0F);
 
     // running until exit
     while (!glfwWindowShouldClose(pWd)) {

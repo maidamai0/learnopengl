@@ -16,10 +16,10 @@ float g_texture_ratio = 0.5;
 // clang-format off
 // float vertices[] = {
 //     // positions          // colors           // texture coords
-//      0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   0.55f, 0.55f,   // top right
-//      0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   0.55f, 0.45f,   // bottom right
-//     -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.45f, 0.45f,   // bottom left
-//     -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.45f, 0.55f    // top left 
+//      0.5F,  0.5F, 0.0F,   1.0F, 0.0F, 0.0F,   0.55f, 0.55f,   // top right
+//      0.5F, -0.5F, 0.0F,   0.0F, 1.0F, 0.0F,   0.55f, 0.45f,   // bottom right
+//     -0.5F, -0.5F, 0.0F,   0.0F, 0.0F, 1.0F,   0.45f, 0.45f,   // bottom left
+//     -0.5F,  0.5F, 0.0F,   1.0F, 1.0F, 0.0F,   0.45f, 0.55f    // top left 
 // };
 
 float vertices[] = {
@@ -139,7 +139,7 @@ auto main(int argc, char **argv) -> int {
     glUniform1i(glGetUniformLocation(shader.GetProgram(), "outTexture1"), 1);
 
     // clear color
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.0F, 0.0F, 0.0F, 1.0F);
 
     // running until exit
     while (!glfwWindowShouldClose(pWd)) {
@@ -159,9 +159,9 @@ auto main(int argc, char **argv) -> int {
         glUniform1f(glGetUniformLocation(shader.GetProgram(), "ratio"), g_texture_ratio);
 
         // transformation
-        glm::mat4 trans(1.0f);
-        trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
-        trans = glm::rotate(trans, static_cast<float>(glfwGetTime()), glm::vec3(0.0f, 0.0f, 1.0f));
+        glm::mat4 trans(1.0F);
+        trans = glm::translate(trans, glm::vec3(0.5F, -0.5F, 0.0F));
+        trans = glm::rotate(trans, static_cast<float>(glfwGetTime()), glm::vec3(0.0F, 0.0F, 1.0F));
 
         glUniformMatrix4fv(
             glGetUniformLocation(shader.GetProgram(), "trans"), 1, GL_FALSE, glm::value_ptr(trans));
@@ -170,8 +170,8 @@ auto main(int argc, char **argv) -> int {
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         // second object
-        glm::mat4 trans1(1.0f);
-        trans1 = glm::translate(trans1, glm::vec3(-0.5f, 0.5f, 0.0f));
+        glm::mat4 trans1(1.0F);
+        trans1 = glm::translate(trans1, glm::vec3(-0.5F, 0.5F, 0.0F));
         const auto s = sin(static_cast<float>(glfwGetTime()));
 
         auto absolute = [](float v) {
