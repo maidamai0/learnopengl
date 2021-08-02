@@ -1,10 +1,10 @@
 #include <cstdlib>
 
 #include "common/glfw_helpper.h"
+#include "common/log.h"
 #include "common/shader.h"
 #include "common/texture.h"
 #include "common/win_main.h"
-#include "log/log.h"
 #include "textures_fs.glsl.h"
 #include "textures_vs.glsl.h"
 

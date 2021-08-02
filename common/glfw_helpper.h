@@ -18,7 +18,7 @@
 #include <sstream>
 #include <string>
 
-#include "log/log.h"
+#include "common/log.h"
 
 #if _WIN32
 #include <Windows.h>

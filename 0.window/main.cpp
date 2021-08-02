@@ -12,8 +12,8 @@
 
 #include "common/color.h"
 #include "common/glfw_helpper.h"
+#include "common/log.h"
 #include "common/win_main.h"
-#include "log/log.h"
 
 auto main() -> int {
     GLFW_GUARD;

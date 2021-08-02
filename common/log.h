@@ -13,8 +13,8 @@
 
 #include <memory>
 
+#include "common/log.h"
 #include "fmt/core.h"
-#include "log/log.h"
 
 #define LOGD SPDLOG_DEBUG
 #define LOGI SPDLOG_INFO

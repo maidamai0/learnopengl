@@ -10,9 +10,9 @@
 #include <cstdlib>
 
 #include "common/glfw_helpper.h"
+#include "common/log.h"
 #include "common/shader.h"
 #include "common/win_main.h"
-#include "log/log.h"
 #include "shaders_fs.glsl.h"
 #include "shaders_vs.glsl.h"
 

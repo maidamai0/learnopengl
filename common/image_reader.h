@@ -14,8 +14,8 @@
 #include <filesystem>
 #include <string>
 
+#include "common/log.h"
 #include "glad/glad.h"
-#include "log/log.h"
 #include "stb_image.h"
 
 class ImageReader final {

@@ -12,9 +12,9 @@
 
 #include "common/color.h"
 #include "common/glfw_helpper.h"
+#include "common/log.h"
 #include "common/win_main.h"
 #include "fs.glsl.h"
-#include "log/log.h"
 #include "vs.glsl.h"
 
 // clang-format off
