@@ -1,7 +1,10 @@
+#include <cstdlib>
+
 #include "common/glfw_helpper.h"
 #include "common/shader.h"
 #include "common/texture.h"
 #include "common/win_main.h"
+#include "log/log.h"
 #include "textures_fs.glsl.h"
 #include "textures_vs.glsl.h"
 
@@ -27,7 +30,7 @@ float vertices[] = {
     -0.5F,  0.5F, 0.0F,   1.0F, 1.0F, 0.0F,   0.0F, 1.0F    // top left 
 };
 
-unsigned int indices[] = {  
+unsigned int indices[] = {
     0, 1, 3, // first triangle
     1, 2, 3  // second triangle
 };
@@ -38,17 +41,17 @@ void key_callback_ratio(GLFWwindow *window, int key, int scan_code, int action, 
     (void)scan_code;
     (void)mods;
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-        fmt::print("Escape pressed\n");
+        LOGI("Escape pressed");
         glfwSetWindowShouldClose(window, GLFW_TRUE);  // not work
     } else if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
-        fmt::print("GLFW_KEY_UP pressed\n");
+        LOGI("GLFW_KEY_UP pressed");
         g_texture_ratio += 0.1F;
 
         if (g_texture_ratio > 1.0F) {
             g_texture_ratio = 1.0F;
         }
     } else if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
-        fmt::print("GLFW_KEY_DOWN pressed\n");
+        LOGI("GLFW_KEY_DOWN pressed");
         g_texture_ratio -= 0.1F;
 
         if (g_texture_ratio < 0.0F) {
@@ -67,9 +70,10 @@ auto main(int argc, char **argv) -> int {
     GLFW_GUARD;
 
     // create a window
-    auto pWd = glfwCreateWindow(640, 480, "textures", nullptr, nullptr);
+    auto *pWd = glfwCreateWindow(640, 480, APP_NAME, nullptr, nullptr);
     if (!pWd) {
-        fmt::print("create window failed!\n");
+        LOGE("create window failed!");
+        return EXIT_FAILURE;
     }
 
     // set key callback
@@ -83,14 +87,14 @@ auto main(int argc, char **argv) -> int {
 
     // initialize gl
     if (!gladLoadGL()) {
-        fmt::print("Load OpenGL failed!\n");
-        return -1;
+        LOGE("Load OpenGL failed!");
+        return EXIT_FAILURE;
     }
-    fmt::print("OpenGL version:{}.{}\n", GLVersion.major, GLVersion.minor);
+    LOGI("OpenGL version:{}.{}", GLVersion.major, GLVersion.minor);
 
     // get gl info
-    fmt::print("rederer is {}\n", glGetString(GL_RENDERER));
-    fmt::print("version is {}\n", glGetString(GL_VERSION));
+    LOGI("rederer is {}", glGetString(GL_RENDERER));
+    LOGI("version is {}", glGetString(GL_VERSION));
 
     // vao
     GLuint vao = 0;
@@ -165,7 +169,7 @@ auto main(int argc, char **argv) -> int {
         glfwSwapBuffers(pWd);
     }
 
-    fmt::print("user request to close this window!\n");
+    LOGI("user request to close this window!");
 
     // destroy window
     glfwDestroyWindow(pWd);

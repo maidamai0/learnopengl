@@ -14,17 +14,18 @@
 #include <filesystem>
 #include <string>
 
-#include "fmt/core.h"
+#include "glad/glad.h"
+#include "log/log.h"
 #include "stb_image.h"
 
-class ImageReader {
+class ImageReader final {
    public:
     explicit ImageReader(std::string&& image_path) {
-        stbi_set_flip_vertically_on_load(true);
+        stbi_set_flip_vertically_on_load(1);
         raw_image_data_ =
             stbi_load(image_path.c_str(), &widht_, &height_, &num_of_color_channels_, 0);
         if (!raw_image_data_) {
-            fmt::print(stderr, "load image:{} failed:{}\n", image_path, stbi_failure_reason());
+            LOGE("load image:{} failed:{}", image_path, stbi_failure_reason());
             throw std::runtime_error("load image failed");
         }
 
@@ -35,17 +36,17 @@ class ImageReader {
                 case 3: image_type_ = GL_RGB; break;
                 case 4: image_type_ = GL_RGBA; break;
                 default:
-                    fmt::print("unkonwn image type:{}\n", num_of_color_channels_);
+                    LOGI("unkonwn image type:{}", num_of_color_channels_);
                     abort();
                     break;
             }
         }
 
-        fmt::print("image[{}], width:{}, height:{}, channels:{}\n",
-                   std::filesystem::absolute(path_info).generic_string(),
-                   widht_,
-                   height_,
-                   num_of_color_channels_);
+        LOGI("image[{}], width:{}, height:{}, channels:{}",
+             std::filesystem::absolute(path_info).generic_string(),
+             widht_,
+             height_,
+             num_of_color_channels_);
 
         // TODO
         // test if destructor is called when exception is throwed here.
@@ -56,23 +57,23 @@ class ImageReader {
         stbi_image_free(raw_image_data_);
     }
 
-    const unsigned char* GetRawData() const {
+    [[nodiscard]] auto GetRawData() const -> const unsigned char* {
         return raw_image_data_;
     }
 
-    auto GetWidth() const {
+    [[nodiscard]] auto GetWidth() const {
         return widht_;
     }
 
-    auto GetHeight() const {
+    [[nodiscard]] auto GetHeight() const {
         return height_;
     }
 
-    auto GetColorChannelNum() const {
+    [[nodiscard]] auto GetColorChannelNum() const {
         return num_of_color_channels_;
     }
 
-    auto GetImageType() const {
+    [[nodiscard]] auto GetImageType() const {
         return image_type_;
     }
 
