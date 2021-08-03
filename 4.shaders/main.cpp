@@ -7,14 +7,21 @@
  *
  */
 
-#include <cstdlib>
-
 #include "common/glfw_helpper.h"
-#include "common/log.h"
-#include "common/shader.h"
 #include "common/win_main.h"
-#include "shaders_fs.glsl.h"
-#include "shaders_vs.glsl.h"
+#include "fs.glsl.h"
+#include "text_rendering/fragment.fs.h"
+#include "vs.glsl.h"
+
+void GLAPIENTRY MessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity,
+                                GLsizei length, const GLchar *message, const void *userParam) {
+    fprintf(stderr,
+            "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+            (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : ""),
+            type,
+            severity,
+            message);
+}
 
 auto main(int argc, char **argv) -> int {
     (void)argc;
@@ -25,71 +32,70 @@ auto main(int argc, char **argv) -> int {
     GLFW_GUARD;
 
     // create a window
-    auto *pWd = glfwCreateWindow(640, 480, APP_NAME, nullptr, nullptr);
+    auto pWd = glfwCreateWindow(640, 480, "hello, opengl", nullptr, nullptr);
     if (!pWd) {
-        LOGE("Create window failed!");
-        return EXIT_FAILURE;
+        fmt::print("create window failed!\n");
     }
 
     // set key callback
     glfwSetKeyCallback(pWd, key_callback);
-
-    // resize callback
-    glfwSetFramebufferSizeCallback(pWd, resize_callback);
 
     // make opengl context
     glfwMakeContextCurrent(pWd);
 
     // initialize gl
     if (!gladLoadGL()) {
-        LOGE("Load OpenGL failed!");
-        return EXIT_FAILURE;
+        fmt::print("Load OpenGL failed!\n");
+        return -1;
     }
-    LOGI("OpenGL version:{}.{}", GLVersion.major, GLVersion.minor);
+    fmt::print("OpenGL version:{}.{}\n", GLVersion.major, GLVersion.minor);
 
     // get gl info
-    LOGI("rederer is {}", glGetString(GL_RENDERER));
-    LOGI("version is {}", glGetString(GL_VERSION));
+    fmt::print("rederer is {}\n", glGetString(GL_RENDERER));
+    fmt::print("version is {}\n", glGetString(GL_VERSION));
 
     // config
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
 
     // triangle point
-    // clang-format off
-    float vertices[] = {
-        -0.5F, -0.5F, 0.0F, 1.0F,0.0F,0.0F,
-        0.5F, -0.5F, 0.0F,  0.0F,1.0F,0.0F,
-        0.0F, 0.5, 0.0F,    0.0F,0.0F,1.0F
-    };
-    // clang-format on
+    float points[] = {0.0F, 0.5F, 0.0F, 0.5F, -0.5F, 0.0F, -0.5F, -0.5, 0.0F};
+
+    // shader
+    GLuint vs = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vs, 1, &glsl::vs, nullptr);
+    glCompileShader(vs);
+
+    GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fs, 1, &glsl::fs, nullptr);
+    glCompileShader(fs);
+
+    // gpu shade program
+    GLuint shade_proram = glCreateProgram();
+    glAttachShader(shade_proram, vs);
+    glAttachShader(shade_proram, fs);
+    glLinkProgram(shade_proram);
 
     // vao
     GLuint vao = 0;
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
+    glEnableVertexAttribArray(0);
 
     // copy data to graphical card with vbo
     GLuint vbo = 0;
     glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(float), points, GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+    glEnableVertexAttribArray(0);
 
-    Shader shader(glsl::shaders_vs, glsl::shaders_fs);
-
-    // position
-    const auto pos_location = glGetAttribLocation(shader.GetProgram(), "vPos");
-    glVertexAttribPointer(pos_location, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), nullptr);
-    glEnableVertexAttribArray(pos_location);
-
-    // color
-    const auto col_location = glGetAttribLocation(shader.GetProgram(), "vCol");
-    glVertexAttribPointer(
-        col_location, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float)));
-    glEnableVertexAttribArray(col_location);
+    // During init, enable debug output
+    glEnable(GL_DEBUG_OUTPUT);
+    glDebugMessageCallback(MessageCallback, 0);
 
     // clear color
-    glClearColor(0.0F, 0.0F, 0.0F, 1.0F);
+    glClearColor(0.6F, 0.6F, 0.8F, 1.0F);
 
     // running until exit
     while (!glfwWindowShouldClose(pWd)) {
@@ -97,6 +103,7 @@ auto main(int argc, char **argv) -> int {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // setup environment
+        glUseProgram(shade_proram);
         glBindVertexArray(vao);
 
         // draw
@@ -109,7 +116,7 @@ auto main(int argc, char **argv) -> int {
         glfwSwapBuffers(pWd);
     }
 
-    LOGE("user request to close this window!");
+    fmt::print("user request to close this window!\n");
 
     // destroy window
     glfwDestroyWindow(pWd);
