@@ -165,31 +165,12 @@ auto main(int argc, char **argv) -> int {
 
     // transformation
     glm::mat4 trans(1.0F);
-    trans = glm::translate(trans, glm::vec3(0.5F, -0.5F, 0.0F));
-    trans = glm::rotate(trans, static_cast<float>(glfwGetTime()), glm::vec3(0.0F, 0.0F, 1.0F));
+    trans = glm::rotate(trans, static_cast<float>(glfwGetTime()), glm::vec3(0.0F, 1.0F, 0.0F));
 
     glUniformMatrix4fv(glGetUniformLocation(shader.GetProgram(), "trans"), 1, GL_FALSE,
                        glm::value_ptr(trans));
 
     glBindVertexArray(vao);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-    // second object
-    glm::mat4 trans1(1.0F);
-    trans1 = glm::translate(trans1, glm::vec3(-0.5F, 0.5F, 0.0F));
-    const auto s = sin(static_cast<float>(glfwGetTime()));
-
-    auto absolute = [](float v) {
-      if (v > 0) {
-        return v;
-      }
-      return -v;
-    };
-
-    const auto positive_s = absolute(s);
-    trans1 = glm::scale(trans1, glm::vec3(positive_s, 1 / (positive_s + 0.01), s));
-    glUniformMatrix4fv(glGetUniformLocation(shader.GetProgram(), "trans"), 1, GL_FALSE,
-                       glm::value_ptr(trans1));
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
     // poll event

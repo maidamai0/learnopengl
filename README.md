@@ -28,6 +28,10 @@ Encapsulate shader in a class
 
 Demonstate how to use textures
 
-## 7 Coordinates
+## 7 Transformation
 
-Explains the coordinates
+Explains transformation
+
+## 8 Coordinates
+
+Explains the 
