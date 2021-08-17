@@ -30,13 +30,15 @@ set(BUILD_SHARED_LIBS ON)
 # for msvc max min confilct
 add_compile_definitions(NOMINMAX)
 
+add_subdirectory(dependency)
+
 # dependency headers
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}
                     ${CMAKE_CURRENT_SOURCE_DIR}/dependency/glad/include
                     ${CMAKE_CURRENT_SOURCE_DIR}/dependency/stb
+                    ${CMAKE_CURRENT_SOURCE_DIR}/dependency/magic_enum/include
 )
 
-add_subdirectory(dependency)
 
 # clang-tidy
 # TODO header files-not found

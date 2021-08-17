@@ -14,12 +14,7 @@ in vec2 TexCoord;
 out vec4 FragColor;
 
 // texture samplers
-uniform sampler2D texture1;
-uniform sampler2D texture2;
+uniform sampler2D texture0;
 
-uniform float ratio;
-
-void main() {
-    FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), ratio);
-})";
+void main() { FragColor = texture(texture0, TexCoord); })";
 }  // namespace glsl
