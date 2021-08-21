@@ -11,15 +11,17 @@
 
 #include "common/log.h"
 
+#include "glm/ext/matrix_transform.hpp"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "magic_enum.hpp"
 
+#include <algorithm>
 #include <cassert>
 
 enum class CameraDirection { kForward, kBackward, kLeft, kRight };
 enum class CameraMode { kOrthographic, kPerspective };
-enum class MouseMode { Rotate, Zoom, Pan, None };
+enum class MouseMode { Rotate, Pan, None };
 
 class Camera {
  public:
@@ -36,7 +38,14 @@ class Camera {
   }
 
   [[nodiscard]] auto GetViewMatrix() const {
-    return glm::lookAt(position_, position_ + front_, up_);
+    auto view = glm::lookAt(position_, position_ + front_, up_);
+    view = glm::rotate(view, yaw_, glm::vec3(0.0F, 1.0F, 0.0F));
+    view = glm::rotate(view, -pitch_, glm::vec3(1.0F, 0.0F, 0.0F));
+    return view;
+  }
+
+  [[nodiscard]] auto GetProjectionMatrix(const float aspect) const {
+    return glm::perspective(glm::radians(zoom_), aspect, near_, far_);
   }
 
   [[nodiscard]] auto GetZoom() const {
@@ -80,30 +89,19 @@ class Camera {
   }
 
   auto ProcessMouseMovement(float offset_x, float offset_y, bool constrain_pitch) {
-    if (mouse_mode_ == MouseMode::Rotate) {
-      yaw_ += offset_x * mouse_sensitivity_;
-      pitch_ += offset_y * mouse_sensitivity_;
-
-      if (constrain_pitch) {
-        if (pitch_ > 89.0f) {
-          pitch_ = 89.0f;
-        } else if (pitch_ < -89.0f) {
-          pitch_ = -89.0f;
-        }
-      }
+    switch (mouse_mode_) {
+      case MouseMode::Rotate:
+        return on_rotate(offset_x, offset_y);
+      case MouseMode::Pan:
+        return on_pan(offset_x, offset_y);
+      case MouseMode::None:
+        return;
     }
-
-    update_camera_vectors();
   }
 
   auto ProcessMouseScroll(float yoffset) {
     zoom_ -= yoffset;
-
-    // if (zoom_ < 1.0f) {
-    //     zoom_ = 1.0f;
-    // }
-
-    fmt::print("zoom is {}\n", zoom_);
+    zoom_ = std::clamp(zoom_, near_, far_);
   }
 
  private:
@@ -118,6 +116,16 @@ class Camera {
     up_ = glm::normalize(glm::cross(right_, front_));
   }
 
+  void on_rotate(float offset_x, float offset_y) {
+    yaw_ += offset_x * mouse_sensitivity_;
+    pitch_ += offset_y * mouse_sensitivity_;
+  }
+
+  void on_pan(float offset_x, float offset_y) {
+    position_ -= right_ * offset_x * mouse_sensitivity_;
+    position_ -= up_ * offset_y * mouse_sensitivity_;
+  }
+
  private:
   // camera attributes
   glm::vec3 position_;
@@ -128,12 +136,15 @@ class Camera {
 
   // camera options
   float move_speed_{250.0f};
-  float mouse_sensitivity_{0.1f};
+  float mouse_sensitivity_{0.01f};
   float zoom_{45.0f};
 
   // euler angles
   float yaw_{-0.0f};
   float pitch_{0.0f};
+
+  float near_ = 0.1F;
+  float far_ = 100.0F;
 
   MouseMode mouse_mode_{MouseMode::None};
 };

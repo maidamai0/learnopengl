@@ -114,6 +114,10 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
     g_camera.SetMouseMode(MouseMode::Rotate);
   }
 
+  if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_PRESS) {
+    g_camera.SetMouseMode(MouseMode::Pan);
+  }
+
   if (action == GLFW_RELEASE) {
     g_camera.SetMouseMode(MouseMode::None);
   }
@@ -129,7 +133,7 @@ void mouse_callback(GLFWwindow * /*unused*/, double x_pos, double y_pos) {
   }
 
   g_camera.ProcessMouseMovement(static_cast<float>((x_pos - g_last_pos_x)),
-                                static_cast<float>((g_last_pos_y - y_pos)), true);
+                                static_cast<float>((g_last_pos_y - y_pos)), false);
   g_last_pos_x = x_pos;
   g_last_pos_y = y_pos;
 }
@@ -236,6 +240,8 @@ auto main(int argc, char **argv) -> int {
     glBindTexture(GL_TEXTURE_2D, texture.GetTextureID());
 
     glm::mat4 view = g_camera.GetViewMatrix();
+    // view = glm::rotate(view, static_cast<float>(glfwGetTime()) * glm::radians(g_x_rotate),
+    //                    glm::vec3(1.0F, 0.0F, 0.0F));
     glUniformMatrix4fv(glGetUniformLocation(shader.GetProgram(), "view"), 1, GL_FALSE,
                        glm::value_ptr(view));
 
@@ -247,8 +253,8 @@ auto main(int argc, char **argv) -> int {
 
     // model transformation
     glm::mat4 model = glm::mat4(1.0F);
-    model = glm::rotate(model, static_cast<float>(glfwGetTime()) * glm::radians(g_x_rotate),
-                        glm::vec3(1.0F, 0.3F, 0.5F));
+    // model = glm::rotate(model, static_cast<float>(glfwGetTime()) * glm::radians(g_x_rotate),
+    //                     glm::vec3(1.0F, 0.3F, 0.5F));
     glUniformMatrix4fv(glGetUniformLocation(shader.GetProgram(), "model"), 1, GL_FALSE,
                        glm::value_ptr(model));
 
