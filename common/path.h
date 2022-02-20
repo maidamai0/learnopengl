@@ -31,17 +31,17 @@
  * @return std::string      shade file full path
  */
 inline auto get_shader_full_path(std::string shader_name) -> std::string {
-    return std::string(SHADERS_PATH) + shader_name;
+  return std::string(SHADERS_PATH) + shader_name;
 }
 
 /**
  * @brief Get the resource full path object
- * 
+ *
  * @param resource_name     typically a image name with extension
- * @return std::string      full path of this resource file 
+ * @return std::string      full path of this resource file
  */
 inline auto get_resource_full_path(std::string&& resource_name) -> std::string {
-    return std::string(RES_PATH) + resource_name;
+  return std::string(RES_PATH) + resource_name;
 }
 
 /**
@@ -49,5 +49,5 @@ inline auto get_resource_full_path(std::string&& resource_name) -> std::string {
  *
  */
 auto operator""_res(const char* name, size_t sz) {
-    return get_resource_full_path(std::string(name));
+  return get_resource_full_path(std::string(name));
 }

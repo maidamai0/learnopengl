@@ -3,10 +3,10 @@
 /**
  * @file define.h
  * @author tonghao.yuan
- * @brief 
+ * @brief
  * @version 0.1
  * @date 2019-08-27
- * 
+ *
  */
 
 #define UNUSED(x) (void)x

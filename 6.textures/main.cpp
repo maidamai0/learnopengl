@@ -38,142 +38,142 @@ unsigned int indices[] = {
 // clang-format on
 
 void key_callback_ratio(GLFWwindow *window, int key, int scan_code, int action, int mods) {
-    (void)scan_code;
-    (void)mods;
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-        LOGI("Escape pressed");
-        glfwSetWindowShouldClose(window, GLFW_TRUE);  // not work
-    } else if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
-        LOGI("GLFW_KEY_UP pressed");
-        g_texture_ratio += 0.1F;
+  (void)scan_code;
+  (void)mods;
+  if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
+    LOGI("Escape pressed");
+    glfwSetWindowShouldClose(window, GLFW_TRUE);  // not work
+  } else if (key == GLFW_KEY_UP && action == GLFW_PRESS) {
+    LOGI("GLFW_KEY_UP pressed");
+    g_texture_ratio += 0.1F;
 
-        if (g_texture_ratio > 1.0F) {
-            g_texture_ratio = 1.0F;
-        }
-    } else if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
-        LOGI("GLFW_KEY_DOWN pressed");
-        g_texture_ratio -= 0.1F;
-
-        if (g_texture_ratio < 0.0F) {
-            g_texture_ratio = 0.0F;
-        }
+    if (g_texture_ratio > 1.0F) {
+      g_texture_ratio = 1.0F;
     }
+  } else if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
+    LOGI("GLFW_KEY_DOWN pressed");
+    g_texture_ratio -= 0.1F;
+
+    if (g_texture_ratio < 0.0F) {
+      g_texture_ratio = 0.0F;
+    }
+  }
 }
 
 auto main(int argc, char **argv) -> int {
-    (void)argc;
-    (void)argv;
+  (void)argc;
+  (void)argv;
 
-    // set error callback
-    glfwSetErrorCallback(err_callback);
+  // set error callback
+  glfwSetErrorCallback(err_callback);
 
-    GLFW_GUARD;
+  GLFW_GUARD;
 
-    // create a window
-    auto *pWd = glfwCreateWindow(640, 480, APP_NAME, nullptr, nullptr);
-    if (!pWd) {
-        LOGE("create window failed!");
-        return EXIT_FAILURE;
-    }
+  // create a window
+  auto *pWd = glfwCreateWindow(640, 480, APP_NAME, nullptr, nullptr);
+  if (!pWd) {
+    LOGE("create window failed!");
+    return EXIT_FAILURE;
+  }
 
-    // set key callback
-    glfwSetKeyCallback(pWd, key_callback_ratio);
+  // set key callback
+  glfwSetKeyCallback(pWd, key_callback_ratio);
 
-    // resize callback
-    glfwSetFramebufferSizeCallback(pWd, resize_callback);
+  // resize callback
+  glfwSetFramebufferSizeCallback(pWd, resize_callback);
 
-    // make opengl context
-    glfwMakeContextCurrent(pWd);
+  // make opengl context
+  glfwMakeContextCurrent(pWd);
 
-    // initialize gl
-    if (!gladLoadGL()) {
-        LOGE("Load OpenGL failed!");
-        return EXIT_FAILURE;
-    }
-    LOGI("OpenGL version:{}.{}", GLVersion.major, GLVersion.minor);
+  // initialize gl
+  if (!gladLoadGL()) {
+    LOGE("Load OpenGL failed!");
+    return EXIT_FAILURE;
+  }
+  LOGI("OpenGL version:{}.{}", GLVersion.major, GLVersion.minor);
 
-    // get gl info
-    LOGI("rederer is {}", glGetString(GL_RENDERER));
-    LOGI("version is {}", glGetString(GL_VERSION));
+  // get gl info
+  LOGI("rederer is {}", glGetString(GL_RENDERER));
+  LOGI("version is {}", glGetString(GL_VERSION));
 
-    // vao
-    GLuint vao = 0;
-    glGenVertexArrays(1, &vao);
+  // vao
+  GLuint vao = 0;
+  glGenVertexArrays(1, &vao);
+  glBindVertexArray(vao);
+
+  // copy data to graphical card with vbo
+  GLuint vbo = 0;
+  glGenBuffers(1, &vbo);
+  glBindBuffer(GL_ARRAY_BUFFER, vbo);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+  // EBO
+  GLuint ebo = 0;
+  glGenBuffers(1, &ebo);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+  Shader shader(glsl::textures_vs, glsl::textures_fs);
+
+  // position
+  const auto pos_location = glGetAttribLocation(shader.GetProgram(), "vPos");
+  glVertexAttribPointer(pos_location, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), nullptr);
+  glEnableVertexAttribArray(pos_location);
+
+  // color
+  const auto color_location = glGetAttribLocation(shader.GetProgram(), "vCol");
+  glVertexAttribPointer(color_location, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
+                        (void *)(3 * sizeof(float)));
+  glEnableVertexAttribArray(color_location);
+
+  // texture cooridinatin
+  const auto tex_location = glGetAttribLocation(shader.GetProgram(), "vTex");
+  glVertexAttribPointer(tex_location, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
+                        (void *)(6 * sizeof(float)));
+  glEnableVertexAttribArray(tex_location);
+
+  // texture
+  Texture texture("winnie_the_pooh.jpg");
+  Texture texture1("awesomeface.png");
+
+  glUniform1i(glGetUniformLocation(shader.GetProgram(), "outTexture"), 0);
+  glUniform1i(glGetUniformLocation(shader.GetProgram(), "outTexture1"), 1);
+
+  // clear color
+  glClearColor(0.0F, 0.0F, 0.0F, 1.0F);
+
+  // running until exit
+  while (!glfwWindowShouldClose(pWd)) {
+    // clear
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // setup environment
     glBindVertexArray(vao);
 
-    // copy data to graphical card with vbo
-    GLuint vbo = 0;
-    glGenBuffers(1, &vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    // draw
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture.GetTextureID());
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, texture1.GetTextureID());
 
-    // EBO
-    GLuint ebo = 0;
-    glGenBuffers(1, &ebo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    // set ratio
+    glUniform1f(glGetUniformLocation(shader.GetProgram(), "ratio"), g_texture_ratio);
 
-    Shader shader(glsl::textures_vs, glsl::textures_fs);
+    glBindVertexArray(vao);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-    // position
-    const auto pos_location = glGetAttribLocation(shader.GetProgram(), "vPos");
-    glVertexAttribPointer(pos_location, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), nullptr);
-    glEnableVertexAttribArray(pos_location);
+    // poll event
+    glfwWaitEvents();
 
-    // color
-    const auto color_location = glGetAttribLocation(shader.GetProgram(), "vCol");
-    glVertexAttribPointer(
-        color_location, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(3 * sizeof(float)));
-    glEnableVertexAttribArray(color_location);
+    // display
+    glfwSwapBuffers(pWd);
+  }
 
-    // texture cooridinatin
-    const auto tex_location = glGetAttribLocation(shader.GetProgram(), "vTex");
-    glVertexAttribPointer(
-        tex_location, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(6 * sizeof(float)));
-    glEnableVertexAttribArray(tex_location);
+  LOGI("user request to close this window!");
 
-    // texture
-    Texture texture("winnie_the_pooh.jpg");
-    Texture texture1("awesomeface.png");
+  // destroy window
+  glfwDestroyWindow(pWd);
 
-    glUniform1i(glGetUniformLocation(shader.GetProgram(), "outTexture"), 0);
-    glUniform1i(glGetUniformLocation(shader.GetProgram(), "outTexture1"), 1);
-
-    // clear color
-    glClearColor(0.0F, 0.0F, 0.0F, 1.0F);
-
-    // running until exit
-    while (!glfwWindowShouldClose(pWd)) {
-        // clear
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        // setup environment
-        glBindVertexArray(vao);
-
-        // draw
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texture.GetTextureID());
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, texture1.GetTextureID());
-
-        // set ratio
-        glUniform1f(glGetUniformLocation(shader.GetProgram(), "ratio"), g_texture_ratio);
-
-        glBindVertexArray(vao);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-        // poll event
-        glfwWaitEvents();
-
-        // display
-        glfwSwapBuffers(pWd);
-    }
-
-    LOGI("user request to close this window!");
-
-    // destroy window
-    glfwDestroyWindow(pWd);
-
-    // terminate
-    glfwTerminate();
+  // terminate
+  glfwTerminate();
 }
