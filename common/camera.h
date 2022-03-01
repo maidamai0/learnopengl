@@ -82,7 +82,7 @@ class Camera {
       }
       default: {
         assert(false && "invalid direction");
-        fmt::print("warn:invalid direction: {}\n", direction);
+        fmt::print("warn:invalid direction: {}\n", magic_enum::enum_name(direction));
         break;
       }
     }
