@@ -13,10 +13,8 @@
 
 namespace {
 float g_x_rotate = -55.0F;
-const auto g_screen_width = 1920.0F;
-const auto g_screen_height = 1080.0F;
-auto g_last_pos_x = 0.0;
-auto g_last_pos_y = 0.0;
+int g_window_width = 1920;
+int g_window_height = 1080;
 
 Camera g_camera({0.0F, 0.0F, 5.0F});
 
@@ -124,22 +122,16 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 }
 
 void mouse_callback(GLFWwindow * /*unused*/, double x_pos, double y_pos) {
-  static bool first_time = true;
-  if (first_time) {
-    first_time = false;
-    g_last_pos_x = x_pos;
-    g_last_pos_y = y_pos;
-    return;
-  }
-
-  g_camera.ProcessMouseMovement(static_cast<float>((x_pos - g_last_pos_x)),
-                                static_cast<float>((g_last_pos_y - y_pos)), false);
-  g_last_pos_x = x_pos;
-  g_last_pos_y = y_pos;
+  g_camera.ProcessMouseMovement(x_pos, y_pos, g_window_width, g_window_width);
 }
 
 void scroll_callback(GLFWwindow * /*unused*/, double /*unused*/, double y_offset) {
   g_camera.ProcessMouseScroll(static_cast<float>(y_offset));
+}
+
+void window_size_callback(GLFWwindow *window, int width, int height) {
+  g_window_width = width;
+  g_window_height = height;
 }
 
 auto main(int argc, char **argv) -> int {
@@ -228,6 +220,8 @@ auto main(int argc, char **argv) -> int {
     // clear
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    glfwGetWindowSize(pWd, &g_window_width, &g_window_height);
+
     // setup environment
     glBindVertexArray(vao);
 
@@ -246,8 +240,9 @@ auto main(int argc, char **argv) -> int {
                        glm::value_ptr(view));
 
     // projection transformation
-    glm::mat4 projection = glm::perspective(glm::radians(g_camera.GetZoom()),
-                                            g_screen_width / g_screen_height, 0.1F, 100.0F);
+    glm::mat4 projection =
+        glm::perspective(glm::radians(g_camera.GetZoom()),
+                         static_cast<float>(g_window_width) / g_window_height, 0.1F, 100.0F);
     glUniformMatrix4fv(glGetUniformLocation(shader.GetProgram(), "projection"), 1, GL_FALSE,
                        glm::value_ptr(projection));
 

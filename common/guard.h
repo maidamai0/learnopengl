@@ -28,3 +28,8 @@ class Guard final {
  private:
   Function func_;
 };
+
+template <typename F>
+auto make_guard(F&& func) {
+  return Guard<F>(std::forward<F&&>(func));
+}

@@ -9,11 +9,15 @@
  *
  */
 
+#include "common/guard.h"
 #include "common/log.h"
+#include "common/trackball.h"
 
 #include "glm/ext/matrix_transform.hpp"
+#include "glm/ext/vector_float2.hpp"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/quaternion.hpp"
 #include "magic_enum.hpp"
 
 #include <algorithm>
@@ -26,21 +30,20 @@ enum class MouseMode { Rotate, Pan, None };
 class Camera {
  public:
   explicit Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f),
-                  glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = -90.0f,
-                  float pitch = 0.0f)
-      : position_{position}, world_up_{up}, yaw_{yaw}, pitch_{pitch} {
+                  glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f))
+      : position_{position}, world_up_{up} {
     update_camera_vectors();
   }
 
-  Camera(float pos_x, float pos_y, float pos_z, float up_x, float up_y, float up_z, float yaw,
-         float pitch)
-      : Camera(glm::vec3(pos_x, pos_y, pos_z), glm::vec3(up_x, up_y, up_z), yaw, pitch) {
+  Camera(float pos_x, float pos_y, float pos_z, float up_x, float up_y, float up_z)
+      : Camera(glm::vec3(pos_x, pos_y, pos_z), glm::vec3(up_x, up_y, up_z)) {
   }
 
   [[nodiscard]] auto GetViewMatrix() const {
     auto view = glm::lookAt(position_, position_ + front_, up_);
-    view = glm::rotate(view, yaw_, glm::vec3(0.0F, 1.0F, 0.0F));
-    view = glm::rotate(view, -pitch_, glm::vec3(1.0F, 0.0F, 0.0F));
+    view = view * trackball_.RotationMatrix();
+    // view = glm::rotate(view, yaw_, glm::vec3(0.0F, 1.0F, 0.0F));
+    // view = glm::rotate(view, -pitch_, glm::vec3(1.0F, 0.0F, 0.0F));
     return view;
   }
 
@@ -88,12 +91,24 @@ class Camera {
     }
   }
 
-  auto ProcessMouseMovement(float offset_x, float offset_y, bool constrain_pitch) {
+  auto ProcessMouseMovement(float xpos, float ypos, int window_w, int window_h) {
+    const auto update_mouse = make_guard([this, xpos, ypos]() {
+      mouse_x_ = xpos;
+      mouse_y_ = ypos;
+    });
+
+    static bool first_time = true;
+    if (first_time) {
+      first_time = false;
+      return;
+    }
+
     switch (mouse_mode_) {
       case MouseMode::Rotate:
-        return on_rotate(offset_x, offset_y);
+        return trackball_.OnMouseMove(mouse_x_ / window_h - 0.5F, -(mouse_y_ / window_h - 0.5F),
+                                      xpos / window_w - 0.5F, -(ypos / window_h - 0.5F));
       case MouseMode::Pan:
-        return on_pan(offset_x, offset_y);
+        return on_pan(xpos - mouse_x_, ypos - mouse_y_);
       case MouseMode::None:
         return;
     }
@@ -106,24 +121,17 @@ class Camera {
 
  private:
   void update_camera_vectors() {
-    glm::vec3 front;
-    front.x = cos(glm::radians(yaw_)) * cos(glm::radians(pitch_));
-    front.y = sin(glm::radians(pitch_));
-    front.z = sin(glm::radians(yaw_)) * cos(glm::radians(pitch_));
-
-    front_ = glm::normalize(front);
     right_ = glm::normalize(glm::cross(front_, world_up_));
     up_ = glm::normalize(glm::cross(right_, front_));
-  }
-
-  void on_rotate(float offset_x, float offset_y) {
-    yaw_ += offset_x * mouse_sensitivity_;
-    pitch_ += offset_y * mouse_sensitivity_;
   }
 
   void on_pan(float offset_x, float offset_y) {
     position_ -= right_ * offset_x * mouse_sensitivity_;
     position_ -= up_ * offset_y * mouse_sensitivity_;
+  }
+
+  static float normalize_mouse_position(float pos, int dim) {
+    return pos / dim - 0.5F;
   }
 
  private:
@@ -138,10 +146,11 @@ class Camera {
   float move_speed_{250.0f};
   float mouse_sensitivity_{0.01f};
   float zoom_{45.0f};
+  float mouse_x_ = 0;
+  float mouse_y_ = 0;
 
-  // euler angles
-  float yaw_{-0.0f};
-  float pitch_{0.0f};
+  // trackball for ratation
+  Trackball trackball_;
 
   float near_ = 0.1F;
   float far_ = 100.0F;
